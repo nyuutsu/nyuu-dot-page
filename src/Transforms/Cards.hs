@@ -54,7 +54,7 @@ buildCardPreview cache rawName setCode source =
         imagePath = case cached >>= cardImage of
             Just p  -> "/images/cards/" <> p
             Nothing -> trace (T.unpack $ "[WARN] Card '" <> lookupKey <> "' not found in cache.")
-                             "/images/cards/MISSING.png"
+                             "/images/cards/MISSING.webp"
 
         altText = maybe "" cardAltText cached
         hanafuda = Span ("", ["hanafuda"], [("aria-hidden", "true")]) [Str "🎴"]

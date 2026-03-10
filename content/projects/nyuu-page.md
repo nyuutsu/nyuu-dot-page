@@ -230,12 +230,12 @@ Shorthand:
 
 We can decorate figures to have the image also be an anchor. That is: you can click on it and open the image directly & at full resolution. Such images have a magnifying glass icon in the bottom right.
 
-![A sleepy Dratini](/images/dratini.png){alt="A cute, slightly deep-fried illustration of a sleepy Dratini" .clickable}
+![A sleepy Dratini](/images/dratini.webp){alt="A cute, slightly deep-fried illustration of a sleepy Dratini" .clickable}
 
 Shorthand:
 
 ```
-![A sleepy Dratini](/images/dratini.png){alt="A cute, slightly deep-fried illustration of a sleepy Dratini" .clickable}
+![A sleepy Dratini](/images/dratini.webp){alt="A cute, slightly deep-fried illustration of a sleepy Dratini" .clickable}
 ```
 
 #### Code Block Line-Number Support

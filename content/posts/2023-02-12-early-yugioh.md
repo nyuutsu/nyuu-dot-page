@@ -163,7 +163,7 @@ The first [Japanese set](https://yugioh.fandom.com/wiki/Vol.1) comes out in Janu
 I am a bit curious about just how much each of these early sets overlaps with the other ones. The information is out there but it I don't think anyone has actually analyzed it in this way. For that matter: I don't think there are any tools quite on Scryfall's level, here.
 :::
 
-Regardless: Japanese Yu-Gi-Oh got lots of new sets over next few years. One of these [sets](https://yugioh.fandom.com/wiki/Phantom_God) came out in August of '00. E1's cards were sourced from Japense sets released between January '99 and August '00. That's [a year and six months](/images/ygo-history/ocg-set-dates.png) and probably twenty or so sets and a few hundred cards.
+Regardless: Japanese Yu-Gi-Oh got lots of new sets over next few years. One of these [sets](https://yugioh.fandom.com/wiki/Phantom_God) came out in August of '00. E1's cards were sourced from Japense sets released between January '99 and August '00. That's [a year and six months](/images/ygo-history/ocg-set-dates.webp) and probably twenty or so sets and a few hundred cards.
 
 ::: note
 Checking the exact number of sets is hard, due to the aforementioned lack of good tools

@@ -12,7 +12,7 @@
 
 body {
   background-color: $color-bg-outer;
-  background-image: url('/images/backgrounds/body.png');
+  background-image: url('/images/backgrounds/body.webp');
   background-repeat: repeat;
   display: flex;
   flex-direction: column;
@@ -40,7 +40,7 @@ body {
 // -----------------------------------------------------------------------------
 
 .site-header {
-  background-image: url('/images/backgrounds/header.png');
+  background-image: url('/images/backgrounds/header.webp');
   background-size: cover;
   background-position: center;
   padding: $space-md;

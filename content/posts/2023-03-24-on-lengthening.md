@@ -31,11 +31,11 @@ Installer found courtesy of [Evolt](https://browsers.evolt.org/) (later renamed 
 
 Tab behavior and presentation is nearly identical to now. SimulBrowse looked like this:
 
-[![several tabs on http://gnu.org/ open in SimulBrowse 3.0.1](/images/vertical-space/simulbrowse-3.png "several tabs on http://gnu.org/ open in SimulBrowse 3.0.1")](/images/vertical-space/simulbrowse-3.png){.inset}
+[![several tabs on http://gnu.org/ open in SimulBrowse 3.0.1](/images/vertical-space/simulbrowse-3.webp "several tabs on http://gnu.org/ open in SimulBrowse 3.0.1")](/images/vertical-space/simulbrowse-3.webp){.inset}
 
 The only significant difference between tab behavior then and now is: in the original version, the tab screen overflow behavior is "the tabs spill off of the side of the screen". They don't compress horizontally as you open more of them. You can look at different parts of the tab bar by clicking the <kbd>◂</kbd> and <kbd>▸</kbd> arrows found to the right of the tab bar:
 
-[![several tabs on http://gnu.org/ the tab navigation arrows in SimulBrowse 3.0.1](/images/vertical-space/simulbrowse-3-zoom.png "several tabs on http://gnu.org/ the tab navigation arrows in SimulBrowse 3.0.1")](/images/vertical-space/simulbrowse-3-zoom.png){.gbc}
+[![several tabs on http://gnu.org/ the tab navigation arrows in SimulBrowse 3.0.1](/images/vertical-space/simulbrowse-3-zoom.webp "several tabs on http://gnu.org/ the tab navigation arrows in SimulBrowse 3.0.1")](/images/vertical-space/simulbrowse-3-zoom.webp){.gbc}
 
 No later than 2004—
 
@@ -50,12 +50,12 @@ Which is way before most people started using tabs. the typical person probably 
 2. Browsing is about *abundance*; you'll probably open dozens of tabs in the course of doing anything deeper than cursory research. Doing so squishes the tabs or drives them offscreen or both; it's difficult to have a decent quick reference of "what do I have open".
 Some examples:
 
-    * [![thirtyish google chrome tabs](/images/vertical-space/horiz-30ish.png "thirtyish google chrome tabs")](/images/vertical-space/horiz-30ish.png)
+    * [![thirtyish google chrome tabs](/images/vertical-space/horiz-30ish.webp "thirtyish google chrome tabs")](/images/vertical-space/horiz-30ish.webp)
 
         Thirty tabs open in chrome: perhaps in the moment you can mostly keep track of what each thing is based on the favicon and first two letters and relative location on the bar?*
 
 
-    * [![fortyish google chrome tabs](/images/vertical-space/horiz-lots.png "fortyish google chrome tabs")](/images/vertical-space/horiz-lots.png)
+    * [![fortyish google chrome tabs](/images/vertical-space/horiz-lots.webp "fortyish google chrome tabs")](/images/vertical-space/horiz-lots.webp)
 
         Forty tabs: you get favicons and relative locations. nothing else
 
@@ -89,11 +89,11 @@ Most chat conversations word-wrap very well. Most of the messages are way shorte
 
 One of these screenshots was taken on my landscape-oriented 1920x1200 monitor:
 
-[![discord viewed in a horizontal window](/images/vertical-space/discord-horizontal.png "discord viewed in a horizontal window")](/images/vertical-space/discord-horizontal.png){.inset}
+[![discord viewed in a horizontal window](/images/vertical-space/discord-horizontal.webp "discord viewed in a horizontal window")](/images/vertical-space/discord-horizontal.webp){.inset}
 
 The other on my (identical but rotated 90°) portrait-oriented 1200x1920 monitor:
 
-[![discord viewed in a vertical window](/images/vertical-space/discord-vertical.png "discord viewed in a vertical window")](/images/vertical-space/discord-vertical.png){.inset}
+[![discord viewed in a vertical window](/images/vertical-space/discord-vertical.webp "discord viewed in a vertical window")](/images/vertical-space/discord-vertical.webp){.inset}
 
 The latter is able to show about twice as many lines (use the black box present in both images as a landmark if you'd like to check) despite having the same pixel count. This is because it doesn't have to spend tons of screen space on "the non-content between the end of the message and the right edge of the screen".
 
@@ -103,7 +103,7 @@ If you have an ultrawide monitor you probably never open up a plaintext document
 
 Websites figure you don't want to do that and won't let you. Below is an (anonymized) screenshot, this time of what I see when I visit twitter. This is as viewed on a typical 1920x1080 monitor:
 
-[![twitter viewed in my web browser with the padding indicated in red and the content indicated in blue](/images/vertical-space/twitter-horizontal-padding.png "twitter viewed in my web browser with the padding indicated in red and the content indicated in blue")](/images/vertical-space/twitter-horizontal-padding.png){.inset}
+[![twitter viewed in my web browser with the padding indicated in red and the content indicated in blue](/images/vertical-space/twitter-horizontal-padding.webp "twitter viewed in my web browser with the padding indicated in red and the content indicated in blue")](/images/vertical-space/twitter-horizontal-padding.webp){.inset}
 
 *a third of the viewport is dedicated to horizontal padding!*
 
@@ -117,7 +117,7 @@ Lemma: a lot of people have horizontal regions of screen space that usually aren
 
 Check out my UI; it makes such elegant use of space by putting a tab *tree* in a sidebar and not having a tab bar at all:
 
-[![firefox open to one of my reddit comments with the stock tab bar hidden and the treestyletab addon enabled](/images/vertical-space/my-ui.png "firefox open to one of my reddit comments with the stock tab bar hidden and the treestyletab addon enabled")](/images/vertical-space/my-ui.png){.inset}
+[![firefox open to one of my reddit comments with the stock tab bar hidden and the treestyletab addon enabled](/images/vertical-space/my-ui.webp "firefox open to one of my reddit comments with the stock tab bar hidden and the treestyletab addon enabled")](/images/vertical-space/my-ui.webp){.inset}
 
 ::: note
 Eschewing an address bar is a *bit* too radical for my tastes so "just browse in fullscreen mode" isn't quite right. If I really want to hide the tree, <kbd>F1</kbd> toggles showing/hiding it.
@@ -157,4 +157,4 @@ Most people use Chrome, which so far as I can tell doesn't allow modifying the U
 
 ---
 
-[popup]: /images/vertical-space/chrome-tst.png
+[popup]: /images/vertical-space/chrome-tst.webp
