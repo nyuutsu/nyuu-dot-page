@@ -2,7 +2,7 @@
 title: "honeypot.wtf"
 icon: "🍯"
 description: "Solidity/EVM exploit tester. Check if a contract is a honeypot before you get rugged."
-weight: 7
+weight: 8
 status: wip
 ---
 

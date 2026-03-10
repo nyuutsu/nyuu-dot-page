@@ -7,7 +7,7 @@ status: proto
 ---
 
 ::: tip
-Impatient? Skip ahead & just download and run my code without reading it & without reading *about* it: [https://github.com/nyuutsu/picnrec-py](https://github.com/nyuutsu/picnrec-py)
+Just want the code for some reason? Get it [here](https://github.com/nyuutsu/picnrec-py).
 :::
 
 ![A demonstration](/images/projects/picnrec/picnrec-screen-comparison-to-irl.png){alt="Hand holding a Game Boy Color with a PicNRec cartridge, framing a fireplace mantel. The GBC screen shows a dithered preview of the scene."}
@@ -29,5 +29,7 @@ The CLI works well enough:
 This program is a prototype. The main goal in writing this version was just to figure out how to reliably connect to, query, retrieve-from, and gallery-wipe the PicNRec. I anticipate rewriting with more care in a language I find more fun.
 
 Despite it being in [tk](https://en.wikipedia.org/wiki/Tk_(software)), I've attempted to make it feel good to use. (e.g. <kbd>Ctrl</kbd>+<kbd>A</kbd> and its ilk should work properly.) It retrieves media slowly since the controller seems to require this.
+
+## Source
 
 Get it [here](https://github.com/nyuutsu/picnrec-py)
