@@ -1,0 +1,30 @@
+# Avatar Mappings
+#
+# [avatars]
+# key = "filename.ext"
+#
+# Path becomes /images/avatars/{filename.ext}
+# If a key isn't listed here, build warns and uses "default".
+
+[avatars]
+default = "snoo-1.webp"
+
+# Reddit snoos
+snoo-1 = "snoo-1.webp"
+snoo-2 = "snoo-2.webp"
+snoo-3 = "snoo-3.webp"
+snoo-4 = "snoo-4.webp"
+snoo-5 = "snoo-5.webp"
+snoo-6 = "snoo-6.webp"
+snoo-7 = "snoo-7.webp"
+snoo-8 = "snoo-8.webp"
+snoo-9 = "snoo-9.webp"
+
+# Bots
+robot = "robot.webp"
+
+# using-claude post characters
+avatar-cool-user = "avatar-cool-user.webp"
+avatar-chatbot = "avatar-chatbot.webp"
+avatar-impish-user = "avatar-impish-user.webp"
+avatar-weary-user = "avatar-weary-user.webp"

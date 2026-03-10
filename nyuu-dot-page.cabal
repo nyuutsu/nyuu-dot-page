@@ -1,0 +1,44 @@
+cabal-version:   2.4
+name:            nyuu-dot-page
+version:         0.1.0.0
+synopsis:        Personal website built with Hakyll
+build-type:      Simple
+
+executable site
+  main-is:          site.hs
+  other-modules:    CardCache
+                  , Config
+                  , ImageDimensions
+                  , SyntaxMap
+                  , Transforms
+                  , Transforms.Admonitions
+                  , Transforms.Anchors
+                  , Transforms.CardNotice
+                  , Transforms.Cards
+                  , Transforms.Chat
+                  , Transforms.FigureLink
+                  , Transforms.ForumPost
+                  , Transforms.ImageDimensions
+                  , Transforms.Japanese
+  hs-source-dirs:   src, .
+  build-depends:
+    , base           >= 4.19 && < 5
+    , hakyll         >= 4.15 && < 5
+    , pandoc         >= 3.0  && < 4
+    , pandoc-types   >= 1.23 && < 2
+    , filepath       >= 1.4  && < 2
+    , text           >= 1.2  && < 3
+    , containers           >= 0.6  && < 1
+    , unordered-containers >= 0.2  && < 1
+    , tomland              >= 1.3  && < 2
+    , aeson                >= 2.0  && < 3
+    , bytestring           >= 0.10 && < 1
+    , directory            >= 1.3  && < 2
+    , JuicyPixels          >= 3.3  && < 4
+    , megaparsec           >= 9.0  && < 10
+    , time                  >= 1.9  && < 2
+    , skylighting-core     >= 0.14 && < 1
+  ghc-options:         -threaded -Wall
+  default-language:    Haskell2010
+  default-extensions:  OverloadedStrings
+                     , ScopedTypeVariables

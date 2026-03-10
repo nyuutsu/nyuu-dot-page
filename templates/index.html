@@ -1,0 +1,25 @@
+<div>
+  <h1>Projects</h1>
+
+  <div class="project-grid">
+  $for(projects)$
+    <section class="project-card$if(status)$ project-card--$status$$endif$">
+      <h2>$if(nolink)$<span class="project-icon">$icon$</span> <span class="project-title-text">$title$</span>$else$<a href="$url$"><span class="project-icon">$icon$</span> $title$</a>$endif$$if(status)$ <span class="project-status project-status--$status$">$status$</span>$endif$</h2>
+      <p>$description$</p>
+    </section>
+  $endfor$
+  </div>
+
+  <h2>Recent Posts</h2>
+
+  <ul class="post-list">
+  $for(posts)$
+    <li class="post-list-item">
+      <a href="$url$" class="post-list-title">$title$</a>
+      <time class="post-list-date" datetime="$isodate$">$date$</time>
+    </li>
+  $endfor$
+  </ul>
+
+  <p><a href="/archive/">View all posts</a></p>
+</div>

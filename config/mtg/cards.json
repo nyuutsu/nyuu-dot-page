@@ -1,0 +1,380 @@
+[
+  {
+    "name": "Abrade",
+    "mana_cost": "{1}{R}",
+    "type_line": "Instant",
+    "oracle_text": "Choose one \u2014\n\u2022 Abrade deals 3 damage to target creature.\n\u2022 Destroy target artifact.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/abrade.jpg"
+  },
+  {
+    "name": "Arclight Phoenix",
+    "mana_cost": "{3}{R}",
+    "type_line": "Creature \u2014 Phoenix",
+    "oracle_text": "Flying, haste\nAt the beginning of combat on your turn, if you've cast three or more instant and sorcery spells this turn, return this card from your graveyard to the battlefield.",
+    "power": "3",
+    "toughness": "2",
+    "image": "mtg/images/arclight-phoenix.jpg"
+  },
+  {
+    "name": "Ascendant Spirit",
+    "mana_cost": "{U}",
+    "type_line": "Snow Creature \u2014 Spirit",
+    "oracle_text": "{S}{S}: This creature becomes a Spirit Warrior with base power and toughness 2/3.\n{S}{S}{S}: If this creature is a Warrior, put a flying counter on it and it becomes a Spirit Warrior Angel with base power and toughness 4/4.\n{S}{S}{S}{S}: If this creature is an Angel, put two +1/+1 counters on it and it gains \"Whenever this creature deals combat damage to a player, draw a card.\"",
+    "power": "1",
+    "toughness": "1",
+    "image": "mtg/images/ascendant-spirit.jpg"
+  },
+  {
+    "name": "Bloodtithe Harvester",
+    "mana_cost": "{B}{R}",
+    "type_line": "Creature \u2014 Vampire",
+    "oracle_text": "When this creature enters, create a Blood token. (It's an artifact with \"{1}, {T}, Discard a card, Sacrifice this token: Draw a card.\")\n{T}, Sacrifice this creature: Target creature gets -X/-X until end of turn, where X is twice the number of Blood tokens you control. Activate only as a sorcery.",
+    "power": "3",
+    "toughness": "2",
+    "image": "mtg/images/bloodtithe-harvester.jpg"
+  },
+  {
+    "name": "Brave the Elements",
+    "mana_cost": "{W}",
+    "type_line": "Instant",
+    "oracle_text": "Choose a color. White creatures you control gain protection from the chosen color until end of turn.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/brave-the-elements.jpg"
+  },
+  {
+    "name": "Brazen Borrower",
+    "mana_cost": "{1}{U}{U} // {1}{U}",
+    "type_line": "Creature \u2014 Faerie Rogue // Instant \u2014 Adventure",
+    "oracle_text": "",
+    "power": "3",
+    "toughness": "1",
+    "image": "mtg/images/brazen-borrower.jpg"
+  },
+  {
+    "name": "Brotherhood's End",
+    "mana_cost": "{1}{R}{R}",
+    "type_line": "Sorcery",
+    "oracle_text": "Choose one —\n• Brotherhood's End deals 3 damage to each creature and each planeswalker.\n• Destroy all artifacts with mana value 3 or less.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/brotherhoods-end.jpg"
+  },
+  {
+    "name": "Chart a Course",
+    "mana_cost": "{1}{U}",
+    "type_line": "Sorcery",
+    "oracle_text": "Draw two cards. Then discard a card unless you attacked this turn.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/chart-a-course.jpg"
+  },
+  {
+    "name": "Consider",
+    "mana_cost": "{U}",
+    "type_line": "Instant",
+    "oracle_text": "Surveil 1. (Look at the top card of your library. You may put it into your graveyard.)\nDraw a card.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/consider.jpg"
+  },
+  {
+    "name": "Crackling Drake",
+    "mana_cost": "{U}{U}{R}{R}",
+    "type_line": "Creature \u2014 Drake",
+    "oracle_text": "Flying\nCrackling Drake's power is equal to the total number of instant and sorcery cards you own in exile and in your graveyard.\nWhen this creature enters, draw a card.",
+    "power": "*",
+    "toughness": "4",
+    "image": "mtg/images/crackling-drake.jpg"
+  },
+  {
+    "name": "Curious Obsession",
+    "mana_cost": "{U}",
+    "type_line": "Enchantment \u2014 Aura",
+    "oracle_text": "Enchant creature\nEnchanted creature gets +1/+1 and has \"Whenever this creature deals combat damage to a player, you may draw a card.\"\nAt the beginning of your end step, if you didn't attack with a creature this turn, sacrifice this Aura.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/curious-obsession.jpg"
+  },
+  {
+    "name": "Fiery Impulse",
+    "mana_cost": "{R}",
+    "type_line": "Instant",
+    "oracle_text": "Fiery Impulse deals 2 damage to target creature.\nSpell mastery \u2014 If there are two or more instant and/or sorcery cards in your graveyard, Fiery Impulse deals 3 damage instead.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/fiery-impulse.jpg"
+  },
+  {
+    "name": "Fry",
+    "mana_cost": "{1}{R}",
+    "type_line": "Instant",
+    "oracle_text": "This spell can't be countered.\nFry deals 5 damage to target creature or planeswalker that's white or blue.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/fry.jpg"
+  },
+  {
+    "name": "Galvanic Iteration",
+    "mana_cost": "{U}{R}",
+    "type_line": "Instant",
+    "oracle_text": "When you next cast an instant or sorcery spell this turn, copy that spell. You may choose new targets for the copy.\nFlashback {1}{U}{R} (You may cast this card from your graveyard for its flashback cost. Then exile it.)",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/galvanic-iteration.jpg"
+  },
+  {
+    "name": "Hall of Storm Giants",
+    "mana_cost": "",
+    "type_line": "Land",
+    "oracle_text": "If you control two or more other lands, this land enters tapped.\n{T}: Add {U}.\n{5}{U}: Until end of turn, this land becomes a 7/7 blue Giant creature with ward {3}. It's still a land. (Whenever it becomes the target of a spell or ability an opponent controls, counter it unless that player pays {3}.)",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/hall-of-storm-giants.jpg"
+  },
+  {
+    "name": "Island",
+    "mana_cost": "",
+    "type_line": "Basic Land \u2014 Island",
+    "oracle_text": "({T}: Add {U}.)",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/island.jpg"
+  },
+  {
+    "name": "Lightning Axe",
+    "mana_cost": "{R}",
+    "type_line": "Instant",
+    "oracle_text": "As an additional cost to cast this spell, discard a card or pay {5}.\nLightning Axe deals 5 damage to target creature.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/lightning-axe.jpg"
+  },
+  {
+    "name": "Mystical Dispute",
+    "mana_cost": "{2}{U}",
+    "type_line": "Instant",
+    "oracle_text": "This spell costs {2} less to cast if it targets a blue spell.\nCounter target spell unless its controller pays {3}.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/mystical-dispute.jpg"
+  },
+  {
+    "name": "Negate",
+    "mana_cost": "{1}{U}",
+    "type_line": "Instant",
+    "oracle_text": "Counter target noncreature spell.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/negate.jpg"
+  },
+  {
+    "name": "Opt",
+    "mana_cost": "{U}",
+    "type_line": "Instant",
+    "oracle_text": "Scry 1. (Look at the top card of your library. You may put that card on the bottom.)\nDraw a card.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/opt.jpg"
+  },
+  {
+    "name": "Otawara, Soaring City",
+    "mana_cost": "",
+    "type_line": "Legendary Land",
+    "oracle_text": "{T}: Add {U}.\nChannel \u2014 {3}{U}, Discard this card: Return target artifact, creature, enchantment, or planeswalker to its owner's hand. This ability costs {1} less to activate for each legendary creature you control.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/otawara-soaring-city.jpg"
+  },
+  {
+    "name": "Pieces of the Puzzle",
+    "mana_cost": "{2}{U}",
+    "type_line": "Sorcery",
+    "oracle_text": "Reveal the top five cards of your library. Put up to two instant and/or sorcery cards from among them into your hand and the rest into your graveyard.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/pieces-of-the-puzzle.jpg"
+  },
+  {
+    "name": "Rattlechains",
+    "mana_cost": "{1}{U}",
+    "type_line": "Creature \u2014 Spirit",
+    "oracle_text": "Flash\nFlying\nWhen this creature enters, target Spirit gains hexproof until end of turn.\nYou may cast Spirit spells as though they had flash.",
+    "power": "2",
+    "toughness": "1",
+    "image": "mtg/images/rattlechains.jpg"
+  },
+  {
+    "name": "Rending Volley",
+    "mana_cost": "{R}",
+    "type_line": "Instant",
+    "oracle_text": "This spell can't be countered.\nRending Volley deals 4 damage to target white or blue creature.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/rending-volley.jpg"
+  },
+  {
+    "name": "Riverglide Pathway",
+    "mana_cost": "",
+    "type_line": "Land // Land",
+    "oracle_text": "",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/riverglide-pathway.jpg"
+  },
+  {
+    "name": "Sheoldred, the Apocalypse",
+    "mana_cost": "{2}{B}{B}",
+    "type_line": "Legendary Creature \u2014 Phyrexian Praetor",
+    "oracle_text": "Deathtouch\nWhenever you draw a card, you gain 2 life.\nWhenever an opponent draws a card, they lose 2 life.",
+    "power": "4",
+    "toughness": "5",
+    "image": "mtg/images/sheoldred-the-apocalypse.jpg"
+  },
+  {
+    "name": "Spell Pierce",
+    "mana_cost": "{U}",
+    "type_line": "Instant",
+    "oracle_text": "Counter target noncreature spell unless its controller pays {2}.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/spell-pierce.jpg"
+  },
+  {
+    "name": "Spikefield Hazard",
+    "mana_cost": "",
+    "type_line": "Instant // Land",
+    "oracle_text": "",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/spikefield-hazard.jpg"
+  },
+  {
+    "name": "Spirebluff Canal",
+    "mana_cost": "",
+    "type_line": "Land",
+    "oracle_text": "This land enters tapped unless you control two or fewer other lands.\n{T}: Add {U} or {R}.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/spirebluff-canal.jpg"
+  },
+  {
+    "name": "Steam Vents",
+    "mana_cost": "",
+    "type_line": "Land \u2014 Island Mountain",
+    "oracle_text": "({T}: Add {U} or {R}.)\nAs this land enters, you may pay 2 life. If you don't, it enters tapped.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/steam-vents.jpg"
+  },
+  {
+    "name": "Storm the Festival",
+    "mana_cost": "{3}{G}{G}{G}",
+    "type_line": "Sorcery",
+    "oracle_text": "Look at the top five cards of your library. You may put up to two permanent cards with mana value 5 or less from among them onto the battlefield. Put the rest on the bottom of your library in a random order.\nFlashback {7}{G}{G}{G} (You may cast this card from your graveyard for its flashback cost. Then exile it.)",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/storm-the-festival.jpg"
+  },
+  {
+    "name": "Stormcarved Coast",
+    "mana_cost": "",
+    "type_line": "Land",
+    "oracle_text": "This land enters tapped unless you control two or more other lands.\n{T}: Add {U} or {R}.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/stormcarved-coast.jpg"
+  },
+  {
+    "name": "Thalia, Guardian of Thraben",
+    "mana_cost": "{1}{W}",
+    "type_line": "Legendary Creature \u2014 Human Soldier",
+    "oracle_text": "First strike\nNoncreature spells cost {1} more to cast.",
+    "power": "2",
+    "toughness": "1",
+    "image": "mtg/images/thalia-guardian-of-thraben.jpg"
+  },
+  {
+    "name": "Thing in the Ice",
+    "mana_cost": "",
+    "type_line": "Creature \u2014 Horror // Creature \u2014 Kraken Horror",
+    "oracle_text": "",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/thing-in-the-ice.jpg"
+  },
+  {
+    "name": "Treasure Cruise",
+    "mana_cost": "{7}{U}",
+    "type_line": "Sorcery",
+    "oracle_text": "Delve (Each card you exile from your graveyard while casting this spell pays for {1}.)\nDraw three cards.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/treasure-cruise.jpg"
+  },
+  {
+    "name": "Young Pyromancer",
+    "mana_cost": "{1}{R}",
+    "type_line": "Creature \u2014 Human Shaman",
+    "oracle_text": "Whenever you cast an instant or sorcery spell, create a 1/1 red Elemental creature token.",
+    "power": "2",
+    "toughness": "1",
+    "image": "mtg/images/young-pyromancer.jpg"
+  },
+  {
+    "name": "Mountain",
+    "mana_cost": "",
+    "type_line": "Basic Land \u2014 Mountain",
+    "oracle_text": "({T}: Add {R}.)",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/mountain.jpg"
+  },
+  {
+    "name": "Stone Rain",
+    "mana_cost": "{2}{R}",
+    "type_line": "Sorcery",
+    "oracle_text": "Destroy target land.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/stone-rain.jpg"
+  },
+  {
+    "name": "Awoken Horror",
+    "mana_cost": "",
+    "type_line": "Creature \u2014 Kraken Horror",
+    "oracle_text": "When this creature transforms into Awoken Horror, return all non-Horror creatures to their owners' hands.",
+    "power": "7",
+    "toughness": "8",
+    "image": "mtg/images/awoken-horror.jpg"
+  },
+  {
+    "name": "Petty Theft",
+    "mana_cost": "{1}{U}",
+    "type_line": "Instant \u2014 Adventure",
+    "oracle_text": "Return target nonland permanent an opponent controls to its owner's hand.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/petty-theft.jpg"
+  },
+  {
+    "name": "Lavaglide Pathway",
+    "mana_cost": "",
+    "type_line": "Land",
+    "oracle_text": "{T}: Add {R}.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/lavaglide-pathway.jpg"
+  },
+  {
+    "name": "Spikefield Cave",
+    "mana_cost": "",
+    "type_line": "Land",
+    "oracle_text": "Spikefield Cave enters tapped.\n{T}: Add {R}.",
+    "power": null,
+    "toughness": null,
+    "image": "mtg/images/spikefield-cave.jpg"
+  }
+]

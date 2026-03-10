@@ -1,0 +1,610 @@
+// =============================================================================
+// Typography
+// Font faces, headings, body text, links, code
+// =============================================================================
+
+@use 'variables' as *;
+
+// -----------------------------------------------------------------------------
+// Font Faces
+// All fonts defined here for easy management and future subsetting
+// -----------------------------------------------------------------------------
+
+// Latin + common punctuation/symbols (shared by all Fell cuts)
+$unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF, U+2100-214F;
+
+// IM Fell English — body text (~14pt historical cut)
+@font-face {
+  font-family: 'IM Fell English';
+  src: url('/fonts/IMFellEnglish-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: $unicode-latin, U+261C, U+261E;  // manicules ☜☞
+}
+
+@font-face {
+  font-family: 'IM Fell English';
+  src: url('/fonts/IMFellEnglish-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: $unicode-latin;
+}
+
+@font-face {
+  font-family: 'IM Fell English SC';
+  src: url('/fonts/IMFellEnglish-SC.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: $unicode-latin;
+}
+
+// IM Fell Great Primer — subheadings h3-h4 (~18pt historical cut)
+@font-face {
+  font-family: 'IM Fell Great Primer';
+  src: url('/fonts/IMFellGreatPrimer-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: $unicode-latin;
+}
+
+@font-face {
+  font-family: 'IM Fell Great Primer';
+  src: url('/fonts/IMFellGreatPrimer-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: $unicode-latin;
+}
+
+@font-face {
+  font-family: 'IM Fell Great Primer SC';
+  src: url('/fonts/IMFellGreatPrimer-SC.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: $unicode-latin;
+}
+
+// IM Fell Double Pica — headings h1-h2 (~22pt historical cut)
+@font-face {
+  font-family: 'IM Fell Double Pica';
+  src: url('/fonts/IMFellDoublePica-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: $unicode-latin;
+}
+
+@font-face {
+  font-family: 'IM Fell Double Pica';
+  src: url('/fonts/IMFellDoublePica-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: $unicode-latin;
+}
+
+@font-face {
+  font-family: 'IM Fell Double Pica SC';
+  src: url('/fonts/IMFellDoublePica-SC.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: $unicode-latin;
+}
+
+// IM Fell DW Pica — small UI text (~12pt historical cut)
+@font-face {
+  font-family: 'IM Fell DW Pica';
+  src: url('/fonts/IMFellDWPica-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: $unicode-latin;
+}
+
+@font-face {
+  font-family: 'IM Fell DW Pica';
+  src: url('/fonts/IMFellDWPica-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: $unicode-latin;
+}
+
+@font-face {
+  font-family: 'IM Fell DW Pica SC';
+  src: url('/fonts/IMFellDWPica-SC.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: $unicode-latin;
+}
+
+// Monospace font: Sarasa Mono J
+// Used for CJK characters in code blocks
+@font-face {
+  font-family: 'Sarasa Mono J';
+  src: url('/fonts/SarasaMonoJ-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sarasa Mono J';
+  src: url('/fonts/SarasaMonoJ-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+// Japanese font: Oradano Mincho GSRR
+// Revival of 1909 Tsukiji Type Foundry metal type — pairs with IM Fell
+@font-face {
+  font-family: 'Oradano-mincho-GSRR';
+  src: url('/fonts/OradanoGSRR.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  // Japanese character ranges
+  unicode-range: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
+}
+
+// Emoji font: Blobmoji
+// unicode-range covers all emoji blocks so the browser routes emoji here.
+// The font file itself only contains emoji found in content (built by blobmoji/build-subset.py).
+$unicode-emoji:
+  U+200D,              // Zero Width Joiner (emoji sequences)
+  U+FE00-FE0F,         // Variation Selectors
+  U+203C, U+2049,      // ‼ ⁉
+  U+2122, U+2139,      // ™ ℹ
+  U+2194-2199,         // ↔↕↖↗↘↙
+  U+21A9-21AA,         // ↩↪
+  U+231A-231B,         // ⌚⌛
+  U+2328,              // ⌨
+  U+23CF,              // ⏏
+  U+23E9-23F3,         // ⏩-⏳
+  U+23F8-23FA,         // ⏸⏹⏺
+  U+24C2,              // Ⓜ
+  U+25AA-25AB,         // ▪▫
+  U+25B6, U+25C0,      // ▶◀
+  U+25FB-25FE,         // ◻◼◽◾
+  U+2600-27BF,         // Misc Symbols + Dingbats
+  U+2934-2935,         // ⤴⤵
+  U+2B05-2B07,         // ⬅⬆⬇
+  U+2B1B-2B1C,         // ⬛⬜
+  U+2B50, U+2B55,      // ⭐⭕
+  U+3030, U+303D,      // 〰〽
+  U+3297, U+3299,      // ㊗㊙
+  U+1F000-1F0FF,       // Mahjong, Playing Cards
+  U+1F100-1F1FF,       // Enclosed Alphanumerics + Regional Indicators (flags)
+  U+1F200-1F2FF,       // Enclosed Ideographic
+  U+1F300-1F5FF,       // Misc Symbols & Pictographs
+  U+1F600-1F64F,       // Emoticons
+  U+1F680-1F6FF,       // Transport & Map
+  U+1F700-1F77F,       // Alchemical Symbols
+  U+1F780-1F7FF,       // Geometric Shapes Extended
+  U+1F800-1F8FF,       // Supplemental Arrows-C
+  U+1F900-1F9FF,       // Supplemental Symbols & Pictographs
+  U+1FA00-1FA6F,       // Chess Symbols + Extended-A
+  U+1FA70-1FAFF,       // Extended-A continued
+  U+E0020-E007F;       // Tags (flag subdivision sequences)
+
+@font-face {
+  font-family: 'Blobmoji';
+  src: url('/fonts/Blobmoji.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  // block: reserve space, show blob emoji when ready (swap would flash system emoji)
+  font-display: block;
+  unicode-range: $unicode-emoji;
+}
+
+
+// -----------------------------------------------------------------------------
+// Base Typography
+// -----------------------------------------------------------------------------
+
+html {
+  // Fluid base font: gentle vw slope for stability across window sizes.
+  // High-DPI unscaled displays should use browser zoom (~150%) rather than
+  // relying on CSS to detect physical pixel density (which it can't).
+  font-size: max(1.125rem, calc(1rem + 0.25vw));
+}
+
+body {
+  font-family: $font-body, $font-emoji;
+  font-size: $font-size-base;
+  font-weight: 400;
+  color: $color-text;
+  line-height: $line-height-loose;
+}
+
+// -----------------------------------------------------------------------------
+// Japanese Text
+// Auto-wrapped in <span lang="ja"> by Pandoc transform for accessibility
+// -----------------------------------------------------------------------------
+
+[lang="ja"] {
+  font-family: $font-japanese;
+}
+
+// -----------------------------------------------------------------------------
+// Headings
+// Using clamp() for fluid sizing without breakpoints
+// -----------------------------------------------------------------------------
+
+h1, h2, h3, h4, h5, h6 {
+  color: $color-heading;
+  font-weight: 400;
+  line-height: $line-height-tight;
+  margin-block: $space-lg $space-md;
+}
+
+h1, h2 {
+  font-family: $font-heading;
+}
+
+h3, h4 {
+  font-family: $font-subheading;
+}
+
+h5, h6 {
+  font-family: $font-body;
+}
+
+h1 {
+  font-size: clamp($font-size-2xl, 5vw, $font-size-3xl);
+  margin-block-start: 0;
+}
+
+h2 {
+  font-size: clamp($font-size-xl, 4vw, $font-size-2xl);
+}
+
+h3 {
+  font-size: $font-size-lg;
+}
+
+h4, h5, h6 {
+  font-size: $font-size-base;
+}
+
+// -----------------------------------------------------------------------------
+// Heading Anchors
+// Headers are wrapped in <a href="#id"> by Pandoc transform
+// This adds the § prefix and removes underline from the link
+// -----------------------------------------------------------------------------
+
+h1, h2, h3, h4, h5, h6 {
+  // Anchor links inside headings
+  > a[href^="#"] {
+    color: inherit;
+    text-decoration: none;
+
+    &::before {
+      content: "§ ";
+      color: $color-accent;
+      font-weight: 400;
+      opacity: 0.5;
+      transition: opacity $transition-speed ease;
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Figures
+// Images with captions become <figure>/<figcaption> via Pandoc transform
+// -----------------------------------------------------------------------------
+
+figure {
+  margin-block: $space-md;
+  margin-inline: 0;
+  width: fit-content;  // Shrink to image width
+
+  img {
+    display: block;
+  }
+
+  figcaption {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    margin-block-start: $space-xs;
+    font-style: italic;
+    text-align: center;  // Center within figure width (matches image)
+  }
+
+  // Clickable figures — link to full-size image
+  &.clickable {
+    position: relative;
+
+    a {
+      cursor: zoom-in;
+    }
+
+    // Magnifying glass overlay, bottom-right of image
+    &::after {
+      content: '🔍';
+      position: absolute;
+      // Sit above figcaption, at image's bottom-right
+      bottom: calc(#{$space-xs} + 1.2em + #{$font-size-sm});
+      right: $space-xs;
+      font-size: 1.5rem;
+      line-height: 1;
+      pointer-events: none;
+      // Stroke outline for visibility over any image
+      @include text-outline(0.85);
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Paragraphs
+// -----------------------------------------------------------------------------
+
+p {
+  margin-block-end: $space-md;
+}
+
+// -----------------------------------------------------------------------------
+// Links
+// -----------------------------------------------------------------------------
+
+a {
+  color: $color-accent;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transition: color $transition-speed ease;
+
+  &:hover,
+  &:focus {
+    color: $color-accent-hover;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Lists
+// -----------------------------------------------------------------------------
+
+ul, ol {
+  padding-inline-start: $space-lg;
+  margin-block-end: $space-md;
+  list-style-position: outside;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+li {
+  margin-block-end: $space-xs;
+}
+
+// Nested lists
+li > ul,
+li > ol {
+  margin-block: $space-xs 0;
+}
+
+// -----------------------------------------------------------------------------
+// Inline code
+// -----------------------------------------------------------------------------
+
+code {
+  font-family: $font-mono;
+  font-size: $font-size-sm;
+  color: $color-code-inline;
+  background: $overlay-code;
+  padding: $space-xs $space-sm;
+  border-radius: $border-radius-md;
+}
+
+// -----------------------------------------------------------------------------
+// Code blocks
+// Syntax highlighting via Pandoc - classes like .kw, .st, .co are generated
+// -----------------------------------------------------------------------------
+
+pre {
+  font-family: $font-mono;
+  font-size: $font-size-sm;
+  line-height: $line-height-normal;
+  background: $overlay-code;
+  padding: $space-md;
+  border-radius: $border-radius-md;
+  overflow-x: auto;
+  margin-block-end: $space-md;
+
+  // Reset inline code styles inside pre
+  code {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+  }
+}
+
+// Pandoc wraps highlighted code in div.sourceCode > pre.sourceCode
+.sourceCode {
+  // Hide Pandoc's line anchor links (we handle line numbers separately)
+  a[href^="#cb"] {
+    display: none;
+  }
+
+  // Base code text color
+  code {
+    color: $color-code-text;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Syntax Highlighting Colors
+// Token classes generated by Pandoc's highlighter
+// Inspired by breezedark but tweaked for this site's palette
+// -----------------------------------------------------------------------------
+
+// Comments
+code span.co { color: #7a7c7d; }                        // Comment
+code span.an { color: #3f8058; }                        // Annotation
+code span.cv { color: #7f8c8d; }                        // CommentVar
+code span.do { color: #a43340; }                        // Documentation
+
+// Keywords & Control Flow
+code span.kw { color: #c9a0dc; font-weight: 700; }      // Keyword (lavender)
+code span.cf { color: #fdbc4b; font-weight: 700; }      // ControlFlow (yellow)
+code span.op { color: #cfcfc2; }                        // Operator
+
+// Strings & Characters
+code span.st { color: #f44f4f; }                        // String (coral red)
+code span.ch { color: #3daee9; }                        // Char
+code span.sc { color: #3daee9; }                        // SpecialChar
+code span.ss { color: #da4453; }                        // SpecialString
+code span.vs { color: #da4453; }                        // VerbatimString
+
+// Numbers
+code span.dv { color: #f67400; }                        // DecVal (orange)
+code span.bn { color: #f67400; }                        // BaseN
+code span.fl { color: #f67400; }                        // Float
+
+// Types & Data
+code span.dt { color: #5dade2; }                        // DataType (light blue)
+code span.at { color: #2980b9; }                        // Attribute
+
+// Functions & Variables
+code span.fu { color: #8e44ad; }                        // Function (purple)
+code span.va { color: #27aeae; }                        // Variable (teal)
+code span.cn { color: #27aeae; font-weight: 700; }      // Constant
+code span.bu { color: #7f8c8d; }                        // BuiltIn
+
+// Imports & Preprocessor
+code span.im { color: #27ae60; }                        // Import (green)
+code span.pp { color: #27ae60; }                        // Preprocessor
+code span.ot { color: #27ae60; }                        // Other (often type signatures)
+code span.ex { color: #0099ff; font-weight: 700; }      // Extension
+
+// Errors & Warnings
+code span.er { color: #da4453; text-decoration: underline; } // Error
+code span.wa { color: #da4453; }                        // Warning
+code span.al { color: #95da4c; background: #4d1f24; font-weight: 700; } // Alert
+code span.in { color: #c45b00; }                        // Information
+
+// Region markers (folding)
+code span.re { color: #2980b9; background: #153042; }   // RegionMarker
+
+// -----------------------------------------------------------------------------
+// Line Numbers
+// Always displayed on syntax-highlighted code blocks
+// Override starting number with startFrom: ```{.lang startFrom="5"}
+// -----------------------------------------------------------------------------
+
+.sourceCode pre code {
+  counter-reset: source-line 0;  // Default, overridden by Pandoc's inline style
+}
+
+.sourceCode pre code > span {
+  position: relative;
+  padding-inline-start: 3em;
+}
+
+.sourceCode pre code > span::before {
+  content: counter(source-line);
+  counter-increment: source-line;
+  position: absolute;
+  inset-inline-start: 0;
+  width: 2.5em;
+  text-align: end;
+  color: #7a7c7d;
+  border-inline-end: 1px solid $border-subtle;
+  padding-inline-end: 0.5em;
+  margin-inline-end: 0.5em;
+  user-select: none;
+}
+
+// -----------------------------------------------------------------------------
+// Blockquotes
+// Decorative quotation marks with left border accent
+// -----------------------------------------------------------------------------
+
+blockquote {
+  position: relative;
+  background: $overlay-darken;
+  border-inline-start: 3px solid $color-accent;
+  border-radius: 0 $border-radius-md $border-radius-md 0;
+  padding: $space-md $space-lg;
+  margin-inline: 0;
+  margin-block-end: $space-md;
+  font-style: italic;
+  color: $color-text;  // Full contrast, not muted
+
+  // Start decorative quote
+  &::before {
+    content: "\201C";  // "
+    font-family: $font-heading;
+    font-size: 3rem;
+    font-style: normal;
+    position: absolute;
+    inset-block-start: -0.25rem;
+    inset-inline-start: 0.5rem;
+    color: $color-accent;
+    opacity: 0.3;
+    line-height: 1;
+  }
+
+  // End decorative quote
+  &::after {
+    content: "\201D";  // "
+    font-family: $font-heading;
+    font-size: 3rem;
+    font-style: normal;
+    position: absolute;
+    inset-block-end: -0.75rem;
+    inset-inline-end: 0.5rem;
+    color: $color-accent;
+    opacity: 0.3;
+    line-height: 1;
+  }
+
+  p:last-child {
+    margin-block-end: 0;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Horizontal rules
+// -----------------------------------------------------------------------------
+
+hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-block: $space-xl;
+}
+
+// -----------------------------------------------------------------------------
+// Strong and emphasis
+// -----------------------------------------------------------------------------
+
+strong, b {
+  font-family: $font-body-sc;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+
+em, i {
+  font-style: italic;
+}

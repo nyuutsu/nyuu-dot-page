@@ -1,0 +1,12 @@
+<article>
+  <header>
+    <h1>$title$</h1>
+    <p class="post-meta">
+      Published <time datetime="$isodate$">$date$</time>
+$if(updated)$
+      <span class="post-updated">(Updated: <time datetime="$updated$">$updatedDisplay$</time>)</span>
+$endif$
+    </p>
+  </header>
+  $body$
+</article>

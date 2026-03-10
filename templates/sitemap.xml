@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://nyuu.page/</loc>
+  </url>
+  <url>
+    <loc>https://nyuu.page/about/</loc>
+  </url>
+  <url>
+    <loc>https://nyuu.page/contact/</loc>
+  </url>
+  <url>
+    <loc>https://nyuu.page/archive/</loc>
+  </url>
+$for(projects)$
+  <url>
+    <loc>https://nyuu.page$url$</loc>
+  </url>
+$endfor$
+$for(posts)$
+  <url>
+    <loc>https://nyuu.page$url$</loc>
+  </url>
+$endfor$
+</urlset>

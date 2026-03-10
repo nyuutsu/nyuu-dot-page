@@ -1,0 +1,49 @@
+# Anthropic - welcome
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+Allow: /
+
+# OpenAI
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+Disallow: /
+
+# Google AI training (not regular search)
+User-agent: Google-Extended
+Disallow: /
+
+# Meta
+User-agent: meta-externalagent
+Disallow: /
+
+# Apple AI training
+User-agent: Applebot-Extended
+Disallow: /
+
+# ByteDance
+User-agent: Bytespider
+Disallow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Disallow: /
+
+# Amazon
+User-agent: Amazonbot
+Disallow: /
+
+# xAI - listed for completeness, though their crawlers
+# have been observed spoofing as Chrome/Safari rather
+# than identifying themselves. So this is decorative.
+User-agent: GrokBot
+User-agent: xAI-Grok
+User-agent: Grok-DeepSearch
+Disallow: /
+
+# Everyone else (regular search engines, etc.)
+User-agent: *
+Allow: /
+
+Sitemap: https://nyuu.page/sitemap.xml

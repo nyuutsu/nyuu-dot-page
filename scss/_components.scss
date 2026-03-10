@@ -1,0 +1,626 @@
+// =============================================================================
+// Components
+// Reusable UI elements: cards, post lists, admonitions
+// =============================================================================
+
+@use 'variables' as *;
+
+// -----------------------------------------------------------------------------
+// Project Cards (for home page)
+// Responsive grid: 1 column on mobile, 2 columns on tablet+
+// -----------------------------------------------------------------------------
+
+.project-grid {
+  display: grid;
+  gap: $space-lg;
+  margin-block: $space-xl;
+
+  // 2-column max for better card proportions
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.project-card {
+  // Solid dark background (matches navbar style)
+  background: $overlay-panel;
+  border-radius: $border-radius-md;
+  padding: $space-lg;
+  border: 1px solid rgba($color-accent, 0.15);
+  position: relative;
+  transition: background-color $transition-speed ease, border-color $transition-speed ease;
+
+  &:has(a):hover {
+    background: $overlay-panel-hover;
+    border-color: rgba($color-accent, 0.3);
+  }
+
+  h2 {
+    margin-block-start: 0;
+    margin-block-end: $space-sm;
+
+    a {
+      text-decoration: none;
+      color: $color-accent;
+      &:hover { color: $color-accent-hover; }
+    }
+  }
+
+  p {
+    color: $color-text;
+    margin-block-end: 0;
+  }
+
+}
+
+// Project icon (emoji, inline in heading)
+.project-icon {
+  @include text-outline;
+}
+
+// -----------------------------------------------------------------------------
+// Project Status
+// Badge stamp + faint diagonal stripes on WIP cards.
+// Driven by `status:` frontmatter field (wip, proto).
+// -----------------------------------------------------------------------------
+
+// Faint diagonal stripes across cards with a status
+.project-card--wip {
+  overflow: hidden;
+  border-color: rgba($color-accent-hover, 0.3);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 8px,
+      rgba($color-accent-hover, 0.07) 8px,
+      rgba($color-accent-hover, 0.07) 16px
+    );
+  }
+}
+
+// Status badge — inline next to project title
+// Hand-stamped feel via slight rotation, varied per card position
+.project-status {
+  display: inline-block;
+  font-family: $font-heading;
+  font-size: $font-size-sm;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.1em 0.5em;
+  margin-inline-start: $space-sm;
+  border: 2px solid;
+  border-radius: $border-radius-sm;
+  vertical-align: middle;
+}
+
+// Hand-stamped rotation per card position
+.project-card:nth-child(4n+1) .project-status { transform: rotate(3deg); }
+.project-card:nth-child(4n+2) .project-status { transform: rotate(-3deg); }
+.project-card:nth-child(4n+3) .project-status { transform: rotate(-2deg); }
+.project-card:nth-child(4n+4) .project-status { transform: rotate(2deg); }
+
+.project-status--wip {
+  color: $color-accent-hover;
+  border-color: $color-accent-hover;
+}
+
+.project-status--proto {
+  color: $color-accent;
+  border-color: $color-accent;
+}
+
+// Plain title (nolink) — muted, clearly not interactive
+.project-title-text {
+  color: $color-text-muted;
+}
+
+// -----------------------------------------------------------------------------
+// Post List (for archive page)
+// -----------------------------------------------------------------------------
+
+.post-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-list-item {
+  padding-block: $space-md;
+  border-bottom: 1px solid $border-subtle;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.post-list-title {
+  display: block;
+  font-size: $font-size-lg;
+  margin-block-end: $space-xs;
+}
+
+.post-list-date {
+  display: block;
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+}
+
+// -----------------------------------------------------------------------------
+// Post Meta (date/author info on individual posts)
+// -----------------------------------------------------------------------------
+
+.post-meta {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  margin-block-end: $space-xl;
+  padding-block-end: $space-md;
+  border-bottom: 1px solid $border-subtle;
+}
+
+.post-updated {
+  margin-inline-start: $space-sm;
+}
+
+// -----------------------------------------------------------------------------
+// Card Notice
+// Explanatory notice about card hover previews, inserted via :::cards:::
+// -----------------------------------------------------------------------------
+
+// Hidden on touch devices where hover previews don't apply
+
+.card-notice {
+  background: rgba(0, 0, 0, 0.25);
+  border-inline-start: 3px solid $color-accent;
+  padding: $space-md;
+  margin-block: $space-lg;
+
+  @media (hover: none) {
+    display: none;
+  }
+
+  > p {
+    margin: 0;
+  }
+
+  .card-notice-details {
+    margin-block-start: $space-sm;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Card Preview
+// Hoverable card name with image preview (CSS-only, no JS)
+//
+// Usage in markdown:
+//   [Card Name]{.card}
+//
+// Path convention: relative paths get /images/cards/ prepended
+// -----------------------------------------------------------------------------
+
+// Hanafuda emoji used as card indicator — white outline for visibility
+.hanafuda {
+  @include text-outline;
+}
+
+.card-preview {
+  position: relative;
+  display: inline;
+}
+
+.card-name {
+  color: $color-accent;
+  cursor: help;
+}
+
+.card-image {
+  display: none;
+  position: absolute;
+  z-index: $z-card-preview;
+  inset-block-end: 100%;
+  inset-inline-start: 0;
+  max-width: 250px;
+  border-radius: $border-radius-lg;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+// Show image on hover (desktop only)
+@media (hover: hover) {
+  .card-preview:hover .card-image {
+    display: block;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Admonitions
+// Styled callout boxes for notes, warnings, tips, etc.
+//
+// Types and colors are defined in config/admonitions.toml (single source of truth).
+// The transform outputs inline CSS custom properties (--adm-bg, --adm-border).
+//
+// Usage in markdown:
+//   ::: note
+//   This is a note.
+//   :::
+//
+//   ::: warning Watch out!
+//   Custom title on the same line.
+//   :::
+// -----------------------------------------------------------------------------
+
+// Base admonition styles - floating label above box
+// Colors come from inline CSS custom properties (set by transform from config)
+.admonition {
+  position: relative;
+  padding: $space-md;
+  padding-block-start: $space-lg;
+  margin-block: $space-xl $space-md;
+  border-radius: 0.5em;  // em-based: scales with surrounding font size
+  border-inline-start: 4px solid;
+  // Use CSS custom properties set by transform (from config/admonitions.toml)
+  background: var(--adm-bg);
+  border-color: var(--adm-border);
+
+  // Floating label with icon
+  .admonition-title {
+    position: absolute;
+    inset-block-start: -0.75rem;
+    inset-inline-start: 1em;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    background: $overlay-panel-hover;
+    padding: 0.2em 0.6em;
+    border-radius: $border-radius-md;
+    font-family: $font-body-sc;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    font-size: $font-size-sm;
+    color: $color-heading;
+  }
+
+  .admonition-icon {
+    width: 1.25em;
+    height: auto;
+  }
+
+  .admonition-content {
+    > :first-child {
+      margin-block-start: 0;
+    }
+
+    > :last-child {
+      margin-block-end: 0;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Game Text
+// In-game text that needs preserved spacing and underline decoration
+//
+// Usage in markdown:
+//   [text]{.game}
+//
+// Produces: <span class="game" lang="ja">...</span>
+// (lang="ja" added automatically by Pandoc transform)
+// -----------------------------------------------------------------------------
+
+.game {
+  font-family: $font-mono;
+  text-decoration: underline dashed;
+  white-space: break-spaces;  // Preserves ALL spaces including at wrap points
+
+  // Override [lang="ja"] font when inside .game — monospace is the point
+  [lang="ja"] {
+    font-family: inherit;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Article (post/page content wrapper)
+// -----------------------------------------------------------------------------
+
+article {
+  // Ensure proper spacing for article content
+  > h1:first-child {
+    margin-block-start: 0;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Greentext
+// 4chan-style quoted text with > prefix
+//
+// Usage in markdown:
+//   [implying something]{.greentext}
+// -----------------------------------------------------------------------------
+
+.greentext {
+  color: $color-greentext;
+  font-family: Arial, sans-serif;  // Intentional: mimics 4chan styling
+
+  &::before {
+    content: ">";
+    margin-inline-end: 0.25rem;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Keyboard Keys
+// Styled to look like physical keyboard keys
+//
+// Usage in HTML:
+//   Press <kbd>Ctrl</kbd>+<kbd>C</kbd> to copy
+// -----------------------------------------------------------------------------
+
+kbd {
+  font-family: $font-mono;
+  font-size: $font-size-sm;
+  padding: 0.1em 0.4em;
+  border-radius: 0.25em;  // em-based: scales with font size
+  border: 1px solid $color-kbd-border;
+  border-bottom-width: 2px;
+  box-shadow: 0 1px 0 $color-kbd-border;
+  background: $color-kbd-bg;
+  color: $color-text;
+}
+
+// -----------------------------------------------------------------------------
+// Image Comparison
+// Side-by-side images, equal width, stack on mobile
+//
+// Usage in markdown:
+//   ::: comparison
+//   ![Image 1](path1.png)
+//
+//   ![Image 2](path2.png)
+//   :::
+//
+// NOTE: Designed for 2-3 images. More will work but may look odd.
+// -----------------------------------------------------------------------------
+
+.comparison {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: $space-md;
+  margin-block: $space-md;
+
+  figure {
+    margin: 0;
+
+    img {
+      max-width: 100%;
+      max-height: 80vh;
+      height: auto;
+    }
+  }
+
+}
+
+// -----------------------------------------------------------------------------
+// Chat Component
+// Discord/Slack-style chat message bubbles
+//
+// Usage in markdown:
+//   ::: chat
+//   @Alice[alice]: Hey, what's up?
+//   @Bob[bob]: Not much!
+//   :::
+//
+// - Display name before brackets, avatar key inside brackets
+// - Both are required
+// -----------------------------------------------------------------------------
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  margin-block: $space-md;
+  padding: $space-md;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: $border-radius-lg;
+}
+
+.chat-message {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-md;
+}
+
+.chat-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.1em;  // em-based: scales with font size
+  flex-shrink: 0;
+}
+
+.chat-bubble {
+  background: rgba(255, 255, 255, 0.08);
+  padding: $space-sm $space-md;
+  border-radius: 0 $border-radius-chat-bubble $border-radius-chat-bubble $border-radius-chat-bubble;
+  max-width: 80%;
+}
+
+.chat-name {
+  display: block;
+  font-family: $font-body-sc;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: $color-accent;
+  font-size: $font-size-sm;
+  margin-block-end: $space-xs;
+}
+
+.chat-content {
+  margin: 0;
+  color: $color-text;
+}
+
+// -----------------------------------------------------------------------------
+// Inset
+// Constrains images to less than full column width for reference/evidence images.
+//
+// Usage in markdown:
+//   [![Alt](image.png "Caption")](/images/full.png){.inset}
+//
+// When class is on link, target the img inside. When on img directly, target it.
+// -----------------------------------------------------------------------------
+
+.inset {
+  display: block;
+  max-width: min(100%, 32rem);
+
+  img {
+    max-height: 80vh;
+    object-fit: contain;
+  }
+}
+
+img.inset {
+  max-width: min(100%, 32rem);
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+// -----------------------------------------------------------------------------
+// GBC / Pixel Art
+// For retro game screenshots using integer zoom for crisp pixels
+//
+// Scales up based on viewport:
+// - 2x on small screens (default)
+// - 3x at 800px+ (GBC is 160px wide; 160*3=480 + padding fits comfortably)
+// - 4x at 1200px+ (160*4=640, plenty of room)
+//
+// Usage in markdown:
+//   ![Alt text](screenshot.png){.gbc}
+// -----------------------------------------------------------------------------
+
+.gbc {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;  // Firefox fallback
+  zoom: 2;
+
+  @media (min-width: 800px) {
+    zoom: 3;
+  }
+
+  @media (min-width: 1200px) {
+    zoom: 4;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Forum Post Component
+// old.reddit.com-style post layout with sidebar and content
+//
+// Usage in markdown:
+//   ::: {.forum-post name="Username" avatar="avatar-key" title="Member" posts="1234"}
+//   Post content here.
+//   :::
+//
+//   ::: {.forum-reply name="Other" avatar="other-key" title="Newbie" posts="42"}
+//   Reply content.
+//   :::
+//
+// - name: display name, avatar: avatar lookup key (both required)
+// -----------------------------------------------------------------------------
+
+.forum-post,
+.forum-reply {
+  display: flex;
+  gap: $space-md;
+  margin-block: $space-md;
+  padding: $space-md;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid $border-subtle;
+  border-radius: $border-radius-md;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+  }
+}
+
+.forum-reply {
+  margin-inline-start: $space-xl;
+}
+
+.forum-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-xs;
+  min-width: 8rem;
+  padding-inline-end: $space-md;
+  border-inline-end: 1px solid $border-subtle;
+  flex-shrink: 0;
+  text-align: center;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $space-sm;
+    border-inline-end: none;
+    border-block-end: 1px solid $border-subtle;
+    padding-inline-end: 0;
+    padding-block-end: $space-sm;
+    min-width: auto;
+    text-align: start;
+  }
+}
+
+.forum-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: $border-radius-md;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.05);
+
+  @media (max-width: $breakpoint-md) {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.forum-author {
+  font-family: $font-body-sc;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: $color-accent;
+}
+
+.forum-title {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  font-style: italic;
+}
+
+.forum-posts {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+}
+
+.forum-content {
+  flex: 1;
+  min-width: 0;
+
+  > :first-child {
+    margin-block-start: 0;
+  }
+
+  > :last-child {
+    margin-block-end: 0;
+  }
+}

@@ -1,0 +1,12 @@
+<article>
+  <h1>$title$</h1>
+
+  <ul class="post-list">
+  $for(posts)$
+    <li class="post-list-item">
+      <a href="$url$" class="post-list-title">$title$</a>
+      <time class="post-list-date" datetime="$isodate$">$date$</time>
+    </li>
+  $endfor$
+  </ul>
+</article>

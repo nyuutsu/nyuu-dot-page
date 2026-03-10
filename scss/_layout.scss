@@ -1,0 +1,181 @@
+// =============================================================================
+// Layout
+// Page structure: centered page container on textured background
+// =============================================================================
+
+@use 'variables' as *;
+
+// -----------------------------------------------------------------------------
+// Body
+// Textured background, centers the page container
+// -----------------------------------------------------------------------------
+
+body {
+  background-color: $color-bg-outer;
+  background-image: url('/images/backgrounds/body.png');
+  background-repeat: repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+// -----------------------------------------------------------------------------
+// Page Container
+// Constrained width, solid background, holds all site content
+// -----------------------------------------------------------------------------
+
+.page {
+  width: 100%;
+  max-width: $max-width-page;
+  min-height: 100vh;
+  background-color: $color-bg-inner;
+  display: flex;
+  flex-direction: column;
+}
+
+// -----------------------------------------------------------------------------
+// Header
+// Logo on left, nav on right, wraps gracefully on small screens
+// -----------------------------------------------------------------------------
+
+.site-header {
+  background-image: url('/images/backgrounds/header.png');
+  background-size: cover;
+  background-position: center;
+  padding: $space-md;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-md;
+
+  @media (min-width: $breakpoint-md) {
+    padding: $space-md $space-xl;
+  }
+}
+
+// Logo
+.site-logo {
+  display: block;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.site-logo-img {
+  height: 2.5rem;
+  width: auto;
+}
+
+// Navigation
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-sm;
+
+  a {
+    padding: $space-xs $space-sm;
+    color: $color-text;
+    text-decoration: none;
+    border-radius: $border-radius-md;
+    background-color: $overlay-panel;
+    transition: background-color $transition-speed ease;
+
+    &:hover {
+      background-color: $overlay-panel-hover;
+      color: $color-accent;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-accent;
+      outline-offset: 2px;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Main Content
+// Flex-grow pushes footer down
+// -----------------------------------------------------------------------------
+
+.site-main {
+  flex: 1;
+  padding: $space-xl $space-md;
+
+  @media (min-width: $breakpoint-md) {
+    padding: $space-xl;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Footer
+// -----------------------------------------------------------------------------
+
+.site-footer {
+  background-image: url('/images/backgrounds/footer.webp');
+  background-repeat: repeat;
+  padding: $space-lg $space-md;
+  border-top: 1px solid $border-subtle;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-md;
+
+  @media (min-width: $breakpoint-md) {
+    padding: $space-lg $space-xl;
+  }
+
+  // Muted copyright text
+  p {
+    color: $color-text-muted;
+    margin: 0;
+    font-size: $font-size-sm;
+  }
+}
+
+// Footer icons
+.footer-icons {
+  display: flex;
+  gap: $space-md;
+  align-items: center;
+
+  a {
+    display: block;
+    opacity: 0.7;
+    transition: opacity $transition-speed ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  img {
+    height: 1.5rem;
+    width: auto;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Skip Link (accessibility)
+// Hidden until focused, then appears at top of page
+// -----------------------------------------------------------------------------
+
+.skip-link {
+  position: absolute;
+  inset-block-start: -100%;
+  inset-inline-start: $space-md;
+  background: $color-bg-inner;
+  color: $color-text;
+  padding: $space-sm $space-md;
+  border-radius: $border-radius-md;
+  z-index: $z-skip-link;
+  text-decoration: none;
+
+  &:focus {
+    inset-block-start: $space-md;
+  }
+}

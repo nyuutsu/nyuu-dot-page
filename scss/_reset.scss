@@ -1,0 +1,111 @@
+// =============================================================================
+// Reset
+// Modern CSS reset based on Josh Comeau's reset
+// =============================================================================
+
+@use 'variables' as *;
+
+// -----------------------------------------------------------------------------
+// Box sizing and margins
+// -----------------------------------------------------------------------------
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// -----------------------------------------------------------------------------
+// HTML and Body
+// -----------------------------------------------------------------------------
+
+html {
+  // Prevent font size inflation on mobile
+  -webkit-text-size-adjust: 100%;
+  // Modern tab size
+  tab-size: 4;
+  color-scheme: dark;
+}
+
+body {
+  // Full viewport height minimum
+  min-height: 100vh;
+  // Improve text rendering
+  text-rendering: optimizeLegibility;
+  line-height: $line-height-normal;
+}
+
+// -----------------------------------------------------------------------------
+// Media elements
+// -----------------------------------------------------------------------------
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+// -----------------------------------------------------------------------------
+// Form elements
+// -----------------------------------------------------------------------------
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+// -----------------------------------------------------------------------------
+// Typography resets
+// -----------------------------------------------------------------------------
+
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+cite {
+  font-style: inherit;
+}
+
+p {
+  overflow-wrap: break-word;
+}
+
+// -----------------------------------------------------------------------------
+// Links
+// -----------------------------------------------------------------------------
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+// -----------------------------------------------------------------------------
+// Lists (reset default styling, re-add in typography)
+// -----------------------------------------------------------------------------
+
+ul, ol {
+  list-style: none;
+}
+
+// -----------------------------------------------------------------------------
+// Accessibility: reduced motion
+// -----------------------------------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

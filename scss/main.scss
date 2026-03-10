@@ -1,0 +1,19 @@
+// =============================================================================
+// Main Stylesheet Entry Point
+//
+// Compile with: sass scss/main.scss css/main.css
+// Watch mode:   sass --watch scss:css
+// =============================================================================
+
+// Import order matters:
+// 1. Variables (used by all other files)
+// 2. Reset (normalizes browser defaults)
+// 3. Typography (fonts, text styles)
+// 4. Layout (page structure)
+// 5. Components (UI elements)
+
+@use 'variables' as *;
+@use 'reset';
+@use 'typography';
+@use 'layout';
+@use 'components';
