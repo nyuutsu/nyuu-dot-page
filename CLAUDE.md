@@ -133,7 +133,7 @@ nyuu-dot-page/
 
 ## Haskell style
 
-Haskell2010 with `OverloadedStrings`.
+GHC2024 language edition.
 
 **Be idiomatic.** Use the right combinator when it fits (`fromMaybe`,
 `mapMaybe`, `concatMap`, `guard`, `groupBy`, `partition`, `on`).
@@ -188,10 +188,13 @@ if it ever needs systems-level work.
 ## Working together
 
 The user is learning Haskell alongside building. Teaching is part
-of the work.
+of the work — not separate from it.
 
 - Explain new concepts before using them — combinators, type
   signatures, patterns. Say what they mean and why they work.
+  Lecture freely.
+- Teach the user to write Haskell, not just watch it appear.
+  Explain what to write and why, then have them write it.
 - Go slow on structural changes and new abstractions. Discuss
   before committing. No bulk code drops.
 - When upgrading code to better patterns, show before and after,
