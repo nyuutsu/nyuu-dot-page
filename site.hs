@@ -202,6 +202,10 @@ main = hakyllWith config $ do
     route idRoute
     compile getResourceBody  -- Sass already compresses; Hakyll's compressCss breaks max()/calc()
 
+  match "css/*.css.map" $ do
+    route idRoute
+    compile copyFileCompiler
+
   ----------------------------------------------------------------------------
   -- Templates: compile for use by other rules
   ----------------------------------------------------------------------------

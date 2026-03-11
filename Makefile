@@ -18,4 +18,4 @@ watch: prebuild
 
 clean:
 	cabal run site -- clean
-	rm -f css/main.css
+	rm -f css/main.css css/main.css.map
