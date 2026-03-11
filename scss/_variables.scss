@@ -123,14 +123,13 @@ $font-subheading-sc: 'IM Fell Great Primer SC', $font-subheading;
 $font-small: 'IM Fell DW Pica', $font-body;
 $font-small-sc: 'IM Fell DW Pica SC', $font-small;
 $font-mono: 'Sarasa Mono J', monospace;
-$font-emoji: 'Blobmoji';
 $font-japanese: 'Oradano-mincho-GSRR';
 
 // -----------------------------------------------------------------------------
 // Mixins
 // -----------------------------------------------------------------------------
 
-// 8-direction text-shadow for white outline on emoji/icons over dark backgrounds
+// 8-direction text-shadow for white outline on text over dark backgrounds
 @mixin text-outline($alpha: 0.4) {
   text-shadow:
     -1px -1px 0 rgba(255, 255, 255, $alpha),
@@ -141,4 +140,13 @@ $font-japanese: 'Oradano-mincho-GSRR';
      0    1px 0 rgba(255, 255, 255, $alpha),
     -1px  0   0 rgba(255, 255, 255, $alpha),
      1px  0   0 rgba(255, 255, 255, $alpha);
+}
+
+// drop-shadow equivalent of text-outline for inline emoji images
+@mixin emoji-outline($alpha: 0.4) {
+  filter:
+    drop-shadow(-1px -1px 0 rgba(255, 255, 255, $alpha))
+    drop-shadow( 1px -1px 0 rgba(255, 255, 255, $alpha))
+    drop-shadow(-1px  1px 0 rgba(255, 255, 255, $alpha))
+    drop-shadow( 1px  1px 0 rgba(255, 255, 255, $alpha));
 }

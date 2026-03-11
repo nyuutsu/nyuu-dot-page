@@ -155,56 +155,29 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
   unicode-range: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
 }
 
-// Emoji font: Blobmoji
-// unicode-range covers all emoji blocks so the browser routes emoji here.
-// The font file itself only contains emoji found in content (built by blobmoji/build-subset.py).
-$unicode-emoji:
-  U+200D,              // Zero Width Joiner (emoji sequences)
-  U+FE00-FE0F,         // Variation Selectors
-  U+203C, U+2049,      // ‼ ⁉
-  U+2122, U+2139,      // ™ ℹ
-  U+2194-2199,         // ↔↕↖↗↘↙
-  U+21A9-21AA,         // ↩↪
-  U+231A-231B,         // ⌚⌛
-  U+2328,              // ⌨
-  U+23CF,              // ⏏
-  U+23E9-23F3,         // ⏩-⏳
-  U+23F8-23FA,         // ⏸⏹⏺
-  U+24C2,              // Ⓜ
-  U+25AA-25AB,         // ▪▫
-  U+25B6, U+25C0,      // ▶◀
-  U+25FB-25FE,         // ◻◼◽◾
-  U+2600-27BF,         // Misc Symbols + Dingbats
-  U+2934-2935,         // ⤴⤵
-  U+2B05-2B07,         // ⬅⬆⬇
-  U+2B1B-2B1C,         // ⬛⬜
-  U+2B50, U+2B55,      // ⭐⭕
-  U+3030, U+303D,      // 〰〽
-  U+3297, U+3299,      // ㊗㊙
-  U+1F000-1F0FF,       // Mahjong, Playing Cards
-  U+1F100-1F1FF,       // Enclosed Alphanumerics + Regional Indicators (flags)
-  U+1F200-1F2FF,       // Enclosed Ideographic
-  U+1F300-1F5FF,       // Misc Symbols & Pictographs
-  U+1F600-1F64F,       // Emoticons
-  U+1F680-1F6FF,       // Transport & Map
-  U+1F700-1F77F,       // Alchemical Symbols
-  U+1F780-1F7FF,       // Geometric Shapes Extended
-  U+1F800-1F8FF,       // Supplemental Arrows-C
-  U+1F900-1F9FF,       // Supplemental Symbols & Pictographs
-  U+1FA00-1FA6F,       // Chess Symbols + Extended-A
-  U+1FA70-1FAFF,       // Extended-A continued
-  U+E0020-E007F;       // Tags (flag subdivision sequences)
+// ---- Inline emoji (Blobmoji SVG images) ----
 
-@font-face {
-  font-family: 'Blobmoji';
-  src: url('/fonts/Blobmoji.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  // block: reserve space, show blob emoji when ready (swap would flash system emoji)
-  font-display: block;
-  unicode-range: $unicode-emoji;
+.emoji {
+  position: relative;
+  display: inline;
 }
 
+.emoji-img {
+  height: 1.2em;
+  width: 1.2em;
+  vertical-align: -0.2em;
+  display: inline;
+  object-fit: contain;
+}
+
+// Hidden but selectable — copy-paste picks up the real emoji character
+.emoji-text {
+  font-size: 0;
+  line-height: 0;
+  color: transparent;
+  position: absolute;
+  overflow: hidden;
+}
 
 // -----------------------------------------------------------------------------
 // Base Typography
@@ -218,7 +191,7 @@ html {
 }
 
 body {
-  font-family: $font-body, $font-emoji;
+  font-family: $font-body;
   font-size: $font-size-base;
   font-weight: 400;
   color: $color-text;
@@ -333,16 +306,17 @@ figure {
 
     // Magnifying glass overlay, bottom-right of image
     &::after {
-      content: '🔍';
+      content: '';
       position: absolute;
       // Sit above figcaption, at image's bottom-right
       bottom: calc(#{$space-xs} + 1.2em + #{$font-size-sm});
       right: $space-xs;
-      font-size: 1.5rem;
-      line-height: 1;
+      width: 1.5rem;
+      height: 1.5rem;
+      background: url('/images/emoji/1f50d.svg') no-repeat center / contain;
       pointer-events: none;
-      // Stroke outline for visibility over any image
-      @include text-outline(0.85);
+      // drop-shadow outline for visibility over any image
+      @include emoji-outline(0.85);
     }
   }
 }

@@ -11,6 +11,8 @@ import Data.Functor ((<&>))
 import Data.List (isSuffixOf, sortBy)
 import Data.Maybe (fromMaybe)
 import Data.Ord (comparing)
+import Data.Char (ord)
+import Numeric (showHex)
 import Data.Time.Format (formatTime, parseTimeM, defaultTimeLocale)
 import Data.Time.Calendar (Day)
 import Hakyll
@@ -20,6 +22,7 @@ import Text.Read (readMaybe)
 import Transforms (allTransforms)
 import Config (loadAdmonitionConfig, loadAvatarConfig)
 import CardCache (buildCardCache)
+import Emoji (buildEmojiAssets)
 import ImageDimensions (scanImageDimensions)
 import SyntaxMap (loadCustomSyntaxMap)
 
@@ -142,6 +145,17 @@ postContext =
   updatedField <>
   siteContext
 
+-- | Computed field: SVG path for the project icon emoji.
+-- Reads the first character of the "icon" metadata, converts to a codepoint
+-- hex path.  The template uses this for the <img> src alongside $icon$ for
+-- alt text and the hidden copy-paste span.
+emojiIconSrcField :: Context String
+emojiIconSrcField = field "icon-src" $ \item -> do
+  maybeIcon <- getMetadataField (itemIdentifier item) "icon"
+  case maybeIcon of
+    Just (c:_) -> return $ "/images/emoji/" ++ showHex (ord c) "" ++ ".svg"
+    _          -> noResult "no icon field"
+
 -- | Sort items by a metadata field (numeric, ascending)
 sortByWeight :: [Item String] -> Compiler [Item String]
 sortByWeight items = do
@@ -166,11 +180,12 @@ main = hakyllWith config $ do
   admonitionConfig <- preprocess $ loadAdmonitionConfig "config/admonitions.toml"
   avatarConfig <- preprocess $ loadAvatarConfig "config/avatars.toml"
   cardCache <- preprocess $ buildCardCache readerOptions "config" "content" "static/images/cards"
+  emojiAssets <- preprocess $ buildEmojiAssets "config/blobmoji/svg-fixed" "static/images/emoji" ["content", "src", "scss"]
   imageDims <- preprocess $ scanImageDimensions "static"
   syntaxMap <- preprocess $ loadCustomSyntaxMap "config/syntax"
                               (writerSyntaxMap defaultHakyllWriterOptions)
   let writerOptions = defaultHakyllWriterOptions { writerSyntaxMap = syntaxMap }
-  let sitePandocCompiler = pandocCompilerWithTransform readerOptions writerOptions (allTransforms admonitionConfig avatarConfig cardCache imageDims)
+  let sitePandocCompiler = pandocCompilerWithTransform readerOptions writerOptions (allTransforms admonitionConfig avatarConfig cardCache imageDims emojiAssets)
 
   ----------------------------------------------------------------------------
   -- Static files: fonts, images
@@ -224,8 +239,9 @@ main = hakyllWith config $ do
     compile $ do
       posts <- fmap (take 5) . recentFirst =<< loadAll "content/posts/*"
       projectPages <- sortByWeight =<< loadAll "content/projects/*"
+      let projectContext = emojiIconSrcField <> defaultContext
       let indexContext =
-            listField "projects" defaultContext (return projectPages) <>
+            listField "projects" projectContext (return projectPages) <>
             listField "posts" postContext (return posts) <>
             constField "title" "Home" <>
             siteContext

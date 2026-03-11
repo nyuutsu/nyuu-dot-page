@@ -4,7 +4,7 @@
   <div class="project-grid">
   $for(projects)$
     <section class="project-card$if(status)$ project-card--$status$$endif$">
-      <h2>$if(nolink)$<span class="project-icon">$icon$</span> <span class="project-title-text">$title$</span>$else$<a href="$url$"><span class="project-icon">$icon$</span> $title$</a>$endif$$if(status)$ <span class="project-status project-status--$status$">$status$</span>$endif$</h2>
+      <h2>$if(nolink)$<span class="project-icon"><span class="emoji"><img src="$icon-src$" alt="$icon$" class="emoji-img" draggable="false"><span class="emoji-text" aria-hidden="true">$icon$</span></span></span> <span class="project-title-text">$title$</span>$else$<a href="$url$"><span class="project-icon"><span class="emoji"><img src="$icon-src$" alt="$icon$" class="emoji-img" draggable="false"><span class="emoji-text" aria-hidden="true">$icon$</span></span></span> $title$</a>$endif$$if(status)$ <span class="project-status project-status--$status$">$status$</span>$endif$</h2>
       <p>$description$</p>
     </section>
   $endfor$

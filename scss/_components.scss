@@ -54,8 +54,8 @@
 }
 
 // Project icon (emoji, inline in heading)
-.project-icon {
-  @include text-outline;
+.project-icon .emoji-img {
+  @include emoji-outline;
 }
 
 // -----------------------------------------------------------------------------
@@ -209,8 +209,8 @@
 // -----------------------------------------------------------------------------
 
 // Hanafuda emoji used as card indicator — white outline for visibility
-.hanafuda {
-  @include text-outline;
+.hanafuda .emoji-img {
+  @include emoji-outline;
 }
 
 .card-preview {

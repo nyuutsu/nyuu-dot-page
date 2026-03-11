@@ -8,6 +8,7 @@ executable site
   main-is:          site.hs
   other-modules:    CardCache
                   , Config
+                  , Emoji
                   , ImageDimensions
                   , SyntaxMap
                   , Transforms
@@ -16,6 +17,7 @@ executable site
                   , Transforms.CardNotice
                   , Transforms.Cards
                   , Transforms.Chat
+                  , Transforms.Emoji
                   , Transforms.FigureLink
                   , Transforms.ForumPost
                   , Transforms.ImageDimensions

@@ -3,9 +3,9 @@
 
 all: build
 
-# Pre-Hakyll steps: emoji font, font subsetting, SCSS
+# Pre-Hakyll steps: font subsetting, SCSS
+# (Emoji SVGs are copied by Hakyll's preprocess step in site.hs)
 prebuild:
-	uv run --project config/blobmoji config/blobmoji/build-subset.py
 	uv run --project config config/font-subset.py
 	sass scss/main.scss css/main.css --style compressed
 

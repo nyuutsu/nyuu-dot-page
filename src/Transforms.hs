@@ -9,6 +9,7 @@ module Transforms
     -- * Individual transforms (re-exported)
   , imageDimensionsTransform
   , japaneseTransform
+  , emojiTransform
   , anchorTransform
   , admonitionTransform
   , chatTransform
@@ -21,11 +22,13 @@ module Transforms
 import Text.Pandoc.Definition (Pandoc)
 import Config (AdmonitionConfig, AvatarConfig)
 import CardCache (CardCache)
+import Emoji (EmojiAssets)
 import ImageDimensions (ImageDimensions)
 
 -- Re-export individual transforms
 import Transforms.ImageDimensions (imageDimensionsTransform)
 import Transforms.Japanese (japaneseTransform)
+import Transforms.Emoji (emojiTransform)
 import Transforms.Anchors (anchorTransform)
 import Transforms.Admonitions (admonitionTransform)
 import Transforms.Chat (chatTransform)
@@ -49,13 +52,17 @@ import Transforms.FigureLink (figureLinkTransform)
 --       need dimensions injected from the cache)
 --   7. anchorTransform - headings become clickable anchors
 --   8. figureLinkTransform - make figure images clickable to full size
---   9. japaneseTransform - wrap CJK text (runs last to process all text)
+--   9. emojiTransform - replace emoji chars with inline SVG images
+--      (must follow cardTransform/cardNoticeTransform which inject emoji,
+--       must precede japaneseTransform so emoji aren't wrapped in lang="ja")
+--  10. japaneseTransform - wrap CJK text (runs last to process all text)
 --
 -- Note: Figures are handled by Pandoc's implicit_figures extension.
 -- Use ![Caption](image){alt="accessibility text"} syntax.
-allTransforms :: AdmonitionConfig -> AvatarConfig -> CardCache -> ImageDimensions -> Pandoc -> Pandoc
-allTransforms admonitionConfig avatarConfig cardCache imageDims =
+allTransforms :: AdmonitionConfig -> AvatarConfig -> CardCache -> ImageDimensions -> EmojiAssets -> Pandoc -> Pandoc
+allTransforms admonitionConfig avatarConfig cardCache imageDims emojiAssets =
   japaneseTransform
+  . emojiTransform emojiAssets
   . figureLinkTransform
   . anchorTransform
   . imageDimensionsTransform imageDims
