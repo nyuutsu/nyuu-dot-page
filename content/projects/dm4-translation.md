@@ -1,9 +1,9 @@
 ---
 title: "DM4 Translation"
-icon: "🎮"
+icon: "🕹️"
 description: "English patch for Yu-Gi-Oh! Duel Monsters 4 (GBC). Ongoing."
 weight: 3
-status: wip
+status: proto
 ---
 
 ::: tip
