@@ -44,40 +44,51 @@ $color-code-text: #cfcfc2;       // Base code block text
 
 // -----------------------------------------------------------------------------
 // Spacing
-// Based on a consistent scale using rem (1rem ≈ 22px on this site)
+// Based on a consistent scale using rem (1rem ≈ 28px on this site)
 // -----------------------------------------------------------------------------
 
-$space-xs:  0.25rem;  // ~6px
-$space-sm:  0.5rem;   // ~11px
-$space-md:  1rem;     // ~22px
-$space-lg:  1.5rem;   // ~33px
-$space-xl:  2rem;     // ~44px
+$space-xs:  0.25rem;  // ~7px
+$space-sm:  0.5rem;   // ~14px
+$space-md:  1rem;     // ~28px
+$space-lg:  1.5rem;   // ~42px
+$space-xl:  2rem;     // ~57px
 
 // -----------------------------------------------------------------------------
 // Typography Scale
-// 1.25 ratio from a ~22px base — the size where IM Fell's stroke modulation
-// and ink traps become visible texture rather than subpixel noise.
+// 1.25 ratio, anchored to historical optical sizes.
 //
-// Historical context (Igino Marini's digitization notes — "print at Xpt to
-// match the original metal type"):
+// Source data (Igino Marini's digitization notes — "print at Xpt to match
+// the original metal type"):
 //   IM Fell English:      13.5pt  (body text, cut by van Dijck, acquired 1672)
 //   IM Fell Great Primer: 17pt    (subheadings, cut by de Walpergen, acq. 1684)
 //   IM Fell Double Pica:  21pt    (headings, cut by de Walpergen, acq. 1684)
 //   IM Fell DW Pica:      12.5pt  (small/UI text, cut by de Walpergen, acq. 1692)
 //
-// The full angular-equivalent sizes (adjusting for screen viewing distance
-// vs printed page) would be ~28px body, ~36px subheadings, ~44px headings.
-// We tried that; it was too large for visitors on standard hardware (27"
-// 1440p reported needing 50% zoom). 22px is a compromise: large enough to
-// show the fonts' character, small enough to not require zoom-out.
+// Viewing distance adjustment:
+//   Printed page: ~14" typical reading distance
+//   Screen: ~22" typical viewing distance  (both figures are approximate)
+//   Factor: 22/14 ≈ 1.571
+//   CSS: 1pt = 96/72 px ≈ 1.333px
+//
+// Derivation (body text, IM Fell English):
+//   13.5pt × 1.333 px/pt = 18px    (original design size in CSS)
+//   18px × (22"/14")     = 28.3px  (angular-equivalent at screen distance)
+//   28.3 / 16            = 1.77rem (relative to 16px browser default)
+//
+// The html rule sets root font-size to 1.77rem, so 1rem ≈ 28px throughout.
+// The 1.25 major-third ratio naturally approximates the historical proportions:
+//   English → Great Primer:  17/13.5  = 1.259  (scale gives 1.25)
+//   Great Primer → Double Pica: 21/17 = 1.235  (scale gives 1.25)
+// This means $font-size-lg and $font-size-xl land near the angular-equivalent
+// sizes for Great Primer (~36px) and Double Pica (~44px) without manual tuning.
 // -----------------------------------------------------------------------------
 
-$font-size-sm:   0.925rem;  // ~20px — metadata, captions
-$font-size-base: 1rem;      // ~22px — body (1rem = root, which html sets to 1.375 × browser default)
-$font-size-lg:   1.25rem;   // ~28px — h3-h4
-$font-size-xl:   1.563rem;  // ~34px — h2
-$font-size-2xl:  1.953rem;  // ~43px — h1 floor
-$font-size-3xl:  2.441rem;  // ~54px — h1 ceiling
+$font-size-sm:   0.925rem;  // ~26px — metadata, captions (DW Pica target: ~26px)
+$font-size-base: 1rem;      // ~28px — body (1rem = root, which html sets to 1.77 × browser default)
+$font-size-lg:   1.25rem;   // ~35px — h3-h4 (Great Primer target: ~36px)
+$font-size-xl:   1.563rem;  // ~44px — h2 (Double Pica target: ~44px)
+$font-size-2xl:  1.953rem;  // ~55px — h1 floor
+$font-size-3xl:  2.441rem;  // ~69px — h1 ceiling
 
 // Line heights
 $line-height-tight:  1.2;
@@ -88,9 +99,8 @@ $line-height-loose:  1.7;
 // Layout
 // -----------------------------------------------------------------------------
 
-// Column width: 49.5vw = ~75 chars at ~22px on a 1920px desktop.
-// vw stays the same physical proportion of the screen at any zoom level.
-$max-width-page: 49.5vw;
+// Page width chosen for ~75 character lines after padding
+$max-width-page: 85ch;
 
 // -----------------------------------------------------------------------------
 // Breakpoints
