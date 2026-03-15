@@ -13,7 +13,7 @@
 // Latin + common punctuation/symbols (shared by all Fell cuts)
 $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF, U+2100-214F;
 
-// IM Fell English — body text (~14pt historical cut)
+// IM Fell English — body text (13.5pt historical cut, van Dijck/Briot, 1672)
 @font-face {
   font-family: 'IM Fell English';
   src: url('/fonts/IMFellEnglish-Regular.woff2') format('woff2');
@@ -41,7 +41,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
   unicode-range: $unicode-latin;
 }
 
-// IM Fell Great Primer — subheadings h3-h4 (~18pt historical cut)
+// IM Fell Great Primer — subheadings h3-h4 (17pt historical cut, de Walpergen, 1684)
 @font-face {
   font-family: 'IM Fell Great Primer';
   src: url('/fonts/IMFellGreatPrimer-Regular.woff2') format('woff2');
@@ -69,7 +69,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
   unicode-range: $unicode-latin;
 }
 
-// IM Fell Double Pica — headings h1-h2 (~22pt historical cut)
+// IM Fell Double Pica — headings h1-h2 (21pt historical cut, de Walpergen, 1684)
 @font-face {
   font-family: 'IM Fell Double Pica';
   src: url('/fonts/IMFellDoublePica-Regular.woff2') format('woff2');
@@ -97,7 +97,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
   unicode-range: $unicode-latin;
 }
 
-// IM Fell DW Pica — small UI text (~12pt historical cut)
+// IM Fell DW Pica — small/UI text (12.5pt historical cut, de Walpergen, 1692)
 @font-face {
   font-family: 'IM Fell DW Pica';
   src: url('/fonts/IMFellDWPica-Regular.woff2') format('woff2');
@@ -184,10 +184,13 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 // -----------------------------------------------------------------------------
 
 html {
-  // Fluid base font: gentle vw slope for stability across window sizes.
-  // High-DPI unscaled displays should use browser zoom (~150%) rather than
-  // relying on CSS to detect physical pixel density (which it can't).
-  font-size: max(1.125rem, calc(1rem + 0.25vw));
+  // Root font size — see Typography Scale in _variables.scss for full derivation.
+  // Floor: 1.77rem ≈ 28px = IM Fell English at its historical angular size
+  // (13.5pt metal type at ~14" reading distance → 28.3px at ~22" screen distance).
+  // Gentle vw slope adapts for larger/farther screens.
+  // rem floor is an accessibility guarantee: never below the user's browser
+  // default × 1.77.
+  font-size: max(1.77rem, calc(1.55rem + 0.25vw));
 }
 
 body {

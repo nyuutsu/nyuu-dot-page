@@ -44,26 +44,51 @@ $color-code-text: #cfcfc2;       // Base code block text
 
 // -----------------------------------------------------------------------------
 // Spacing
-// Based on a consistent scale using rem
+// Based on a consistent scale using rem (1rem ≈ 28px on this site)
 // -----------------------------------------------------------------------------
 
-$space-xs:  0.25rem;  // 4px
-$space-sm:  0.5rem;   // 8px
-$space-md:  1rem;     // 16px
-$space-lg:  1.5rem;   // 24px
-$space-xl:  2rem;     // 32px
+$space-xs:  0.25rem;  // ~7px
+$space-sm:  0.5rem;   // ~14px
+$space-md:  1rem;     // ~28px
+$space-lg:  1.5rem;   // ~42px
+$space-xl:  2rem;     // ~57px
 
 // -----------------------------------------------------------------------------
 // Typography Scale
-// 1.25 ratio (major third), mobile-first
+// 1.25 ratio, anchored to historical optical sizes.
+//
+// Source data (Igino Marini's digitization notes — "print at Xpt to match
+// the original metal type"):
+//   IM Fell English:      13.5pt  (body text, cut by van Dijck, acquired 1672)
+//   IM Fell Great Primer: 17pt    (subheadings, cut by de Walpergen, acq. 1684)
+//   IM Fell Double Pica:  21pt    (headings, cut by de Walpergen, acq. 1684)
+//   IM Fell DW Pica:      12.5pt  (small/UI text, cut by de Walpergen, acq. 1692)
+//
+// Viewing distance adjustment:
+//   Printed page: ~14" typical reading distance
+//   Screen: ~22" typical viewing distance  (both figures are approximate)
+//   Factor: 22/14 ≈ 1.571
+//   CSS: 1pt = 96/72 px ≈ 1.333px
+//
+// Derivation (body text, IM Fell English):
+//   13.5pt × 1.333 px/pt = 18px    (original design size in CSS)
+//   18px × (22"/14")     = 28.3px  (angular-equivalent at screen distance)
+//   28.3 / 16            = 1.77rem (relative to 16px browser default)
+//
+// The html rule sets root font-size to 1.77rem, so 1rem ≈ 28px throughout.
+// The 1.25 major-third ratio naturally approximates the historical proportions:
+//   English → Great Primer:  17/13.5  = 1.259  (scale gives 1.25)
+//   Great Primer → Double Pica: 21/17 = 1.235  (scale gives 1.25)
+// This means $font-size-lg and $font-size-xl land near the angular-equivalent
+// sizes for Great Primer (~36px) and Double Pica (~44px) without manual tuning.
 // -----------------------------------------------------------------------------
 
-$font-size-sm:   0.875rem;  // 14px
-$font-size-base: 1rem;      // 16px (browser default)
-$font-size-lg:   1.25rem;   // 20px
-$font-size-xl:   1.563rem;  // 25px
-$font-size-2xl:  1.953rem;  // 31px
-$font-size-3xl:  2.441rem;  // 39px
+$font-size-sm:   0.925rem;  // ~26px — metadata, captions (DW Pica target: ~26px)
+$font-size-base: 1rem;      // ~28px — body (1rem = root, which html sets to 1.77 × browser default)
+$font-size-lg:   1.25rem;   // ~35px — h3-h4 (Great Primer target: ~36px)
+$font-size-xl:   1.563rem;  // ~44px — h2 (Double Pica target: ~44px)
+$font-size-2xl:  1.953rem;  // ~55px — h1 floor
+$font-size-3xl:  2.441rem;  // ~69px — h1 ceiling
 
 // Line heights
 $line-height-tight:  1.2;
