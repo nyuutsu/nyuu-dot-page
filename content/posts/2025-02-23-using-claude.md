@@ -12,14 +12,8 @@ updated: 2026-01-28
 * Use "problem decomposition": break down the task into bite-sized pieces.
 ::::
 
-::: {.warning title="Note From The Future"}
-I've revised the post (including adding the above tl;dr) to make it clearer that the point is **not**
-
-> You should try to one-shot every task. The one-shot taskers will rule this world!
-:::
-
 ::: note
-This post exists because my fiancé wanted advice on a thing and I wrote something quick and dirty to relay this information and she deemed it blog post material. But it had to be redacted a lot to make it fit to post publicly. Alas.
+This post exists because my fiancé wanted advice on a thing and I wrote something quick and dirty to relay this information and she deemed it blog post material. But it had to be redacted a lot to make it fit to post publicly.
 :::
 
 Some people have trouble getting LLMs to write useful code for them. Here I explain what I think works and what does not.
@@ -77,11 +71,19 @@ Use these strategies:
 
 Using LLMs for programming is, ideally, something like having a combination [rubber duck](https://rubberduckdebugging.com/) and grunt-worker. Discuss the task until you *understand* the task. Walk the bot through the process of breaking the task down. Doing this is often easier than doing it yourself.
 
+### More on quizzing
+
+The quiz question should be something where you already know the answer, & a wrong answer reveals a fundamental misunderstanding. e.g. you are going to have it do data retrieval. Data indexing is described relative to values in column a. Row 1 is for column titles. So the values in A are +1 relative to the row numbers. Ask it to retrieve the item in row 55 (or any other row). If it isn't on the same page no sense trying to proceed yet.
+
+### Problem decomposition example
+
 Below is a very heavily redacted conversation that went especially well.
 
 ::: note
 Throughout this post, chatbot responses have been censored to remove business-specific content. Anywhere you see `[...]` or `[redacted]`, that's where something was cut.
 :::
+
+Breaking the problem down is a skill. If you don't know how to do this: ask the model. e.g. `What are the separable stages of this problem?`. We do so here.
 
 ::: chat
 @CoolUser[avatar-cool-user]: I'm going to show you a script. explain what it does. Note any idiosyncratic language strengths being leveraged that might make it challenging to port to another language. write a documentation/readme document to help a user understand what this is doing and what assumptions it is making or what data shape it is assuming
