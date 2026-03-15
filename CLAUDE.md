@@ -24,13 +24,15 @@ styling, config in TOML/JSON.
 
 ### How the layout works
 
-The site is a narrow content column (`$max-width-page: 85ch`) centered on a granite-textured background. The granite gutters are the design — they're visible on any screen wider than ~1360px, which is most desktops. The content column is sized for readable line lengths (~75 characters), not to fill the viewport.
+The site is a content column (`$max-width-page: max(85ch, 50vw)`) centered on a granite-textured background. The granite gutters are the design — they're visible on any screen wider than the column. The column width is `85ch` (~75 characters) with a `50vw` floor that prevents the column from shrinking when the user zooms out. On ultrawides (21:9+), the vw floor is dropped and the column uses pure `85ch`.
 
-**Known issue:** On high-resolution displays (4K at native scaling), the content column is uncomfortably narrow relative to the screen. The user currently copes by zooming in. This should be solved properly (e.g. scaling base font size with viewport width so the `ch`-based layout grows to fill more of the screen).
+### Breakpoint rules
+
+**All breakpoints must bake in ~15-20% horizontal buffer for vertical-tab users.** A breakpoint targeting 1920px screens should be set at ~1500px so that a 1920px user with a vertical tab sidebar (~1536px effective viewport) is captured by the breakpoint. Breakpoints are named by device class, not resolution.
 
 ### Testing responsive changes
 
-Verify at real sizes: phone (~375px), tablet (~768px), desktop (1920px), and 4K (3840px — content should not feel lost in gutters). Breakpoints are in `_variables.scss`.
+Verify at real sizes: phone (~375px), tablet (~768px), laptop (1366px), desktop (1920px with and without vertical tabs), 1440p (2560px), and 4K (3840px). Breakpoints are in `_variables.scss`.
 
 ## Build System (site.hs)
 

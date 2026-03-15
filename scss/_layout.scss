@@ -32,6 +32,13 @@ body {
   background-color: $color-bg-inner;
   display: flex;
   flex-direction: column;
+
+  // Ultrawides (21:9+): drop the vw floor, just use ch for line length.
+  // The column is already a thin stripe on an ultrawide; the extra width
+  // is granite, not content. Aspect-ratio queries are zoom-invariant.
+  @media (min-aspect-ratio: 21/9) {
+    max-width: $ideal-line-length;
+  }
 }
 
 // -----------------------------------------------------------------------------

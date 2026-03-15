@@ -44,51 +44,50 @@ $color-code-text: #cfcfc2;       // Base code block text
 
 // -----------------------------------------------------------------------------
 // Spacing
-// Based on a consistent scale using rem (1rem ≈ 28px on this site)
+// Based on a consistent scale using rem. Actual px depends on device class;
+// see Typography Scale breakpoints below.
 // -----------------------------------------------------------------------------
 
-$space-xs:  0.25rem;  // ~7px
-$space-sm:  0.5rem;   // ~14px
-$space-md:  1rem;     // ~28px
-$space-lg:  1.5rem;   // ~42px
-$space-xl:  2rem;     // ~57px
+$space-xs:  0.25rem;
+$space-sm:  0.5rem;
+$space-md:  1rem;
+$space-lg:  1.5rem;
+$space-xl:  2rem;
 
 // -----------------------------------------------------------------------------
 // Typography Scale
-// 1.25 ratio, anchored to historical optical sizes.
+// 1.25 ratio with device-class breakpoints for the root font size.
 //
-// Source data (Igino Marini's digitization notes — "print at Xpt to match
-// the original metal type"):
+// Historical context (Igino Marini's digitization notes — "print at Xpt to
+// match the original metal type"):
 //   IM Fell English:      13.5pt  (body text, cut by van Dijck, acquired 1672)
 //   IM Fell Great Primer: 17pt    (subheadings, cut by de Walpergen, acq. 1684)
 //   IM Fell Double Pica:  21pt    (headings, cut by de Walpergen, acq. 1684)
 //   IM Fell DW Pica:      12.5pt  (small/UI text, cut by de Walpergen, acq. 1692)
 //
-// Viewing distance adjustment:
-//   Printed page: ~14" typical reading distance
-//   Screen: ~22" typical viewing distance  (both figures are approximate)
-//   Factor: 22/14 ≈ 1.571
-//   CSS: 1pt = 96/72 px ≈ 1.333px
+// The root font size varies by device class to account for viewing distance.
+// Smaller screens are held closer, so the font can be physically smaller while
+// still subtending the same angle on the retina. Derivation per class:
+//   13.5pt × (viewing_distance / 14") × 1.333 px/pt
 //
-// Derivation (body text, IM Fell English):
-//   13.5pt × 1.333 px/pt = 18px    (original design size in CSS)
-//   18px × (22"/14")     = 28.3px  (angular-equivalent at screen distance)
-//   28.3 / 16            = 1.77rem (relative to 16px browser default)
+//   Phone   (~12"): 15.4px → 1rem    (use browser default; phone is close)
+//   Tablet  (~16"): 20.6px → 1.25rem
+//   Laptop  (~20"): 25.7px → 1.375rem (texture threshold for IM Fell detail)
+//   Desktop (~24"): 30.9px → 1.5rem   (24px; rounded down for readability)
+//   Large   (~26"): 33.3px → 1.625rem
+//   4K      (~30"): 38.6px → 1.875rem
 //
-// The html rule sets root font-size to 1.77rem, so 1rem ≈ 28px throughout.
-// The 1.25 major-third ratio naturally approximates the historical proportions:
+// The 1.25 scale ratio approximates the historical proportions between cuts:
 //   English → Great Primer:  17/13.5  = 1.259  (scale gives 1.25)
 //   Great Primer → Double Pica: 21/17 = 1.235  (scale gives 1.25)
-// This means $font-size-lg and $font-size-xl land near the angular-equivalent
-// sizes for Great Primer (~36px) and Double Pica (~44px) without manual tuning.
 // -----------------------------------------------------------------------------
 
-$font-size-sm:   0.925rem;  // ~26px — metadata, captions (DW Pica target: ~26px)
-$font-size-base: 1rem;      // ~28px — body (1rem = root, which html sets to 1.77 × browser default)
-$font-size-lg:   1.25rem;   // ~35px — h3-h4 (Great Primer target: ~36px)
-$font-size-xl:   1.563rem;  // ~44px — h2 (Double Pica target: ~44px)
-$font-size-2xl:  1.953rem;  // ~55px — h1 floor
-$font-size-3xl:  2.441rem;  // ~69px — h1 ceiling
+$font-size-sm:   0.925rem;  // metadata, captions
+$font-size-base: 1rem;      // body (1rem = root; actual px set per device class)
+$font-size-lg:   1.25rem;   // h3-h4
+$font-size-xl:   1.563rem;  // h2
+$font-size-2xl:  1.953rem;  // h1 floor
+$font-size-3xl:  2.441rem;  // h1 ceiling
 
 // Line heights
 $line-height-tight:  1.2;
@@ -99,17 +98,32 @@ $line-height-loose:  1.7;
 // Layout
 // -----------------------------------------------------------------------------
 
-// Page width chosen for ~75 character lines after padding
-$max-width-page: 85ch;
+// Target line length: ~75 chars per line at any root font size.
+$ideal-line-length: 85ch;
+
+// Column width: the ch value targets line length; the vw floor prevents
+// the column from shrinking below 50% of the screen when the user zooms
+// out. At normal zoom these are roughly equal; they diverge on zoom.
+$max-width-page: max(#{$ideal-line-length}, 50vw);
 
 // -----------------------------------------------------------------------------
 // Breakpoints
-// Mobile-first: styles apply up to this width, then change
+// Mobile-first: min-width queries, styles apply at this width and above.
+//
+// All breakpoints bake in ~15-20% horizontal buffer for vertical-tab users.
+// A "desktop" breakpoint at 1500px catches a 1920px user whose browser
+// viewport is ~1536px after a vertical tab sidebar eats the rest.
 // -----------------------------------------------------------------------------
 
-$breakpoint-sm: 480px;   // Placeholder — not currently used
-$breakpoint-md: 768px;   // Tablets / large phones (only layout breakpoint in use)
-$breakpoint-lg: 1024px;  // Placeholder — not currently used
+// Layout breakpoint (padding, component layout)
+$breakpoint-md: 768px;
+
+// Typography breakpoints (root font size per device class)
+$breakpoint-tablet:  600px;   // Phone → tablet
+$breakpoint-laptop:  1000px;  // Tablet → laptop
+$breakpoint-desktop: 1500px;  // Laptop → desktop (1920px with tabs ≈ 1536px)
+$breakpoint-large:   2000px;  // Desktop → large (2560px with tabs ≈ 2048px)
+$breakpoint-4k:      3200px;  // Large → 4K native (3840px with tabs ≈ 3264px)
 
 // -----------------------------------------------------------------------------
 // Border Radius
