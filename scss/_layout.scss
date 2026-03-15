@@ -32,6 +32,11 @@ body {
   background-color: $color-bg-inner;
   display: flex;
   flex-direction: column;
+
+  // Phones/small tablets: fill the screen, no granite gutters
+  @media (max-width: $breakpoint-md) {
+    max-width: 100%;
+  }
 }
 
 // -----------------------------------------------------------------------------

@@ -184,13 +184,12 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 // -----------------------------------------------------------------------------
 
 html {
-  // Root font size — see Typography Scale in _variables.scss for full derivation.
-  // Floor: 1.77rem ≈ 28px = IM Fell English at its historical angular size
-  // (13.5pt metal type at ~14" reading distance → 28.3px at ~22" screen distance).
+  // Root font size — see Typography Scale in _variables.scss for rationale.
+  // Floor: 1.375rem ≈ 22px = texture threshold for IM Fell's stroke detail.
   // Gentle vw slope adapts for larger/farther screens.
   // rem floor is an accessibility guarantee: never below the user's browser
-  // default × 1.77.
-  font-size: max(1.77rem, calc(1.55rem + 0.25vw));
+  // default × 1.375.
+  font-size: max(1.375rem, calc(1.25rem + 0.15vw));
 }
 
 body {
