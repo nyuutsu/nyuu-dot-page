@@ -14,6 +14,39 @@
 * { padding: 0; margin: 0; box-sizing: border-box; }
 
 // -----------------------------------------------------------------------------
+// Font Faces (absolute URLs; this CSS is loaded cross-origin on files.nyuu.page)
+// -----------------------------------------------------------------------------
+
+$font-origin: 'https://nyuu.page/fonts';
+
+@font-face {
+  font-family: 'IM Fell English';
+  src: url('#{$font-origin}/IMFellEnglish-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'IM Fell English SC';
+  src: url('#{$font-origin}/IMFellEnglish-SC.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'IM Fell Double Pica';
+  src: url('#{$font-origin}/IMFellDoublePica-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'IM Fell DW Pica';
+  src: url('#{$font-origin}/IMFellDWPica-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Oradano-mincho-GSRR';
+  src: url('#{$font-origin}/OradanoGSRR.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+  unicode-range: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
+}
+
+// -----------------------------------------------------------------------------
 // Base
 // -----------------------------------------------------------------------------
 
