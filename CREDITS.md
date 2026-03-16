@@ -12,3 +12,5 @@
 - **Blobmoji** by Google — [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 - **Oradano Mincho GSRR** by TRANSCRIPTION — [IPA Font License](https://opensource.org/licenses/IPA)
 - **Sarasa Mono J** (Iosevka + Source Han Sans) — [SIL Open Font License 1.1](https://scripts.sil.org/OFL)
+- **Source Serif 4** by Frank Grießhammer (Adobe) — [SIL Open Font License 1.1](https://scripts.sil.org/OFL)
+- **Noto Serif JP** by Google — [SIL Open Font License 1.1](https://scripts.sil.org/OFL)

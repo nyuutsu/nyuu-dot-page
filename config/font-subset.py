@@ -141,6 +141,18 @@ FONTS = {
     "IMFellDWPica-SC.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
     "SarasaMonoJ-Regular.woff2": {"ranges": MONO_RANGES, "always_include": MONO_ALWAYS_INCLUDE},
     "SarasaMonoJ-Bold.woff2": {"ranges": MONO_RANGES, "always_include": MONO_ALWAYS_INCLUDE},
+    # Source Serif 4 — smooth site body text (3 optical sizes)
+    "SourceSerif4-Regular.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
+    "SourceSerif4-It.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
+    "SourceSerif4-Bold.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
+    "SourceSerif4Display-Regular.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
+    "SourceSerif4Display-It.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
+    "SourceSerif4Display-Bold.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
+    "SourceSerif4Caption-Regular.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
+    "SourceSerif4Caption-It.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
+    # Noto Serif JP — smooth site Japanese text
+    "NotoSerifJP-Regular.woff2": {"ranges": CJK_RANGES, "always_include": set()},
+    "NotoSerifJP-Bold.woff2": {"ranges": CJK_RANGES, "always_include": set()},
 }
 
 

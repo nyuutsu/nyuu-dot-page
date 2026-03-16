@@ -34,6 +34,16 @@ static/fonts/IMFellDWPica-SC.woff2
 static/fonts/OradanoGSRR.woff2
 static/fonts/SarasaMonoJ-Regular.woff2
 static/fonts/SarasaMonoJ-Bold.woff2
+static/fonts/SourceSerif4-Regular.woff2
+static/fonts/SourceSerif4-It.woff2
+static/fonts/SourceSerif4-Bold.woff2
+static/fonts/SourceSerif4Display-Regular.woff2
+static/fonts/SourceSerif4Display-It.woff2
+static/fonts/SourceSerif4Display-Bold.woff2
+static/fonts/SourceSerif4Caption-Regular.woff2
+static/fonts/SourceSerif4Caption-It.woff2
+static/fonts/NotoSerifJP-Regular.woff2
+static/fonts/NotoSerifJP-Bold.woff2
 
 # Blobmoji outputs (regenerated during make build)
 static/fonts/Blobmoji.woff2

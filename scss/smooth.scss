@@ -1,0 +1,7 @@
+// Smooth site stylesheet — Source Serif 4 instead of IM Fell
+// Same structure as main.scss, with font overrides appended.
+@use 'reset';
+@use 'typography';
+@use 'layout';
+@use 'components';
+@use 'smooth-overrides';

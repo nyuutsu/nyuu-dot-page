@@ -1,5 +1,7 @@
 {{ $nonce := uuidv4 -}}
 {{ $nonceAttribute := print "nonce=" (quote $nonce) -}}
+{{ $isSmooth := eq .Req.Host "smooth-files.nyuu.page" -}}
+{{ $fontOrigin := "https://nyuu.page" -}}
 {{ $csp := printf "default-src 'none'; img-src 'self' https://nyuu.page; font-src https://nyuu.page; object-src 'none'; base-uri 'none'; script-src 'nonce-%s'; style-src 'nonce-%s'; frame-ancestors 'self'; form-action 'self';" $nonce $nonce -}}
 {{ $enableCsp := true -}}
 {{ if $enableCsp -}}
@@ -316,40 +318,48 @@
 * { padding: 0; margin: 0; box-sizing: border-box; }
 
 /* ---- Fonts (loaded from main domain via CORS) ---- */
+{{ if $isSmooth }}
+@font-face {
+	font-family: 'Source Serif 4';
+	src: url('{{ $fontOrigin }}/fonts/SourceSerif4-Regular.woff2') format('woff2');
+	font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+	font-family: 'Source Serif 4';
+	src: url('{{ $fontOrigin }}/fonts/SourceSerif4-It.woff2') format('woff2');
+	font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+	font-family: 'Source Serif 4';
+	src: url('{{ $fontOrigin }}/fonts/SourceSerif4-Bold.woff2') format('woff2');
+	font-weight: 700; font-style: normal; font-display: swap;
+}
+{{ else }}
 @font-face {
 	font-family: 'IM Fell English';
-	src: url('https://nyuu.page/fonts/IMFellEnglish-Regular.woff2') format('woff2');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
+	src: url('{{ $fontOrigin }}/fonts/IMFellEnglish-Regular.woff2') format('woff2');
+	font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
 	font-family: 'IM Fell English SC';
-	src: url('https://nyuu.page/fonts/IMFellEnglish-SC.woff2') format('woff2');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
+	src: url('{{ $fontOrigin }}/fonts/IMFellEnglish-SC.woff2') format('woff2');
+	font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
 	font-family: 'IM Fell Double Pica';
-	src: url('https://nyuu.page/fonts/IMFellDoublePica-Regular.woff2') format('woff2');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
+	src: url('{{ $fontOrigin }}/fonts/IMFellDoublePica-Regular.woff2') format('woff2');
+	font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
 	font-family: 'IM Fell DW Pica';
-	src: url('https://nyuu.page/fonts/IMFellDWPica-Regular.woff2') format('woff2');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
+	src: url('{{ $fontOrigin }}/fonts/IMFellDWPica-Regular.woff2') format('woff2');
+	font-weight: 400; font-style: normal; font-display: swap;
 }
+{{ end }}
 @font-face {
 	font-family: 'Oradano-mincho-GSRR';
-	src: url('https://nyuu.page/fonts/OradanoGSRR.woff2') format('woff2');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
+	src: url('{{ $fontOrigin }}/fonts/OradanoGSRR.woff2') format('woff2');
+	font-weight: 400; font-style: normal; font-display: swap;
 	unicode-range: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
 }
 
@@ -796,6 +806,32 @@ a:focus-visible {
 	#filter { max-width: 100px; }
 	.grid .entry { max-width: initial; }
 }
+
+{{ if $isSmooth }}
+/* ---- Smooth font + sizing overrides ---- */
+/* Source Serif 4 doesn't need IM Fell's large sizes for texture visibility */
+html { font-size: 1rem; }
+@media (min-width: 600px)  { html { font-size: 1.063rem; } }
+@media (min-width: 1000px) { html { font-size: 1.125rem; } }
+@media (min-width: 1500px) { html { font-size: 1.188rem; } }
+@media (min-width: 2000px) { html { font-size: 1.25rem; } }
+@media (min-width: 3200px) { html { font-size: 1.375rem; } }
+body,
+.site-nav a,
+#filter,
+td a { font-family: 'Source Serif 4', serif; }
+.site-footer p,
+.file-size,
+.file-date,
+.breadcrumbs,
+th { font-family: 'Source Serif 4', serif; }
+.browse-header h1,
+.entry .name { font-family: 'Source Serif 4', serif; }
+strong, b { font-family: 'Source Serif 4', serif; font-weight: 700; letter-spacing: normal; }
+.nav-smooth-files { display: none; }
+{{ else }}
+.nav-textured-files { display: none; }
+{{ end }}
 </style>
 {{- if eq .Layout "grid"}}
 <style {{ $nonceAttribute }}>.page { max-width: none; } main { margin-top: 1px; }</style>
@@ -805,16 +841,20 @@ a:focus-visible {
 	<a class="skip-link" href="#listing">Skip to file listing</a>
 
 	<div class="page">
+		{{ $mainSite := "https://nyuu.page" }}
+		{{ if $isSmooth }}{{ $mainSite = "https://smooth.nyuu.page" }}{{ end }}
 		<header class="site-header">
-			<a href="https://nyuu.page/" class="site-logo">
+			<a href="{{ $mainSite }}/" class="site-logo">
 				<img src="https://nyuu.page/images/logo.svg" alt="nyuu.page" class="site-logo-img">
 			</a>
 			<nav class="site-nav" aria-label="Main navigation">
-				<a href="https://nyuu.page/">Home</a>
-				<a href="https://nyuu.page/about/">About</a>
-				<a href="https://nyuu.page/contact/">Contact</a>
-				<a href="https://nyuu.page/archive/">Archive</a>
+				<a href="{{ $mainSite }}/">Home</a>
+				<a href="{{ $mainSite }}/about/">About</a>
+				<a href="{{ $mainSite }}/contact/">Contact</a>
+				<a href="{{ $mainSite }}/archive/">Archive</a>
 				<a href="/" aria-current="page">Files</a>
+				<a href="https://smooth-files.nyuu.page{{ .Req.RequestURI }}" class="nav-smooth-files">Smooth font</a>
+				<a href="https://files.nyuu.page{{ .Req.RequestURI }}" class="nav-textured-files">Textured font</a>
 			</nav>
 		</header>
 

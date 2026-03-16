@@ -51,6 +51,11 @@ $endif$
         <a href="/contact/">Contact</a>
         <a href="/archive/">Archive</a>
         <a href="https://files.nyuu.page">Files</a>
+        <a href="https://smooth.nyuu.page$url$" class="nav-smooth">Smooth font</a>
+        <!-- Protocol-relative (//nyuu.page) so Caddy's replace directive,
+             which rewrites "https://nyuu.page" to "https://smooth.nyuu.page",
+             does not rewrite this link. The browser resolves // to https. -->
+        <a href="//nyuu.page$url$" class="nav-textured">Textured font</a>
       </nav>
     </header>
 

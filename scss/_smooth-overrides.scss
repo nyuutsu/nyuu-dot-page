@@ -1,0 +1,176 @@
+// =============================================================================
+// Smooth Site Overrides — Source Serif 4 + Noto Serif JP
+// Replaces IM Fell with Source Serif 4 and Oradano with Noto Serif JP
+// for readers who find the rough texture uncomfortable.
+// Same layout, same sizing, different typefaces.
+// =============================================================================
+
+@use 'variables' as *;
+
+// -----------------------------------------------------------------------------
+// Font Faces — Source Serif 4 (Adobe, OFL)
+// Three optical sizes: Caption (<14px), Regular (14-24px), Display (24px+)
+// -----------------------------------------------------------------------------
+
+// Body text — Regular optical size
+@font-face {
+  font-family: 'Source Serif 4';
+  src: url('/fonts/SourceSerif4-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif 4';
+  src: url('/fonts/SourceSerif4-It.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif 4';
+  src: url('/fonts/SourceSerif4-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+// Headings — Display optical size
+@font-face {
+  font-family: 'Source Serif 4 Display';
+  src: url('/fonts/SourceSerif4Display-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif 4 Display';
+  src: url('/fonts/SourceSerif4Display-It.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif 4 Display';
+  src: url('/fonts/SourceSerif4Display-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+// Small text — Caption optical size
+@font-face {
+  font-family: 'Source Serif 4 Caption';
+  src: url('/fonts/SourceSerif4Caption-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif 4 Caption';
+  src: url('/fonts/SourceSerif4Caption-It.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+// Noto Serif JP — replaces Oradano-mincho-GSRR for Japanese text
+@font-face {
+  font-family: 'Noto Serif JP';
+  src: url('/fonts/NotoSerifJP-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
+}
+
+@font-face {
+  font-family: 'Noto Serif JP';
+  src: url('/fonts/NotoSerifJP-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
+}
+
+// -----------------------------------------------------------------------------
+// Font Family Overrides
+// Replace IM Fell with Source Serif 4, Oradano with Noto Serif JP
+// -----------------------------------------------------------------------------
+
+// Source Serif 4 doesn't need the large sizes that IM Fell requires for
+// visible texture. These are conventional screen-reading sizes.
+html {
+  font-size: 1rem;                                              // phone (16px)
+
+  @media (min-width: $breakpoint-tablet)  { font-size: 1.063rem; }  // ~17px
+  @media (min-width: $breakpoint-laptop)  { font-size: 1.125rem; }  // ~18px
+  @media (min-width: $breakpoint-desktop) { font-size: 1.188rem; }  // ~19px
+  @media (min-width: $breakpoint-large)   { font-size: 1.25rem; }   // ~20px
+  @media (min-width: $breakpoint-4k)      { font-size: 1.375rem; }  // ~22px
+}
+
+$ss4-body: 'Source Serif 4', serif;
+$ss4-heading: 'Source Serif 4 Display', 'Source Serif 4', serif;
+$ss4-small: 'Source Serif 4 Caption', 'Source Serif 4', serif;
+
+body {
+  font-family: $ss4-body;
+}
+
+[lang="ja"] {
+  font-family: 'Noto Serif JP';
+}
+
+h1, h2 {
+  font-family: $ss4-heading;
+}
+
+h3, h4 {
+  font-family: $ss4-heading;
+}
+
+h5, h6 {
+  font-family: $ss4-body;
+}
+
+// Source Serif 4 has a real bold weight; use it instead of small-caps
+strong, b {
+  font-family: $ss4-body;
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+// Small text (metadata, captions, footer)
+.site-footer p,
+figcaption,
+code {
+  font-family: $ss4-small;
+}
+
+// Blockquote decorative marks
+blockquote::before,
+blockquote::after {
+  font-family: $ss4-heading;
+}
+
+// Admonition labels
+.admonition-title {
+  font-family: $ss4-body;
+  font-weight: 700;
+}
+
+// Chat names
+.chat-name {
+  font-family: $ss4-body;
+}
+
+// Hide "smooth font" nav link — we're already on the smooth site
+.nav-smooth {
+  display: none;
+}
