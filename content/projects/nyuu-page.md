@@ -454,6 +454,9 @@ Later, the card transformer does its walk, looking for `.card` spans. It will fi
 ::: info
 After the card transformer is done the span will look like this:
 
+<details>
+<summary>Finished AST for the Thalia card span</summary>
+
 ```haskell
 , Span
     ( "" , [ "card-preview" ] , [] )
@@ -476,6 +479,8 @@ After the card transformer is done the span will look like this:
         )
     ]
 ```
+
+</details>
 :::
 
 #### Composition and ordering

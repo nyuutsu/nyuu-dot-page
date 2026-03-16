@@ -624,3 +624,53 @@ img.inset {
     margin-block-end: 0;
   }
 }
+
+// -----------------------------------------------------------------------------
+// Collapsible Content (<details>/<summary>)
+// Native HTML disclosure widget.
+// -----------------------------------------------------------------------------
+
+details {
+  margin-block: $space-md;
+  border-inline-start: 2px solid rgba($color-accent, 0.3);
+  padding-inline-start: $space-md;
+
+  summary {
+    cursor: pointer;
+    color: $color-text;
+    list-style: none;
+    user-select: none;
+
+    &::after {
+      content: " (interact to read more)";
+      color: $color-text-muted;
+      font-size: $font-size-sm;
+      font-style: italic;
+    }
+
+    &:hover {
+      color: $color-accent;
+    }
+
+    &:hover::after {
+      color: $color-accent;
+    }
+  }
+
+  &[open] {
+    border-color: rgba($color-accent, 0.5);
+
+    summary {
+      margin-block-end: $space-sm;
+
+      &::after {
+        content: " (interact to collapse)";
+      }
+    }
+  }
+}
+
+// Inside forum posts, tighten the details spacing
+.forum-content details {
+  margin-block: 0;
+}
