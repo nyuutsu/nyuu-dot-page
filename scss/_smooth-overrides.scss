@@ -1,18 +1,17 @@
 // =============================================================================
-// Smooth Site Overrides — Source Serif 4 + Noto Serif JP
-// Replaces IM Fell with Source Serif 4 and Oradano with Noto Serif JP
-// for readers who find the rough texture uncomfortable.
-// Same layout, same sizing, different typefaces.
+// Smooth Site Overrides: Source Serif 4 + Noto Serif JP
+// For readers who find IM Fell's rough texture uncomfortable.
+// Same layout and sizing; different typefaces.
 // =============================================================================
 
 @use 'variables' as *;
 
 // -----------------------------------------------------------------------------
-// Font Faces — Source Serif 4 (Adobe, OFL)
+// Font Faces: Source Serif 4 (Adobe, OFL)
 // Three optical sizes: Caption (<14px), Regular (14-24px), Display (24px+)
 // -----------------------------------------------------------------------------
 
-// Body text — Regular optical size
+// Body text (Regular optical size)
 @font-face {
   font-family: 'Source Serif 4';
   src: url('/fonts/SourceSerif4-Regular.woff2') format('woff2');
@@ -37,7 +36,7 @@
   font-display: swap;
 }
 
-// Headings — Display optical size
+// Headings (Display optical size)
 @font-face {
   font-family: 'Source Serif 4 Display';
   src: url('/fonts/SourceSerif4Display-Regular.woff2') format('woff2');
@@ -62,7 +61,7 @@
   font-display: swap;
 }
 
-// Small text — Caption optical size
+// Small text (Caption optical size)
 @font-face {
   font-family: 'Source Serif 4 Caption';
   src: url('/fonts/SourceSerif4Caption-Regular.woff2') format('woff2');
@@ -79,7 +78,7 @@
   font-display: swap;
 }
 
-// Noto Serif JP — replaces Oradano-mincho-GSRR for Japanese text
+// Noto Serif JP: Japanese text
 @font-face {
   font-family: 'Noto Serif JP';
   src: url('/fonts/NotoSerifJP-Regular.woff2') format('woff2');
@@ -170,7 +169,12 @@ blockquote::after {
   font-family: $ss4-body;
 }
 
-// Hide "smooth font" nav link — we're already on the smooth site
-.nav-smooth {
+// Hide "smooth font" nav links; we're on the smooth site
+.nav-smooth, .nav-smooth-files {
   display: none;
+}
+
+// Show "textured font" nav link on the files page
+.nav-textured-files {
+  display: initial;
 }

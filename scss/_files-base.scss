@@ -1,0 +1,514 @@
+// =============================================================================
+// Files Page (browse.html)
+// Styles for the Caddy file-server template at files.nyuu.page.
+// Shares variables with the main site so colors, breakpoints, and font sizes
+// stay in sync without manual updates.
+// =============================================================================
+
+@use 'variables' as *;
+
+// -----------------------------------------------------------------------------
+// Base
+// -----------------------------------------------------------------------------
+
+html {
+  font-size: 1rem;
+
+  @media (min-width: $breakpoint-tablet)  { font-size: 1.25rem; }
+  @media (min-width: $breakpoint-laptop)  { font-size: 1.375rem; }
+  @media (min-width: $breakpoint-desktop) { font-size: 1.5rem; }
+  @media (min-width: $breakpoint-large)   { font-size: 1.625rem; }
+  @media (min-width: $breakpoint-4k)      { font-size: 1.875rem; }
+}
+
+body {
+  font-family: $font-body, serif;
+  color: $color-text;
+  line-height: $line-height-loose;
+  text-rendering: optimizespeed;
+  background-color: $color-bg-outer;
+  background-image: url('https://nyuu.page/images/backgrounds/body.webp');
+  background-repeat: repeat;
+  min-height: 100vh;
+}
+
+img, svg {
+  vertical-align: middle;
+  z-index: 1;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: $border-radius-md;
+}
+
+td img {
+  max-width: 1.5em;
+  max-height: 2em;
+  object-fit: cover;
+}
+
+body, a, svg,
+.layout.current, .layout.current svg,
+.go-up {
+  color: $color-text;
+  text-decoration: none;
+}
+
+#layout-list, #layout-grid { cursor: pointer; }
+
+// -----------------------------------------------------------------------------
+// Layout: centered column with granite gutters
+// -----------------------------------------------------------------------------
+
+.page {
+  width: 100%;
+  max-width: max(#{$ideal-line-length}, 50vw);
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: $color-bg-inner;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-aspect-ratio: 21/9) {
+    max-width: $ideal-line-length;
+  }
+}
+
+.wrapper {
+  max-width: 100%;
+}
+
+.browse-header, .meta {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+// -----------------------------------------------------------------------------
+// Site header (matches main site)
+// -----------------------------------------------------------------------------
+
+.site-header {
+  background-image: url('https://nyuu.page/images/backgrounds/header.webp');
+  background-size: cover;
+  background-position: center;
+  padding: $space-md;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-md;
+
+  @media (min-width: $breakpoint-md) {
+    padding: $space-md $space-xl;
+  }
+}
+
+.site-logo { display: block; text-decoration: none; }
+.site-logo:hover { opacity: 0.85; }
+.site-logo-img { height: 2.5rem; width: auto; }
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-sm;
+}
+
+.site-nav a {
+  padding: $space-xs $space-sm;
+  color: $color-text;
+  text-decoration: none;
+  border-radius: $border-radius-md;
+  background-color: $overlay-panel;
+  transition: background-color $transition-speed ease;
+}
+
+.site-nav a:hover {
+  background-color: $overlay-panel-hover;
+  color: $color-accent;
+}
+
+.site-nav a[aria-current="page"] {
+  color: $color-accent;
+}
+
+// -----------------------------------------------------------------------------
+// Site footer (matches main site)
+// -----------------------------------------------------------------------------
+
+.site-footer {
+  background-image: url('https://nyuu.page/images/backgrounds/footer.webp');
+  background-repeat: repeat;
+  padding: $space-lg $space-md;
+  border-top: 1px solid $border-subtle;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-md;
+
+  @media (min-width: $breakpoint-md) {
+    padding: $space-lg $space-xl;
+  }
+}
+
+.site-footer p {
+  color: $color-text-muted;
+  margin: 0;
+  font-family: $font-small, serif;
+  font-size: $font-size-sm;
+}
+
+.footer-icons {
+  display: flex;
+  gap: $space-md;
+  align-items: center;
+}
+
+.footer-icons a {
+  display: block;
+  opacity: 0.7;
+  transition: opacity $transition-speed ease;
+}
+
+.footer-icons a:hover { opacity: 1; }
+.footer-icons img { height: 1.5rem; width: auto; }
+
+// -----------------------------------------------------------------------------
+// Links
+// -----------------------------------------------------------------------------
+
+td a {
+  color: $color-accent;
+  text-decoration: none;
+  text-underline-offset: 0.2em;
+  transition: color $transition-speed ease;
+}
+
+td a:hover {
+  color: $color-accent-hover;
+}
+
+td a:visited {
+  color: $color-code-inline;
+}
+
+td a:visited:hover {
+  color: $color-accent-hover;
+}
+
+// -----------------------------------------------------------------------------
+// Column widths
+// -----------------------------------------------------------------------------
+
+th:first-child, td:first-child { width: 5%; }
+th:last-child, td:last-child { width: 5%; }
+
+// -----------------------------------------------------------------------------
+// Small text (sizes, timestamps)
+// -----------------------------------------------------------------------------
+
+.size, .timestamp {
+  font-family: $font-small, serif;
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+}
+
+.grid .size {
+  font-size: 0.75rem;
+  margin-top: 0.5em;
+  color: $color-text-muted;
+}
+
+// -----------------------------------------------------------------------------
+// Browse header (breadcrumbs bar)
+// -----------------------------------------------------------------------------
+
+.browse-header {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: $color-bg-inner;
+  border-bottom: 1px solid $border-subtle;
+}
+
+.breadcrumbs {
+  font-family: $font-body-sc, serif;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  color: $color-text-muted;
+  margin-bottom: 5px;
+  padding-left: 3px;
+}
+
+h1 {
+  font-family: $font-heading, serif;
+  font-size: $font-size-lg;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  color: $color-text-muted;
+}
+
+h1 a, th a { color: $color-heading; }
+
+h1 a {
+  padding: 0 3px;
+  margin: 0 1px;
+}
+
+h1 a:hover {
+  background: rgba($color-accent, 0.15);
+  color: $color-accent;
+}
+
+h1 a:first-child { margin: 0; }
+
+// -----------------------------------------------------------------------------
+// Main content
+// -----------------------------------------------------------------------------
+
+.site-main {
+  flex: 1;
+  background-color: $color-bg-inner;
+}
+
+main {
+  margin: 0 auto;
+}
+
+// -----------------------------------------------------------------------------
+// Meta bar
+// -----------------------------------------------------------------------------
+
+.meta {
+  display: flex;
+  gap: 1em;
+  font-family: $font-small, serif;
+  font-size: $font-size-sm;
+  border-bottom: 1px solid $border-subtle;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  color: $color-text-muted;
+}
+
+#summary {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  margin-right: auto;
+}
+
+// -----------------------------------------------------------------------------
+// Filter
+// -----------------------------------------------------------------------------
+
+.filter-container {
+  position: relative;
+  display: inline-block;
+  margin-left: 1em;
+}
+
+#search-icon {
+  color: $color-accent;
+  position: absolute;
+  height: 1em;
+  top: 0.6em;
+  left: 0.5em;
+}
+
+#filter {
+  padding: 0.5em 1em 0.5em 2.5em;
+  border: 1px solid $border-subtle;
+  border-radius: $border-radius-md;
+  font-family: $font-body, serif;
+  background: $overlay-code;
+  color: $color-text;
+  position: relative;
+  z-index: 2;
+}
+
+#filter::placeholder { color: $color-text-muted; }
+
+#filter:focus {
+  outline: 2px solid $color-accent;
+  outline-offset: 2px;
+  border-color: $color-accent;
+}
+
+// -----------------------------------------------------------------------------
+// Layout toggles
+// -----------------------------------------------------------------------------
+
+.layout, .layout svg { color: $color-text-muted; }
+.layout.current, .layout.current svg { color: $color-accent; }
+
+// -----------------------------------------------------------------------------
+// Table
+// -----------------------------------------------------------------------------
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+tbody tr, tbody tr a, .entry a {
+  transition: all $transition-speed;
+}
+
+tbody tr:hover, .grid .entry a:hover {
+  background-color: rgba($color-accent, 0.05);
+}
+
+th, td { text-align: left; }
+
+th {
+  font-family: $font-body-sc, serif;
+  position: sticky;
+  top: 0;
+  background: $color-bg-inner;
+  white-space: nowrap;
+  z-index: 2;
+  text-transform: uppercase;
+  font-size: $font-size-sm;
+  letter-spacing: 1px;
+  padding: 0.75em 0;
+  color: $color-text;
+}
+
+th a { transition: color $transition-speed ease; }
+th a:hover { color: $color-accent; }
+
+td { white-space: nowrap; }
+td:nth-child(2) { width: 75%; }
+td:nth-child(2) a { padding: 1em 0; display: block; }
+td:nth-child(3), th:nth-child(3) { padding: 0 20px 0 20px; min-width: 150px; }
+
+td .go-up {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.name, .go-up {
+  word-break: break-all;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+// -----------------------------------------------------------------------------
+// Icon colors
+// -----------------------------------------------------------------------------
+
+.listing .icon-tabler { color: $color-text-muted; }
+.listing .icon-tabler-folder-filled { color: #ffb900 !important; }
+
+// -----------------------------------------------------------------------------
+// Size bars
+// -----------------------------------------------------------------------------
+
+.sizebar {
+  position: relative;
+  padding: $space-xs $space-sm;
+  display: flex;
+}
+
+.sizebar-bar {
+  background-color: rgba($color-accent, 0.1);
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: 0;
+  height: 100%;
+  pointer-events: none;
+}
+
+.sizebar-text {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// -----------------------------------------------------------------------------
+// Grid layout
+// -----------------------------------------------------------------------------
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16em, 1fr));
+  gap: 2px;
+}
+
+.grid .entry { position: relative; width: 100%; }
+
+.grid .entry a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5em;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.grid .entry a:hover { background-color: rgba($color-accent, 0.05); }
+.grid .entry svg { width: 75px; height: 75px; }
+.grid .entry img { max-height: 200px; object-fit: cover; }
+.grid .entry .name { margin-top: 1em; }
+
+// -----------------------------------------------------------------------------
+// Accessibility
+// -----------------------------------------------------------------------------
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: $space-md;
+  background: $color-bg-inner;
+  color: $color-text;
+  padding: $space-sm $space-md;
+  border-radius: $border-radius-md;
+  z-index: $z-skip-link;
+  text-decoration: none;
+}
+
+.skip-link:focus { top: $space-md; }
+
+a:focus-visible {
+  outline: 2px solid $color-accent;
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// -----------------------------------------------------------------------------
+// Responsive
+// -----------------------------------------------------------------------------
+
+@media (max-width: 600px) {
+  .hideable { display: none; }
+  td:nth-child(2) { width: auto; }
+  th:nth-child(3), td:nth-child(3) { padding-right: 5%; text-align: right; }
+  h1 { color: $color-heading; }
+  h1 a { margin: 0; }
+  #filter { max-width: 100px; }
+  .grid .entry { max-width: initial; }
+}
+
+// Hide "textured font" nav link; we're on the textured site
+.nav-textured-files {
+  display: none;
+}

@@ -18,7 +18,7 @@
 @use 'layout';
 @use 'components';
 
-// Hide "textured font" nav link — we're already on the textured (main) site
+// Hide "textured font" nav link; we're on the textured (main) site
 .nav-textured {
   display: none;
 }
