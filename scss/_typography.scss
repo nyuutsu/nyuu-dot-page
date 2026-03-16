@@ -588,6 +588,15 @@ strong, b {
   font-family: $font-body-sc;
   font-weight: 400;
   letter-spacing: 0.03em;
+
+  // Use the SC cut matched to each optical size
+  h1 &, h2 & { font-family: $font-heading-sc; }
+  h3 &, h4 & { font-family: $font-subheading-sc; }
+  h5 &, h6 & { font-family: $font-body-sc; }
+
+  .site-footer &,
+  figcaption &,
+  .admonition-title & { font-family: $font-small-sc; }
 }
 
 em, i {
