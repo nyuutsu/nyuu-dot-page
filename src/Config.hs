@@ -65,7 +65,7 @@ admonitionFileCodec = AdmonitionFile
 type AdmonitionConfig = Map Text AdmonitionType
 
 -- | Load admonition config from TOML file
--- Crashes on missing/malformed file — this is intentional. Admonition config
+-- Crashes on missing/malformed file; startup should fail loudly if config is wrong. Admonition config
 -- is required for the site to render correctly; a graceful fallback would
 -- silently produce broken output.
 loadAdmonitionConfig :: FilePath -> IO AdmonitionConfig
@@ -91,7 +91,7 @@ avatarFileCodec :: TomlCodec (HM.HashMap Text Text)
 avatarFileCodec = Toml.tableHashMap Toml._KeyText Toml.text "avatars"
 
 -- | Load avatar config from TOML file
--- Crashes on missing/malformed file — same rationale as loadAdmonitionConfig.
+-- Crashes on missing/malformed file; same rationale as loadAdmonitionConfig.
 loadAvatarConfig :: FilePath -> IO AvatarConfig
 loadAvatarConfig path = do
   content <- TIO.readFile path
@@ -100,7 +100,7 @@ loadAvatarConfig path = do
     Right table -> return $ Map.fromList (HM.toList table)
 
 -- | Look up avatar filename by key, returning Nothing if not found.
--- Callers handle the fallback/warning — see defaultAvatarFile.
+-- Callers handle the fallback/warning; see defaultAvatarFile.
 lookupAvatar :: Text -> AvatarConfig -> Maybe Text
 lookupAvatar = Map.lookup
 

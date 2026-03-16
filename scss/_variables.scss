@@ -58,7 +58,7 @@ $space-xl:  2rem;
 // Typography Scale
 // 1.25 ratio with device-class breakpoints for the root font size.
 //
-// Historical context (Igino Marini's digitization notes — "print at Xpt to
+// Historical context, from Igino Marini's digitization notes ("print at Xpt to
 // match the original metal type"):
 //   IM Fell English:      13.5pt  (body text, cut by van Dijck, acquired 1672)
 //   IM Fell Great Primer: 17pt    (subheadings, cut by de Walpergen, acq. 1684)
@@ -155,7 +155,7 @@ $transition-speed: 0.15s;
 $font-body: 'IM Fell English', serif;
 $font-body-sc: 'IM Fell English SC', $font-body;
 $font-heading: 'IM Fell Double Pica', $font-body;
-// Not yet used in rules — reserved for future optical size assignments
+// Not yet used in rules; reserved for future optical size assignments
 $font-heading-sc: 'IM Fell Double Pica SC', $font-heading;
 $font-subheading: 'IM Fell Great Primer', $font-body;
 $font-subheading-sc: 'IM Fell Great Primer SC', $font-subheading;

@@ -84,7 +84,7 @@
   }
 }
 
-// Status badge — inline next to project title
+// Status badge: inline next to project title
 // Hand-stamped feel via slight rotation, varied per card position
 .project-status {
   display: inline-block;
@@ -115,7 +115,7 @@
   border-color: $color-accent;
 }
 
-// Plain title (nolink) — muted, clearly not interactive
+// Plain title (nolink): muted, clearly not interactive
 .project-title-text {
   color: $color-text-muted;
 }
@@ -208,7 +208,7 @@
 // Path convention: relative paths get /images/cards/ prepended
 // -----------------------------------------------------------------------------
 
-// Hanafuda emoji used as card indicator — white outline for visibility
+// Hanafuda emoji used as card indicator: white outline for visibility
 .hanafuda .emoji-img {
   @include emoji-outline;
 }
@@ -322,7 +322,7 @@
   text-decoration: underline dashed;
   white-space: break-spaces;  // Preserves ALL spaces including at wrap points
 
-  // Override [lang="ja"] font when inside .game — monospace is the point
+  // Override [lang="ja"] font when inside .game; monospace takes precedence here
   [lang="ja"] {
     font-family: inherit;
   }

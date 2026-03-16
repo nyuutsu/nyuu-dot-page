@@ -13,7 +13,7 @@
 // Latin + common punctuation/symbols (shared by all Fell cuts)
 $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF, U+2100-214F;
 
-// IM Fell English — body text (13.5pt historical cut, van Dijck/Briot, 1672)
+// IM Fell English: body text (13.5pt historical cut, van Dijck/Briot, 1672)
 @font-face {
   font-family: 'IM Fell English';
   src: url('/fonts/IMFellEnglish-Regular.woff2') format('woff2');
@@ -41,7 +41,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
   unicode-range: $unicode-latin;
 }
 
-// IM Fell Great Primer — subheadings h3-h4 (17pt historical cut, de Walpergen, 1684)
+// IM Fell Great Primer: subheadings h3-h4 (17pt historical cut, de Walpergen, 1684)
 @font-face {
   font-family: 'IM Fell Great Primer';
   src: url('/fonts/IMFellGreatPrimer-Regular.woff2') format('woff2');
@@ -69,7 +69,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
   unicode-range: $unicode-latin;
 }
 
-// IM Fell Double Pica — headings h1-h2 (21pt historical cut, de Walpergen, 1684)
+// IM Fell Double Pica: headings h1-h2 (21pt historical cut, de Walpergen, 1684)
 @font-face {
   font-family: 'IM Fell Double Pica';
   src: url('/fonts/IMFellDoublePica-Regular.woff2') format('woff2');
@@ -97,7 +97,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
   unicode-range: $unicode-latin;
 }
 
-// IM Fell DW Pica — small/UI text (12.5pt historical cut, de Walpergen, 1692)
+// IM Fell DW Pica: small/UI text (12.5pt historical cut, de Walpergen, 1692)
 @font-face {
   font-family: 'IM Fell DW Pica';
   src: url('/fonts/IMFellDWPica-Regular.woff2') format('woff2');
@@ -144,7 +144,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 }
 
 // Japanese font: Oradano Mincho GSRR
-// Revival of 1909 Tsukiji Type Foundry metal type — pairs with IM Fell
+// Revival of 1909 Tsukiji Type Foundry metal type; chosen to pair with IM Fell
 @font-face {
   font-family: 'Oradano-mincho-GSRR';
   src: url('/fonts/OradanoGSRR.woff2') format('woff2');
@@ -170,7 +170,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
   object-fit: contain;
 }
 
-// Hidden but selectable — copy-paste picks up the real emoji character
+// Hidden but selectable; copy-paste picks up the real emoji character
 .emoji-text {
   font-size: 0;
   line-height: 0;
@@ -184,7 +184,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 // -----------------------------------------------------------------------------
 
 html {
-  // Root font size per device class — see Typography Scale in _variables.scss
+  // Root font size per device class; see Typography Scale in _variables.scss
   // for derivation. Smaller screens are closer to the face; the font can be
   // physically smaller while subtending the same angle on the retina.
   font-size: 1rem;                                         // phone (~16px)
@@ -302,7 +302,7 @@ figure {
     text-align: center;  // Center within figure width (matches image)
   }
 
-  // Clickable figures — link to full-size image
+  // Clickable figures: link to full-size image
   &.clickable {
     position: relative;
 
