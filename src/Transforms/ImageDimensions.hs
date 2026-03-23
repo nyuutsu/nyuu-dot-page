@@ -11,7 +11,7 @@ module Transforms.ImageDimensions (imageDimensionsTransform) where
 import Text.Pandoc.Walk (walk)
 import Text.Pandoc.Definition
 import Data.Text (Text)
-import qualified Data.Text as T
+import qualified Data.Text as Text
 import ImageDimensions (ImageDimensions, lookupDimensions, Dimensions(..))
 
 -- | Add width/height to an Image if not already present
@@ -22,8 +22,8 @@ addDimensions cache img@(Image (identifier, classes, attributes) alt (url, title
       Nothing -> img
       Just dimensions ->
         let newAttributes = attributes ++
-              [ ("width",  T.pack $ show $ dimensionWidth dimensions)
-              , ("height", T.pack $ show $ dimensionHeight dimensions)
+              [ ("width",  Text.pack $ show $ dimensionWidth dimensions)
+              , ("height", Text.pack $ show $ dimensionHeight dimensions)
               ]
         in Image (identifier, classes, newAttributes) alt (url, title)
 addDimensions _ x = x

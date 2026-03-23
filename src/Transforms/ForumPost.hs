@@ -32,7 +32,7 @@ module Transforms.ForumPost (forumPostTransform) where
 
 import Text.Pandoc.Walk (walk)
 import Text.Pandoc.Definition
-import qualified Data.Text as T
+import qualified Data.Text as Text
 import Data.Maybe (catMaybes)
 import Config (AvatarConfig, resolveAvatar)
 import Debug.Trace (trace)
@@ -45,11 +45,11 @@ transformForum config (Div (identifier, classes, attributes) content)
           -- name = display name, avatar = avatar lookup key (warn if missing)
           displayName = case lookup "name" attributes of
             Just found -> found
-            Nothing -> trace (T.unpack $ "[WARN] " <> divClass <> " missing name attribute, using Anonymous")
+            Nothing -> trace (Text.unpack $ "[WARN] " <> divClass <> " missing name attribute, using Anonymous")
                              "Anonymous"
           avatarKey = case lookup "avatar" attributes of
             Just found -> found
-            Nothing -> trace (T.unpack $ "[WARN] " <> divClass <> " missing avatar attribute, using default")
+            Nothing -> trace (Text.unpack $ "[WARN] " <> divClass <> " missing avatar attribute, using default")
                              "default"
 
           avatarPath = resolveAvatar divClass avatarKey config

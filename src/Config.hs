@@ -27,7 +27,7 @@ import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
 import qualified Data.HashMap.Strict as HM
 import Data.Text (Text)
-import qualified Data.Text as T
+import qualified Data.Text as Text
 import qualified Data.Text.IO as TIO
 import Data.Maybe (fromMaybe)
 import Debug.Trace (trace)
@@ -114,7 +114,7 @@ defaultAvatarFile = Map.findWithDefault "robot.webp" "default"
 resolveAvatar :: Text -> Text -> AvatarConfig -> Text
 resolveAvatar context key config =
   let file = fromMaybe
-        (trace (T.unpack $ "[WARN] " <> context <> " avatar '" <> key <> "' not in config, using default")
+        (trace (Text.unpack $ "[WARN] " <> context <> " avatar '" <> key <> "' not in config, using default")
                (defaultAvatarFile config))
         (lookupAvatar key config)
   in "/images/avatars/" <> file

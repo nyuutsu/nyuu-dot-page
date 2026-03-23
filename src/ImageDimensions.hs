@@ -18,7 +18,7 @@ import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
 import Data.Maybe (catMaybes)
 import Data.Text (Text)
-import qualified Data.Text as T
+import qualified Data.Text as Text
 import FileUtils (findFiles, withDirectoryOrDefault)
 import Foreign.C.String (withCString)
 import Foreign.C.Types (CChar, CInt(..), CUInt(..))
@@ -93,4 +93,4 @@ readDimensions staticDir path = do
     Nothing -> do
       putStrLn $ "[WARN] Failed to read dimensions: " ++ path
       return Nothing
-    Just dims -> return $ Just (T.pack urlPath, dims)
+    Just dims -> return $ Just (Text.pack urlPath, dims)

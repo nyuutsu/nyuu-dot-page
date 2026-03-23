@@ -15,12 +15,12 @@ module Transforms.CardNotice (cardNoticeTransform, exampleCardName) where
 import Text.Pandoc.Walk (walk)
 import Text.Pandoc.Definition
 import Data.Text (Text)
-import qualified Data.Text as T
+import qualified Data.Text as Text
 import Data.List (intersperse, intercalate)
 
 -- | Convert text into Pandoc inlines (words become Str separated by Space)
 textToInlines :: Text -> [Inline]
-textToInlines = intersperse Space . map Str . T.words
+textToInlines = intersperse Space . map Str . Text.words
 
 -- | Join inline fragments with spaces
 joinInlines :: [[Inline]] -> [Inline]

@@ -18,7 +18,7 @@ import Data.Char (ord)
 import Data.Maybe (mapMaybe)
 import qualified Data.Set as Set
 import Data.Set (Set)
-import qualified Data.Text as T
+import qualified Data.Text as Text
 import qualified Data.Text.IO as TIO
 import Debug.Trace (trace)
 import Numeric (showHex)
@@ -58,19 +58,19 @@ scanAvailableSvgs dir = do
   return $ Set.fromList (mapMaybe parseSvgFilename files)
   where
     parseSvgFilename name = do
-      let base = T.pack (dropExtension name)
+      let base = Text.pack (dropExtension name)
       guard (takeExtension name == ".svg")
-      rest <- T.stripPrefix "emoji_u" base
-      guard (not (T.any (== '_') rest))  -- single codepoint only
-      readHexMaybe (T.unpack rest)
+      rest <- Text.stripPrefix "emoji_u" base
+      guard (not (Text.any (== '_') rest))  -- single codepoint only
+      readHexMaybe (Text.unpack rest)
 
 -- | Recursively scan directories for emoji characters in source files
 scanForEmoji :: [FilePath] -> IO (Set Int)
 scanForEmoji dirs = do
   files <- concat <$> mapM (findFiles [".md", ".hs", ".scss"]) dirs
   contents <- mapM TIO.readFile files
-  let allText = T.concat contents
-  return $ T.foldl' (\codepoints character ->
+  let allText = Text.concat contents
+  return $ Text.foldl' (\codepoints character ->
     if isEmojiCodepoint (ord character)
       then Set.insert (ord character) codepoints
       else codepoints) Set.empty allText

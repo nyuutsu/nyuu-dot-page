@@ -14,7 +14,7 @@ module Transforms.Emoji (emojiTransform) where
 
 import Data.Char (ord)
 import qualified Data.Set as Set
-import qualified Data.Text as T
+import qualified Data.Text as Text
 import Data.Text (Text)
 import Numeric (showHex)
 import Text.Pandoc.Definition
@@ -34,8 +34,8 @@ transformInline _ x = [x]
 -- Blobmoji SVG plus a hidden <span> with the real character for copy-paste.
 emojiInline :: Char -> Inline
 emojiInline c =
-  let hex = T.pack (showHex (ord c) "")
-      charText = T.singleton c
+  let hex = Text.pack (showHex (ord c) "")
+      charText = Text.singleton c
       src = "/images/emoji/" <> hex <> ".svg"
       img = Image ("", ["emoji-img"], [("draggable", "false")]) [Str charText] (src, "")
       hiddenText = Span ("", ["emoji-text"], [("aria-hidden", "true")]) [Str charText]
@@ -44,21 +44,21 @@ emojiInline c =
 -- | Split a text string around emoji characters, producing a mix of
 -- Str nodes (regular text) and emoji Span/Image nodes.
 processText :: EmojiAssets -> Text -> [Inline]
-processText assets = go T.empty
+processText assets = go Text.empty
   where
-    go buffer txt = case T.uncons txt of
+    go buffer txt = case Text.uncons txt of
       Nothing -> flush buffer []
       Just (character, rest)
         | Set.member (ord character) assets ->
             let rest' = stripVariationSelector rest
-            in flush buffer (emojiInline character : go T.empty rest')
+            in flush buffer (emojiInline character : go Text.empty rest')
         | otherwise ->
-            go (T.snoc buffer character) rest
+            go (Text.snoc buffer character) rest
 
     flush buffer rest
-      | T.null buffer = rest
+      | Text.null buffer = rest
       | otherwise     = Str buffer : rest
 
-    stripVariationSelector t = case T.uncons t of
+    stripVariationSelector t = case Text.uncons t of
       Just ('\xFE0F', remaining) -> remaining
       _ -> t

@@ -13,13 +13,13 @@ module Transforms.Anchors (anchorTransform) where
 
 import Text.Pandoc.Walk (walk)
 import Text.Pandoc.Definition
-import qualified Data.Text as T
+import qualified Data.Text as Text
 
 -- | Wrap header content in an anchor link pointing to the header's id
 -- Only processes headers that have an id (Pandoc auto-generates these)
 headerToAnchor :: Block -> Block
 headerToAnchor (Header level attr@(idAttr, _, _) inlines)
-  | not (T.null idAttr) =
+  | not (Text.null idAttr) =
       -- Create a link with the header id as target
       let link = Link ("", [], []) inlines ("#" <> idAttr, "")
       in Header level attr [link]

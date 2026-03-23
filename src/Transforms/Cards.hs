@@ -17,7 +17,7 @@ module Transforms.Cards (cardTransform) where
 import Text.Pandoc.Walk (walk)
 import Text.Pandoc.Definition
 import Data.Text (Text)
-import qualified Data.Text as T
+import qualified Data.Text as Text
 import Debug.Trace (trace)
 import CardCache (CardCache, lookupCard, CardData(..), normalizeQuotes)
 import Text.Pandoc.Shared (stringify)
@@ -43,7 +43,7 @@ buildCardPreview cache rawName setCode source =
 
     imagePath = case cached >>= cardImage of
         Just p  -> "/images/cards/" <> p
-        Nothing -> trace (T.unpack $ "[WARN] Card '" <> lookupKey <> "' not found in cache.")
+        Nothing -> trace (Text.unpack $ "[WARN] Card '" <> lookupKey <> "' not found in cache.")
                          "/images/cards/MISSING.webp"
 
     altText = maybe "" cardAltText cached

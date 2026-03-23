@@ -29,7 +29,7 @@ module Transforms.Chat (chatTransform) where
 import Text.Pandoc.Walk (walk)
 import Text.Pandoc.Definition
 import Data.Text (Text)
-import qualified Data.Text as T
+import qualified Data.Text as Text
 import Config (AvatarConfig, resolveAvatar)
 import Debug.Trace (trace)
 
@@ -65,7 +65,7 @@ avatarKeyFrom :: Citation -> Text
 avatarKeyFrom citation =
   case citationSuffix citation of
     (Str key : _) -> key
-    _ -> trace (T.unpack $ "[WARN] Chat @" <> citationId citation <> " has no avatar key, using default")
+    _ -> trace (Text.unpack $ "[WARN] Chat @" <> citationId citation <> " has no avatar key, using default")
                "default"
 
 -- | Parse a chat div's content into messages
@@ -117,9 +117,9 @@ parseChat config blocks = map (buildMessage config) (groupByMessage blocks)
     stripColon :: [Inline] -> Maybe [Inline]
     stripColon (Str ":" : Space : rest) = Just rest
     stripColon (Str t : rest)
-      | ":" `T.isPrefixOf` t =
-          let after = T.drop 1 t
-          in Just $ if T.null after then rest else Str after : rest
+      | ":" `Text.isPrefixOf` t =
+          let after = Text.drop 1 t
+          in Just $ if Text.null after then rest else Str after : rest
     stripColon _ = Nothing
 
 -- | Transform chat divs into message bubbles

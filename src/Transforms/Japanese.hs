@@ -16,7 +16,7 @@ module Transforms.Japanese (japaneseTransform) where
 import Text.Pandoc.Walk (walk)
 import Text.Pandoc.Definition
 import Data.Text (Text)
-import qualified Data.Text as T
+import qualified Data.Text as Text
 import Data.Char (ord)
 import Data.List (groupBy)
 import Data.Function (on)
@@ -28,14 +28,14 @@ type Parser = Parsec Void Text
 
 -- | Escape text for safe interpolation into raw HTML (ruby annotations)
 escapeHtml :: Text -> Text
-escapeHtml = T.concatMap escape
+escapeHtml = Text.concatMap escape
   where
     escape '&'  = "&amp;"
     escape '<'  = "&lt;"
     escape '>'  = "&gt;"
     escape '"'  = "&quot;"
     escape '\'' = "&#39;"
-    escape c    = T.singleton c
+    escape c    = Text.singleton c
 
 -- | Detect if a character is in CJK ranges (Japanese, Chinese, Korean)
 -- Covers: CJK Symbols, Hiragana, Katakana, CJK Unified Ideographs, Fullwidth
@@ -87,7 +87,7 @@ plainRunP = PlainText <$> takeWhile1P (Just "plain text") (\c -> not (isCJK c) &
 
 -- | A { that didn't start a valid ruby pattern (try rubyP backtracks here)
 literalBraceP :: Parser Segment
-literalBraceP = PlainText . T.singleton <$> char '{'
+literalBraceP = PlainText . Text.singleton <$> char '{'
 
 -- | One segment: try ruby first (backtracking on failure), then CJK, plain, or literal brace
 segmentP :: Parser Segment

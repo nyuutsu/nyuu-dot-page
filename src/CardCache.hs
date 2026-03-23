@@ -29,7 +29,7 @@ module CardCache
 
 import Data.Aeson (FromJSON(..), (.:), (.:?), withObject)
 import qualified Data.Aeson as Aeson
-import qualified Data.ByteString as BS
+import qualified Data.ByteString as ByteString
 import Data.List (sort)
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
@@ -37,7 +37,7 @@ import Data.Maybe (catMaybes, fromMaybe, mapMaybe)
 import Data.Set (Set)
 import qualified Data.Set as Set
 import Data.Text (Text)
-import qualified Data.Text as T
+import qualified Data.Text as Text
 import qualified Data.Text.IO as TIO
 import Control.Exception (try, SomeException)
 import Control.Monad (forM, foldM)
@@ -204,13 +204,13 @@ instance FromJSON MtgFace where
 
 -- | Build alt text from optional parts, dropping Nothings and joining with spaces
 altParts :: [Maybe Text] -> Text
-altParts = T.unwords . catMaybes
+altParts = Text.unwords . catMaybes
 
 formatPokemonAlt :: PokemonCard -> Text
 formatPokemonAlt card = altParts $
   [ Just (pokemonName card)
   , (\hp -> "- " <> hp <> " HP") <$> pokemonHP card
-  , (\types -> "- " <> T.intercalate "/" types) <$> pokemonTypes card
+  , (\types -> "- " <> Text.intercalate "/" types) <$> pokemonTypes card
   ] ++
   map formatAbility (fromMaybe [] $ pokemonAbilities card) ++
   map formatAttack (fromMaybe [] $ pokemonAttacks card) ++
@@ -221,10 +221,10 @@ formatPokemonAlt card = altParts $
   where
     formatAbility ability = Just ("- " <> abilityName ability <> ": " <> abilityText ability)
     formatAttack attack =
-      let cost = T.concat $ fromMaybe [] (attackCost attack)
+      let cost = Text.concat $ fromMaybe [] (attackCost attack)
           damage = fromMaybe "" (attackDamage attack)
           base = "- " <> attackName attack <> " [" <> cost <> "]"
-                 <> if T.null damage then "" else " " <> damage
+                 <> if Text.null damage then "" else " " <> damage
       in Just (base <> maybe "" (": " <>) (attackText attack))
 
 formatYugiohAlt :: YugiohCard -> Text
@@ -233,23 +233,23 @@ formatYugiohAlt card = altParts
   , ("- " <>) <$> yugiohType card
   , (\race -> "(" <> race <> ")") <$> yugiohRace card
   , (\attr -> "[" <> attr <> "]") <$> yugiohAttribute card
-  , (\level -> "- Level " <> T.pack (show level)) <$> yugiohLevel card
+  , (\level -> "- Level " <> Text.pack (show level)) <$> yugiohLevel card
   , case (yugiohAttack card, yugiohDefense card) of
-      (Just attack, Just defense) -> Just ("- ATK " <> T.pack (show attack) <> " / DEF " <> T.pack (show defense))
+      (Just attack, Just defense) -> Just ("- ATK " <> Text.pack (show attack) <> " / DEF " <> Text.pack (show defense))
       _ -> Nothing
   , (\desc -> "- " <> truncateDescription desc) <$> yugiohDescription card
   ]
   where
     truncateDescription desc =
-      let clean = T.replace "\n" " " desc
-      in if T.length clean > 200 then T.take 200 clean <> "..." else clean
+      let clean = Text.replace "\n" " " desc
+      in if Text.length clean > 200 then Text.take 200 clean <> "..." else clean
 
 formatMtgCardAlt :: MtgCard -> Text
 formatMtgCardAlt card = altParts
   [ Just (mtgName card)
   , mtgManaCost card
   , ("- " <>) <$> mtgTypeLine card
-  , ("- " <>) . T.replace "\n" " " <$> mtgOracleText card
+  , ("- " <>) . Text.replace "\n" " " <$> mtgOracleText card
   , case (mtgPower card, mtgToughness card) of
       (Just powerValue, Just toughnessValue) -> Just ("- " <> powerValue <> "/" <> toughnessValue)
       _ -> Nothing
@@ -260,7 +260,7 @@ formatMtgFaceAlt face = altParts
   [ Just (mtgFaceName face)
   , mtgFaceManaCost face
   , ("- " <>) <$> mtgFaceTypeLine face
-  , ("- " <>) . T.replace "\n" " " <$> mtgFaceOracleText face
+  , ("- " <>) . Text.replace "\n" " " <$> mtgFaceOracleText face
   , case (mtgFacePower face, mtgFaceToughness face) of
       (Just powerValue, Just toughnessValue) -> Just ("- " <> powerValue <> "/" <> toughnessValue)
       _ -> Nothing
@@ -320,7 +320,7 @@ loadPokemon configDir =
     isPokemonJSON f = isJSON f && takeBaseName f /= "en"
 
     foldSet (cardMap, seenNames) filename cards =
-      let setCode = T.pack $ takeBaseName filename
+      let setCode = Text.pack $ takeBaseName filename
       in foldl' (addCard setCode) (cardMap, seenNames) cards
 
     addCard setCode (cardMap, seenNames) card =
@@ -422,7 +422,7 @@ extractCardSpans = query extractSpan
 -- Pandoc's smart typography converts ' to U+2019 etc., but the card cache
 -- uses straight quotes (from JSON data).
 normalizeQuotes :: Text -> Text
-normalizeQuotes = T.map normalize
+normalizeQuotes = Text.map normalize
   where
     normalize '\x2019' = '\''  -- right single quote -> apostrophe
     normalize '\x2018' = '\''  -- left single quote -> apostrophe
@@ -445,8 +445,8 @@ referencedImages allCards referenced =
 -- Returns True if a new copy was made.
 copyImage :: FilePath -> FilePath -> Text -> IO Bool
 copyImage configDir destDir flatPath = do
-  let sourcePath = configDir </> unflattenImagePath (T.unpack flatPath)
-      destPath = destDir </> T.unpack flatPath
+  let sourcePath = configDir </> unflattenImagePath (Text.unpack flatPath)
+      destPath = destDir </> Text.unpack flatPath
   sourceExists <- doesFileExist sourcePath
   if not sourceExists
     then do
@@ -458,7 +458,7 @@ copyImage configDir destDir flatPath = do
         then return False  -- already copied; writing would re-trigger Hakyll's watcher
         else do
           createDirectoryIfMissing True (takeDirectory destPath)
-          BS.readFile sourcePath >>= BS.writeFile destPath
+          ByteString.readFile sourcePath >>= ByteString.writeFile destPath
           return True
 
 -- | Copy images for referenced cards from config/*/images/ to static/images/cards/
@@ -517,14 +517,14 @@ buildCardCache readerOpts configDir contentDir staticCardsDir = do
 flattenImagePath :: Maybe Text -> Maybe Text
 flattenImagePath = fmap flatten
   where
-    flatten path = case T.splitOn "/" path of
-      (franchise : "images" : rest) -> T.intercalate "/" (franchise : rest)
+    flatten path = case Text.splitOn "/" path of
+      (franchise : "images" : rest) -> Text.intercalate "/" (franchise : rest)
       _ -> path
 
 -- | Decode a JSON file, returning Nothing on failure
 decodeJSONFile :: FromJSON a => FilePath -> IO (Maybe a)
 decodeJSONFile path = do
-  result <- try (BS.readFile path) :: IO (Either SomeException BS.ByteString)
+  result <- try (ByteString.readFile path) :: IO (Either SomeException ByteString.ByteString)
   case result of
     Left _   -> return Nothing
     Right bytes -> return $ Aeson.decodeStrict bytes

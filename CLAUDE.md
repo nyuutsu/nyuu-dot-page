@@ -87,7 +87,7 @@ nyuu-dot-page/
 │   ├── Transforms.hs       # Re-exports all transforms, documents ordering
 │   ├── Config.hs           # TOML config loading (admonitions, avatars)
 │   ├── CardCache.hs        # Builds card cache from franchise JSONs, copies images
-│   ├── ImageDimensions.hs  # Scans images for dimensions (JuicyPixels + WebP headers)
+│   ├── ImageDimensions.hs  # Scans images for dimensions (Rust imagesize via FFI)
 │   ├── SyntaxMap.hs        # Custom Kate XML syntax definitions
 │   └── Transforms/
 │       ├── Admonitions.hs  # ::: note/warning/etc
@@ -106,12 +106,17 @@ nyuu-dot-page/
 │   └── *.md                # Static pages
 │
 ├── scss/                   # Styles (modular)
-│   ├── main.scss           # Entry point (imports only)
-│   ├── _variables.scss     # Design tokens
+│   ├── main.scss           # Entry point: textured main site
+│   ├── smooth.scss         # Entry point: smooth main site (Source Serif 4)
+│   ├── files.scss          # Entry point: files.nyuu.page (textured)
+│   ├── files-smooth.scss   # Entry point: files.nyuu.page (smooth)
+│   ├── _variables.scss     # Design tokens, mixins, !default font config
 │   ├── _reset.scss         # CSS reset
-│   ├── _typography.scss    # Fonts, text styles
-│   ├── _layout.scss        # Page structure
-│   └── _components.scss    # UI elements (widgets)
+│   ├── _typography.scss    # Font faces (via mixin), text styles, syntax colors
+│   ├── _layout.scss        # Page structure (header, footer, nav, skip link)
+│   ├── _components.scss    # UI elements (widgets)
+│   ├── _smooth-overrides.scss  # Smooth font faces + SC→bold behavior
+│   └── _files-base.scss    # File listing (table, grid, filter, breadcrumbs)
 │
 ├── static/
 │   ├── fonts/              # Output fonts (subsetted Latin/JP + Blobmoji full)
@@ -132,10 +137,18 @@ nyuu-dot-page/
 - Max 3 levels of SCSS nesting; flatten if deeper
 - No `!important`, no IDs for styling (only for anchor targets)
 - Section separators use the `// ----` style
+- Font stacks and root font sizes use `!default` in `_variables.scss`;
+  entry points configure them via `@use 'variables' with (...)`
+- `$asset-origin` (`!default`, empty for main site) prefixes all
+  `url()` paths; files page sets it to `'https://nyuu.page'`
+- New `@font-face` declarations use the `font-face()` mixin from
+  `_variables.scss`, not hand-written blocks
 
 ## Haskell style
 
-GHC2024 language edition.
+GHC2024 language edition. `OverloadedStrings` where Text literals
+are needed. Strict fields on data types by default. `-Wall` clean,
+zero warnings. No orphan instances.
 
 **Be idiomatic.** Use the right combinator when it fits (`fromMaybe`,
 `mapMaybe`, `concatMap`, `guard`, `groupBy`, `partition`, `on`).
@@ -160,8 +173,13 @@ without hiding meaning.
 pattern emerges, make a clean abstraction — three duplicated blocks
 are worse than one clear function.
 
-**Qualified imports** for containers (`Map`, `T` for Text, `BS`
-for ByteString).
+**New code follows the same rules.** Every naming convention here
+applies equally to new code, refactors, and helpers introduced during
+changes. If a rename pass cleaned something up, the same patterns
+shouldn't come back in through new helpers or variables.
+This includes test code.
+
+**Qualified imports** for containers (`Map`, `Text`, `ByteString`).
 
 **Comments explain WHY, not WHAT.** If a comment restates the code,
 delete it.
@@ -176,6 +194,9 @@ combinators, clearer structure.
 performance-critical work, pure domain logic stays in Haskell.
 This project doesn't use Rust currently but the preference applies
 if it ever needs systems-level work.
+
+Derive what's natural for the type. Closed enumerations should
+have `Enum, Bounded`.
 
 ### Project-specific
 
@@ -203,6 +224,10 @@ of the work — not separate from it.
   explain what improved.
 - If something isn't clear, stop and explain. Understanding
   matters more than progress.
+- Commit messages describe what changed and why, in imperative mood
+  ("Add X" rather than "Added X"). Keep subject lines under 72
+  characters and put detail in the body when it's needed. Avoid
+  em dashes in commit messages.
 
 ## Widget System
 
@@ -469,7 +494,7 @@ Image copying skips files that already exist in the destination to avoid retrigg
 
 **What it does:**
 1. Recursively scans `static/images/` for PNG, JPEG, GIF, WebP (SVG excluded)
-2. Reads dimensions via JuicyPixels (PNG/JPEG/GIF) or manual WebP header parsing (VP8/VP8L/VP8X)
+2. Reads dimensions via Rust `imagesize` crate through FFI
 3. Returns `ImageDimensions` map directly
 
 The transform (`Transforms/ImageDimensions.hs`) injects `width` and `height` attributes into `<img>` tags for CLS prevention.

@@ -28,7 +28,7 @@ module Transforms.Admonitions (admonitionTransform) where
 import Text.Pandoc.Walk (walk)
 import Text.Pandoc.Definition
 import Data.Text (Text)
-import qualified Data.Text as T
+import qualified Data.Text as Text
 import Control.Applicative ((<|>))
 import Data.Maybe (fromMaybe)
 import Config (AdmonitionConfig, AdmonitionType(..), lookupAdmonition)
@@ -51,8 +51,8 @@ resolveTitle customTitle attributes typeConfig =
 transformBlock :: AdmonitionConfig -> Block -> Block
 transformBlock config (Div (identifier, classes, attributes) content)
   | (typeName:rest) <- classes
-  , Just typeConfig <- lookupAdmonition (T.toLower typeName) config =
-      let customTitle = if null rest then Nothing else Just (T.unwords rest)
+  , Just typeConfig <- lookupAdmonition (Text.toLower typeName) config =
+      let customTitle = if null rest then Nothing else Just (Text.unwords rest)
           title = resolveTitle customTitle attributes typeConfig
           -- Title with optional icon
           titleInlines = case admonitionIcon typeConfig of
