@@ -44,3 +44,4 @@ executable site
   ghc-options:         -threaded -Wall
   default-language:    GHC2024
   default-extensions:  OverloadedStrings
+                     , StrictData

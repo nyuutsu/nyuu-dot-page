@@ -305,8 +305,9 @@ td .go-up {
 // Icon colors
 // -----------------------------------------------------------------------------
 
+// Tabler icons use stroke="currentColor"; color sets the icon appearance
 .listing .icon-tabler { color: $color-text-muted; }
-.listing .icon-tabler-folder-filled { color: #ffb900 !important; }
+.listing .icon-tabler-folder-filled { color: #ffb900; }
 
 // -----------------------------------------------------------------------------
 // Size bars
