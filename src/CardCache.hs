@@ -41,9 +41,8 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import Control.Exception (try, SomeException)
 import Control.Monad (forM, foldM)
-import FileUtils (findFiles)
-import System.Directory (listDirectory, doesDirectoryExist, createDirectoryIfMissing,
-                         doesFileExist)
+import FileUtils (findFiles, withDirectoryOrDefault)
+import System.Directory (listDirectory, createDirectoryIfMissing, doesFileExist)
 import System.FilePath ((</>), takeExtension, takeBaseName, takeDirectory)
 import Text.Pandoc (runIO, readMarkdown)
 import Text.Pandoc.Definition (Pandoc, Inline(..))
@@ -281,10 +280,8 @@ loadFranchiseDir :: FromJSON a
                  -> acc                                       -- ^ Initial accumulator
                  -> (acc -> String -> [a] -> acc)             -- ^ Fold: acc -> filename -> cards -> acc
                  -> IO acc
-loadFranchiseDir dir fileFilter initial foldFile = do
-  exists <- doesDirectoryExist dir
-  if not exists then return initial
-  else do
+loadFranchiseDir dir fileFilter initial foldFile =
+  withDirectoryOrDefault (pure initial) dir $ do
     jsonFiles <- sort . filter fileFilter <$> listDirectory dir
     foldM processFile initial jsonFiles
   where
@@ -389,10 +386,8 @@ alwaysInclude = [exampleCardName]
 
 -- | Scan content/ for [Card Name]{.card ...} references using Pandoc's parser
 scanCardReferences :: ReaderOptions -> FilePath -> IO (Set Text)
-scanCardReferences opts contentDir = do
-  exists <- doesDirectoryExist contentDir
-  if not exists then return Set.empty
-  else do
+scanCardReferences opts contentDir =
+  withDirectoryOrDefault (pure Set.empty) contentDir $ do
     mdFiles <- findFiles [".md"] contentDir
     refs <- forM mdFiles $ \path -> do
       content <- TIO.readFile path

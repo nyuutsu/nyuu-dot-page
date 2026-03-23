@@ -24,6 +24,7 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import Control.Exception (try, SomeException)
 import Control.Monad (forM)
+import FileUtils (withDirectoryOrDefault)
 import System.Directory (listDirectory, doesDirectoryExist)
 import System.FilePath ((</>), takeExtension, makeRelative)
 import System.IO (withBinaryFile, IOMode(ReadMode))
@@ -45,19 +46,18 @@ lookupDimensions path (ImageDimensions m) = Map.lookup path m
 
 -- | Scan static directory for images and collect their dimensions
 scanImageDimensions :: FilePath -> IO ImageDimensions
-scanImageDimensions staticDir = do
-  let imagesDir = staticDir </> "images"
-  exists <- doesDirectoryExist imagesDir
-  if not exists
-    then do
+scanImageDimensions staticDir =
+  withDirectoryOrDefault missingWarning imagesDir $ do
+    files <- findFilesRecursive imagesDir
+    let imageFiles = filter (isImageExt . map toLower . takeExtension) files
+    dimensions <- catMaybes <$> mapM (readDimensions staticDir) imageFiles
+    putStrLn $ "Scanned dimensions for " ++ show (length dimensions) ++ " images"
+    return $ ImageDimensions $ Map.fromList dimensions
+  where
+    imagesDir = staticDir </> "images"
+    missingWarning = do
       putStrLn $ "[WARN] Image directory not found: " ++ imagesDir
       return emptyDimensions
-    else do
-      files <- findFilesRecursive imagesDir
-      let imageFiles = filter (isImageExt . map toLower . takeExtension) files
-      dimensions <- catMaybes <$> mapM (readDimensions staticDir) imageFiles
-      putStrLn $ "Scanned dimensions for " ++ show (length dimensions) ++ " images"
-      return $ ImageDimensions $ Map.fromList dimensions
 
 -- ---------------------------------------------------------------------------
 -- File discovery
