@@ -27,30 +27,30 @@ import Text.Pandoc.Shared (stringify)
 -- source: Franchise (e.g., "mtg", "yugioh", "pokemon") for disambiguation
 buildCardPreview :: CardCache -> Text -> Maybe Text -> Maybe Text -> [Inline]
 buildCardPreview cache rawName setCode source =
-    let -- Normalize smart quotes for cache lookup (Pandoc converts ' -> ')
-        name = normalizeQuotes rawName
+    [Span ("", ["card-preview"], []) [hanafuda, nameElement, previewImage]]
+  where
+    -- Normalize smart quotes for cache lookup (Pandoc converts ' -> ')
+    name = normalizeQuotes rawName
 
-        -- Build lookup key: set:name > source:name > name
-        lookupKey = case setCode of
-            Just s  -> s <> ":" <> name
-            Nothing -> case source of
-                Just franchise -> franchise <> ":" <> name
-                Nothing  -> name
+    -- Build lookup key: set:name > source:name > name
+    lookupKey = case setCode of
+        Just s  -> s <> ":" <> name
+        Nothing -> case source of
+            Just franchise -> franchise <> ":" <> name
+            Nothing  -> name
 
-        cached = lookupCard lookupKey cache
+    cached = lookupCard lookupKey cache
 
-        imagePath = case cached >>= cardImage of
-            Just p  -> "/images/cards/" <> p
-            Nothing -> trace (T.unpack $ "[WARN] Card '" <> lookupKey <> "' not found in cache.")
-                             "/images/cards/MISSING.webp"
+    imagePath = case cached >>= cardImage of
+        Just p  -> "/images/cards/" <> p
+        Nothing -> trace (T.unpack $ "[WARN] Card '" <> lookupKey <> "' not found in cache.")
+                         "/images/cards/MISSING.webp"
 
-        altText = maybe "" cardAltText cached
-        hanafuda = Span ("", ["hanafuda"], [("aria-hidden", "true")]) [Str "🎴"]
-        nameElement = Span ("", ["card-name"], []) [Str name]
-        previewImage = Image ("", ["card-image"], [("loading", "eager"), ("decoding", "async")])
-                             [Str altText] (imagePath, "")
-
-    in [Span ("", ["card-preview"], []) [hanafuda, nameElement, previewImage]]
+    altText = maybe "" cardAltText cached
+    hanafuda = Span ("", ["hanafuda"], [("aria-hidden", "true")]) [Str "🎴"]
+    nameElement = Span ("", ["card-name"], []) [Str name]
+    previewImage = Image ("", ["card-image"], [("loading", "eager"), ("decoding", "async")])
+                         [Str altText] (imagePath, "")
 
 -- | Transform a single inline, returning one or more inlines
 -- Card spans expand to multiple inlines; everything else passes through.

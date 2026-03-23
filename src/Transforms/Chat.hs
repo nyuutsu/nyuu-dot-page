@@ -37,7 +37,7 @@ import Debug.Trace (trace)
 data ChatMessage = ChatMessage
   { messageName   :: !Text   -- ^ Display name
   , messageAvatar :: !Text   -- ^ Avatar key (looked up in config)
-  , messageBlocks :: [Block]  -- ^ Message content blocks
+  , messageBlocks :: ![Block]  -- ^ Message content blocks
   }
 
 -- | Build a rendered chat message block

@@ -472,7 +472,7 @@ copyCardImages configDir destDir allCards referenced = do
   createDirectoryIfMissing True destDir
   let images = referencedImages allCards referenced
   copied <- mapM (copyImage configDir destDir) (Set.toList images)
-  return $ length (filter id copied)
+  return $ length [() | True <- copied]
 
 -- | pokemon/base1-1.webp -> pokemon/images/base1-1.webp
 unflattenImagePath :: FilePath -> FilePath
