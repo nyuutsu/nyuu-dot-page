@@ -8,6 +8,10 @@ css/
 # Cabal build artifacts
 dist-newstyle/
 
+# Rust build artifacts
+rusty-site/target/
+.rusty-stamp
+
 # Python venvs (managed by uv)
 config/.venv/
 config/blobmoji/.venv/

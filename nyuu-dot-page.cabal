@@ -37,10 +37,10 @@ executable site
     , aeson                >= 2.0  && < 3
     , bytestring           >= 0.10 && < 1
     , directory            >= 1.3  && < 2
-    , JuicyPixels          >= 3.3  && < 4
     , megaparsec           >= 9.0  && < 10
     , time                  >= 1.9  && < 2
     , skylighting-core     >= 0.14 && < 1
+  extra-libraries:     rusty_site
   ghc-options:         -threaded -Wall
   default-language:    GHC2024
   default-extensions:  OverloadedStrings

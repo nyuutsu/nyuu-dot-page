@@ -1,11 +1,26 @@
 # nyuu.page build system
-.PHONY: all build watch clean prebuild
+.PHONY: all build watch clean prebuild rusty-site
+
+RUSTY_LIB := $(CURDIR)/rusty-site/target/release
+RUSTY_A   := $(RUSTY_LIB)/librusty_site.a
+
+RUSTFLAGS += -C target-cpu=native
+export RUSTFLAGS
 
 all: build
 
-# Pre-Hakyll steps: font subsetting, SCSS
+# Rust static library
+rusty-site:
+	cargo build --release --manifest-path rusty-site/Cargo.toml
+
+# Pre-Hakyll steps: Rust library, font subsetting, SCSS
 # (Emoji SVGs are copied by Hakyll's preprocess step in site.hs)
-prebuild:
+prebuild: rusty-site
+	@if [ $(RUSTY_A) -nt .rusty-stamp ] 2>/dev/null; then \
+		echo "Rust library changed, cleaning cabal cache..."; \
+		cabal clean; \
+		touch .rusty-stamp; \
+	fi
 	uv run --project config config/font-subset.py
 	sass scss/main.scss css/main.css --style compressed
 	sass scss/smooth.scss css/smooth.css --style compressed
@@ -13,12 +28,14 @@ prebuild:
 	sass scss/files-smooth.scss css/files-smooth.css --style compressed
 
 build: prebuild
-	cabal run site -- build
+	cabal run site --extra-lib-dirs=$(RUSTY_LIB) -- build
 
 # watch only needs prebuild, not build — Hakyll's watch builds on startup
 watch: prebuild
-	sass --watch scss/main.scss:css/main.css --style compressed & sass --watch scss/smooth.scss:css/smooth.css --style compressed & sass --watch scss/files.scss:css/files.css --style compressed & sass --watch scss/files-smooth.scss:css/files-smooth.css --style compressed & cabal run site -- watch
+	sass --watch scss/main.scss:css/main.css --style compressed & sass --watch scss/smooth.scss:css/smooth.css --style compressed & sass --watch scss/files.scss:css/files.css --style compressed & sass --watch scss/files-smooth.scss:css/files-smooth.css --style compressed & cabal run site --extra-lib-dirs=$(RUSTY_LIB) -- watch
 
 clean:
-	cabal run site -- clean
+	cabal run site --extra-lib-dirs=$(RUSTY_LIB) -- clean
 	rm -f css/main.css css/main.css.map css/smooth.css css/smooth.css.map css/files.css css/files.css.map css/files-smooth.css css/files-smooth.css.map
+	cd rusty-site && cargo clean
+	rm -f .rusty-stamp
