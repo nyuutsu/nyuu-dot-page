@@ -9,6 +9,7 @@ executable site
   other-modules:    CardCache
                   , Config
                   , Emoji
+                  , FileUtils
                   , ImageDimensions
                   , SyntaxMap
                   , Transforms

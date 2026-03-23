@@ -13,7 +13,7 @@ module Emoji
   , buildEmojiAssets
   ) where
 
-import Control.Monad (filterM, guard, unless)
+import Control.Monad (guard, unless)
 import Data.Char (ord)
 import Data.Maybe (mapMaybe)
 import qualified Data.Set as Set
@@ -22,8 +22,9 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import Debug.Trace (trace)
 import Numeric (showHex)
-import System.Directory (copyFile, createDirectoryIfMissing, doesDirectoryExist,
-                         doesFileExist, listDirectory)
+import FileUtils (findFiles)
+import System.Directory (copyFile, createDirectoryIfMissing, doesFileExist,
+                         listDirectory)
 import System.FilePath ((</>), dropExtension, takeExtension)
 
 -- | Set of emoji codepoints that have SVG assets available
@@ -90,16 +91,6 @@ copySvg srcDir dstDir cp = do
 
 
 -- ---- Helpers ----
-
--- | Recursively find files with given extensions
-findFiles :: [String] -> FilePath -> IO [FilePath]
-findFiles exts dir = do
-  entries <- map (dir </>) <$> listDirectory dir
-  files   <- filterM doesFileExist entries
-  subdirs <- filterM doesDirectoryExist entries
-  let matching = filter ((`elem` exts) . takeExtension) files
-  rest <- concat <$> mapM (findFiles exts) subdirs
-  return (matching ++ rest)
 
 data EmojiRange = EmojiRange
   { rangeStart :: !Int

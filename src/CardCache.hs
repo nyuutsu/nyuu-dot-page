@@ -41,6 +41,7 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import Control.Exception (try, SomeException)
 import Control.Monad (forM, foldM)
+import FileUtils (findFiles)
 import System.Directory (listDirectory, doesDirectoryExist, createDirectoryIfMissing,
                          doesFileExist)
 import System.FilePath ((</>), takeExtension, takeBaseName, takeDirectory)
@@ -392,7 +393,7 @@ scanCardReferences opts contentDir = do
   exists <- doesDirectoryExist contentDir
   if not exists then return Set.empty
   else do
-    mdFiles <- findMdFiles contentDir
+    mdFiles <- findFiles [".md"] contentDir
     refs <- forM mdFiles $ \path -> do
       content <- TIO.readFile path
       result <- runIO (readMarkdown opts content)
@@ -433,16 +434,6 @@ normalizeQuotes = T.map normalize
     normalize '\x201C' = '"'   -- left double quote -> straight
     normalize '\x201D' = '"'   -- right double quote -> straight
     normalize c = c
-
--- | Find all .md files recursively
-findMdFiles :: FilePath -> IO [FilePath]
-findMdFiles dir = do
-  entries <- listDirectory dir
-  concat <$> forM entries (\entry -> do
-    let path = dir </> entry
-    isDir <- doesDirectoryExist path
-    if isDir then findMdFiles path
-    else return [path | takeExtension path == ".md"])
 
 -- =============================================================================
 -- Image copying
