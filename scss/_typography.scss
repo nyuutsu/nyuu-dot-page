@@ -3,6 +3,7 @@
 // Font faces, headings, body text, links, code
 // =============================================================================
 
+@use 'sass:list';
 @use 'variables' as *;
 
 // -----------------------------------------------------------------------------
@@ -12,148 +13,34 @@
 
 // Latin + common punctuation/symbols (shared by all Fell cuts)
 $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF, U+2100-214F;
+$unicode-japanese: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
 
 // IM Fell English: body text (13.5pt historical cut, van Dijck/Briot, 1672)
-@font-face {
-  font-family: 'IM Fell English';
-  src: url('#{$asset-origin}/fonts/IMFellEnglish-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: $unicode-latin, U+261C, U+261E;  // manicules ☜☞
-}
-
-@font-face {
-  font-family: 'IM Fell English';
-  src: url('#{$asset-origin}/fonts/IMFellEnglish-Italic.woff2') format('woff2');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-  unicode-range: $unicode-latin;
-}
-
-@font-face {
-  font-family: 'IM Fell English SC';
-  src: url('#{$asset-origin}/fonts/IMFellEnglish-SC.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: $unicode-latin;
-}
+@include font-face('IM Fell English',    'IMFellEnglish-Regular', $range: ($unicode-latin, U+261C, U+261E));  // manicules ☜☞
+@include font-face('IM Fell English',    'IMFellEnglish-Italic', $style: italic, $range: $unicode-latin);
+@include font-face('IM Fell English SC', 'IMFellEnglish-SC', $range: $unicode-latin);
 
 // IM Fell Great Primer: subheadings h3-h4 (17pt historical cut, de Walpergen, 1684)
-@font-face {
-  font-family: 'IM Fell Great Primer';
-  src: url('#{$asset-origin}/fonts/IMFellGreatPrimer-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: $unicode-latin;
-}
-
-@font-face {
-  font-family: 'IM Fell Great Primer';
-  src: url('#{$asset-origin}/fonts/IMFellGreatPrimer-Italic.woff2') format('woff2');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-  unicode-range: $unicode-latin;
-}
-
-@font-face {
-  font-family: 'IM Fell Great Primer SC';
-  src: url('#{$asset-origin}/fonts/IMFellGreatPrimer-SC.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: $unicode-latin;
-}
+@include font-face('IM Fell Great Primer',    'IMFellGreatPrimer-Regular', $range: $unicode-latin);
+@include font-face('IM Fell Great Primer',    'IMFellGreatPrimer-Italic', $style: italic, $range: $unicode-latin);
+@include font-face('IM Fell Great Primer SC', 'IMFellGreatPrimer-SC', $range: $unicode-latin);
 
 // IM Fell Double Pica: headings h1-h2 (21pt historical cut, de Walpergen, 1684)
-@font-face {
-  font-family: 'IM Fell Double Pica';
-  src: url('#{$asset-origin}/fonts/IMFellDoublePica-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: $unicode-latin;
-}
-
-@font-face {
-  font-family: 'IM Fell Double Pica';
-  src: url('#{$asset-origin}/fonts/IMFellDoublePica-Italic.woff2') format('woff2');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-  unicode-range: $unicode-latin;
-}
-
-@font-face {
-  font-family: 'IM Fell Double Pica SC';
-  src: url('#{$asset-origin}/fonts/IMFellDoublePica-SC.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: $unicode-latin;
-}
+@include font-face('IM Fell Double Pica',    'IMFellDoublePica-Regular', $range: $unicode-latin);
+@include font-face('IM Fell Double Pica',    'IMFellDoublePica-Italic', $style: italic, $range: $unicode-latin);
+@include font-face('IM Fell Double Pica SC', 'IMFellDoublePica-SC', $range: $unicode-latin);
 
 // IM Fell DW Pica: small/UI text (12.5pt historical cut, de Walpergen, 1692)
-@font-face {
-  font-family: 'IM Fell DW Pica';
-  src: url('#{$asset-origin}/fonts/IMFellDWPica-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: $unicode-latin;
-}
+@include font-face('IM Fell DW Pica',    'IMFellDWPica-Regular', $range: $unicode-latin);
+@include font-face('IM Fell DW Pica',    'IMFellDWPica-Italic', $style: italic, $range: $unicode-latin);
+@include font-face('IM Fell DW Pica SC', 'IMFellDWPica-SC', $range: $unicode-latin);
 
-@font-face {
-  font-family: 'IM Fell DW Pica';
-  src: url('#{$asset-origin}/fonts/IMFellDWPica-Italic.woff2') format('woff2');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-  unicode-range: $unicode-latin;
-}
+// Sarasa Mono J: monospace, CJK characters in code blocks
+@include font-face('Sarasa Mono J', 'SarasaMonoJ-Regular');
+@include font-face('Sarasa Mono J', 'SarasaMonoJ-Bold', $weight: 700);
 
-@font-face {
-  font-family: 'IM Fell DW Pica SC';
-  src: url('#{$asset-origin}/fonts/IMFellDWPica-SC.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: $unicode-latin;
-}
-
-// Monospace font: Sarasa Mono J
-// Used for CJK characters in code blocks
-@font-face {
-  font-family: 'Sarasa Mono J';
-  src: url('#{$asset-origin}/fonts/SarasaMonoJ-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Sarasa Mono J';
-  src: url('#{$asset-origin}/fonts/SarasaMonoJ-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-// Japanese font: Oradano Mincho GSRR
-// Revival of 1909 Tsukiji Type Foundry metal type; chosen to pair with IM Fell
-@font-face {
-  font-family: 'Oradano-mincho-GSRR';
-  src: url('#{$asset-origin}/fonts/OradanoGSRR.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  // Japanese character ranges
-  unicode-range: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
-}
+// Oradano Mincho GSRR: 1909 Tsukiji Type Foundry metal type revival, pairs with IM Fell
+@include font-face('Oradano-mincho-GSRR', 'OradanoGSRR', $range: $unicode-japanese);
 
 // ---- Inline emoji (Blobmoji SVG images) ----
 
@@ -438,59 +325,49 @@ pre {
   }
 }
 
-// -----------------------------------------------------------------------------
-// Syntax Highlighting Colors
-// Token classes generated by Pandoc's highlighter
-// Inspired by breezedark but tweaked for this site's palette
-// -----------------------------------------------------------------------------
+// Syntax highlighting colors (Pandoc token classes, breezedark-inspired)
+$syntax-colors: (
+  co: #7a7c7d,  // Comment
+  an: #3f8058,  // Annotation
+  cv: #7f8c8d,  // CommentVar
+  do: #a43340,  // Documentation
+  kw: #c9a0dc,  // Keyword (lavender)
+  cf: #fdbc4b,  // ControlFlow (yellow)
+  op: #cfcfc2,  // Operator
+  st: #f44f4f,  // String (coral red)
+  ch: #3daee9,  // Char
+  sc: #3daee9,  // SpecialChar
+  ss: #da4453,  // SpecialString
+  vs: #da4453,  // VerbatimString
+  dv: #f67400,  // DecVal (orange)
+  bn: #f67400,  // BaseN
+  fl: #f67400,  // Float
+  dt: #5dade2,  // DataType (light blue)
+  at: #2980b9,  // Attribute
+  fu: #8e44ad,  // Function (purple)
+  va: #27aeae,  // Variable (teal)
+  cn: #27aeae,  // Constant
+  bu: #7f8c8d,  // BuiltIn
+  im: #27ae60,  // Import (green)
+  pp: #27ae60,  // Preprocessor
+  ot: #27ae60,  // Other (often type signatures)
+  ex: #0099ff,  // Extension
+  wa: #da4453,  // Warning
+  in: #c45b00,  // Information
+);
+$syntax-bold: (kw, cf, cn, ex);
 
-// Comments
-code span.co { color: #7a7c7d; }                        // Comment
-code span.an { color: #3f8058; }                        // Annotation
-code span.cv { color: #7f8c8d; }                        // CommentVar
-code span.do { color: #a43340; }                        // Documentation
+@each $class, $color in $syntax-colors {
+  code span.#{$class} {
+    color: $color;
+    @if list.index($syntax-bold, $class) { font-weight: 700; }
+  }
+}
 
-// Keywords & Control Flow
-code span.kw { color: #c9a0dc; font-weight: 700; }      // Keyword (lavender)
-code span.cf { color: #fdbc4b; font-weight: 700; }      // ControlFlow (yellow)
-code span.op { color: #cfcfc2; }                        // Operator
-
-// Strings & Characters
-code span.st { color: #f44f4f; }                        // String (coral red)
-code span.ch { color: #3daee9; }                        // Char
-code span.sc { color: #3daee9; }                        // SpecialChar
-code span.ss { color: #da4453; }                        // SpecialString
-code span.vs { color: #da4453; }                        // VerbatimString
-
-// Numbers
-code span.dv { color: #f67400; }                        // DecVal (orange)
-code span.bn { color: #f67400; }                        // BaseN
-code span.fl { color: #f67400; }                        // Float
-
-// Types & Data
-code span.dt { color: #5dade2; }                        // DataType (light blue)
-code span.at { color: #2980b9; }                        // Attribute
-
-// Functions & Variables
-code span.fu { color: #8e44ad; }                        // Function (purple)
-code span.va { color: #27aeae; }                        // Variable (teal)
-code span.cn { color: #27aeae; font-weight: 700; }      // Constant
-code span.bu { color: #7f8c8d; }                        // BuiltIn
-
-// Imports & Preprocessor
-code span.im { color: #27ae60; }                        // Import (green)
-code span.pp { color: #27ae60; }                        // Preprocessor
-code span.ot { color: #27ae60; }                        // Other (often type signatures)
-code span.ex { color: #0099ff; font-weight: 700; }      // Extension
-
-// Errors & Warnings
-code span.er { color: #da4453; text-decoration: underline; } // Error
-code span.wa { color: #da4453; }                        // Warning
-code span.al { color: #95da4c; background: #4d1f24; font-weight: 700; } // Alert
-code span.in { color: #c45b00; }                        // Information
-
-// Region markers (folding)
-code span.re { color: #2980b9; background: #153042; }   // RegionMarker
+// Tokens with unique properties beyond color + weight
+code span.er { color: #da4453; text-decoration: underline; }  // Error
+code span.al { color: #95da4c; background: #4d1f24; font-weight: 700; }  // Alert
+code span.re { color: #2980b9; background: #153042; }  // RegionMarker
 
 // -----------------------------------------------------------------------------
 // Line Numbers

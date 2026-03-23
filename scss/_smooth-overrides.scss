@@ -18,91 +18,25 @@
 // Three optical sizes: Caption (<14px), Regular (14-24px), Display (24px+)
 // -----------------------------------------------------------------------------
 
-// Body text (Regular optical size)
-@font-face {
-  font-family: 'Source Serif 4';
-  src: url('#{$asset-origin}/fonts/SourceSerif4-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+$unicode-japanese: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
 
-@font-face {
-  font-family: 'Source Serif 4';
-  src: url('#{$asset-origin}/fonts/SourceSerif4-It.woff2') format('woff2');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
+// Source Serif 4: body text (Regular optical size)
+@include font-face('Source Serif 4', 'SourceSerif4-Regular');
+@include font-face('Source Serif 4', 'SourceSerif4-It', $style: italic);
+@include font-face('Source Serif 4', 'SourceSerif4-Bold', $weight: 700);
 
-@font-face {
-  font-family: 'Source Serif 4';
-  src: url('#{$asset-origin}/fonts/SourceSerif4-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+// Source Serif 4 Display: headings
+@include font-face('Source Serif 4 Display', 'SourceSerif4Display-Regular');
+@include font-face('Source Serif 4 Display', 'SourceSerif4Display-It', $style: italic);
+@include font-face('Source Serif 4 Display', 'SourceSerif4Display-Bold', $weight: 700);
 
-// Headings (Display optical size)
-@font-face {
-  font-family: 'Source Serif 4 Display';
-  src: url('#{$asset-origin}/fonts/SourceSerif4Display-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Source Serif 4 Display';
-  src: url('#{$asset-origin}/fonts/SourceSerif4Display-It.woff2') format('woff2');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Source Serif 4 Display';
-  src: url('#{$asset-origin}/fonts/SourceSerif4Display-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-// Small text (Caption optical size)
-@font-face {
-  font-family: 'Source Serif 4 Caption';
-  src: url('#{$asset-origin}/fonts/SourceSerif4Caption-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Source Serif 4 Caption';
-  src: url('#{$asset-origin}/fonts/SourceSerif4Caption-It.woff2') format('woff2');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
+// Source Serif 4 Caption: small text
+@include font-face('Source Serif 4 Caption', 'SourceSerif4Caption-Regular');
+@include font-face('Source Serif 4 Caption', 'SourceSerif4Caption-It', $style: italic);
 
 // Noto Serif JP: Japanese text
-@font-face {
-  font-family: 'Noto Serif JP';
-  src: url('#{$asset-origin}/fonts/NotoSerifJP-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
-}
-
-@font-face {
-  font-family: 'Noto Serif JP';
-  src: url('#{$asset-origin}/fonts/NotoSerifJP-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
-}
+@include font-face('Noto Serif JP', 'NotoSerifJP-Regular', $range: $unicode-japanese);
+@include font-face('Noto Serif JP', 'NotoSerifJP-Bold', $weight: 700, $range: $unicode-japanese);
 
 // -----------------------------------------------------------------------------
 // SC → Bold

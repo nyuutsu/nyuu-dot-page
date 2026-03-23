@@ -190,6 +190,18 @@ $root-font-4k:      1.875rem !default;     // ~30px
 // Mixins
 // -----------------------------------------------------------------------------
 
+// Emit a @font-face block. File path is relative to $asset-origin/fonts/.
+@mixin font-face($family, $file, $weight: 400, $style: normal, $range: null) {
+  @font-face {
+    font-family: $family;
+    src: url('#{$asset-origin}/fonts/#{$file}.woff2') format('woff2');
+    font-weight: $weight;
+    font-style: $style;
+    font-display: swap;
+    @if $range { unicode-range: $range; }
+  }
+}
+
 // 8-direction text-shadow for white outline on text over dark backgrounds
 @mixin text-outline($alpha: 0.4) {
   text-shadow:
