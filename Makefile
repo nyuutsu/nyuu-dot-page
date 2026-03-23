@@ -1,5 +1,5 @@
 # nyuu.page build system
-.PHONY: all build watch clean prebuild rusty-site
+.PHONY: all build watch clean prebuild rusty-site precompress
 
 RUSTY_LIB := $(CURDIR)/rusty-site/target/release
 RUSTY_A   := $(RUSTY_LIB)/librusty_site.a
@@ -29,6 +29,22 @@ prebuild: rusty-site
 
 build: prebuild
 	cabal run site --extra-lib-dirs=$(RUSTY_LIB) -- build
+
+# Precompress _site/ for Caddy's precompressed file_server.
+# Brotli q11 (max), zstd q19 (max), gzip q9 (max).
+# Only compresses text-like files; images are already compressed.
+COMPRESS_EXTS := -name '*.html' -o -name '*.css' -o -name '*.js' \
+                 -o -name '*.svg' -o -name '*.xml' -o -name '*.json' \
+                 -o -name '*.txt' -o -name '*.map'
+
+precompress: build
+	@echo "Precompressing _site/ ..."
+	@find _site/ -type f \( $(COMPRESS_EXTS) \) | while read f; do \
+		brotli -q 11 -f -o "$$f.br" "$$f"; \
+		zstd -q -19 -f -o "$$f.zst" "$$f"; \
+		gzip -9 -k -f "$$f"; \
+	done
+	@echo "Done."
 
 # watch only needs prebuild, not build — Hakyll's watch builds on startup
 watch: prebuild
