@@ -1,5 +1,33 @@
-// Smooth site stylesheet: Source Serif 4 + Noto Serif JP
-// Same structure as main.scss, with font overrides appended.
+// =============================================================================
+// Smooth Site Stylesheet: Source Serif 4 + Noto Serif JP
+// For readers who find IM Fell's rough texture uncomfortable.
+//
+// Font stacks are configured here via @use ... with (); every partial that
+// references $font-body etc. automatically gets Source Serif 4 instead of
+// IM Fell. Only genuine behavior differences (SC→bold, optical sizing for
+// small text) remain as overrides in _smooth-overrides.scss.
+// =============================================================================
+
+@use 'variables' as * with (
+  // Source Serif 4: three optical sizes (Caption, Regular, Display)
+  $font-body:          ('Source Serif 4', serif),
+  $font-body-sc:       ('Source Serif 4', serif),
+  $font-heading:       ('Source Serif 4 Display', 'Source Serif 4', serif),
+  $font-heading-sc:    ('Source Serif 4 Display', 'Source Serif 4', serif),
+  $font-subheading:    ('Source Serif 4 Display', 'Source Serif 4', serif),
+  $font-subheading-sc: ('Source Serif 4 Display', 'Source Serif 4', serif),
+  $font-small:         ('Source Serif 4 Caption', 'Source Serif 4', serif),
+  $font-small-sc:      ('Source Serif 4 Caption', 'Source Serif 4', serif),
+  $font-japanese:      'Noto Serif JP',
+
+  // Conventional screen-reading sizes (no texture detail to preserve)
+  $root-font-tablet:  1.063rem,   // ~17px (was 1.25rem)
+  $root-font-laptop:  1.125rem,   // ~18px (was 1.375rem)
+  $root-font-desktop: 1.188rem,   // ~19px (was 1.5rem)
+  $root-font-large:   1.25rem,    // ~20px (was 1.625rem)
+  $root-font-4k:      1.375rem,   // ~22px (was 1.875rem)
+);
+
 @use 'reset';
 @use 'typography';
 @use 'layout';

@@ -1,7 +1,14 @@
 // =============================================================================
-// Smooth Site Overrides: Source Serif 4 + Noto Serif JP
-// For readers who find IM Fell's rough texture uncomfortable.
-// Same layout and sizing; different typefaces.
+// Smooth Site Overrides
+// Font-face declarations for Source Serif 4 + Noto Serif JP, plus the few
+// behavioral differences that can't be expressed as variable swaps.
+//
+// Font-family rules are NOT here — those are handled by the entry point
+// configuring _variables.scss via @use ... with (). This file only contains:
+//   1. @font-face declarations (the actual typeface files)
+//   2. SC→bold: IM Fell uses separate SC font cuts; Source Serif uses bold weight
+//   3. Optical sizing for small text (Caption cut for figcaption/footer)
+//   4. Nav toggles
 // =============================================================================
 
 @use 'variables' as *;
@@ -98,76 +105,34 @@
 }
 
 // -----------------------------------------------------------------------------
-// Font Family Overrides
-// Replace IM Fell with Source Serif 4, Oradano with Noto Serif JP
+// SC → Bold
+// IM Fell has separate small-caps font cuts (weight 400, visually distinct).
+// Source Serif 4 has no SC cuts; use bold weight for the same visual emphasis.
 // -----------------------------------------------------------------------------
 
-// Source Serif 4 doesn't need the large sizes that IM Fell requires for
-// visible texture. These are conventional screen-reading sizes.
-html {
-  font-size: 1rem;                                              // phone (16px)
-
-  @media (min-width: $breakpoint-tablet)  { font-size: 1.063rem; }  // ~17px
-  @media (min-width: $breakpoint-laptop)  { font-size: 1.125rem; }  // ~18px
-  @media (min-width: $breakpoint-desktop) { font-size: 1.188rem; }  // ~19px
-  @media (min-width: $breakpoint-large)   { font-size: 1.25rem; }   // ~20px
-  @media (min-width: $breakpoint-4k)      { font-size: 1.375rem; }  // ~22px
-}
-
-$ss4-body: 'Source Serif 4', serif;
-$ss4-heading: 'Source Serif 4 Display', 'Source Serif 4', serif;
-$ss4-small: 'Source Serif 4 Caption', 'Source Serif 4', serif;
-
-body {
-  font-family: $ss4-body;
-}
-
-[lang="ja"] {
-  font-family: 'Noto Serif JP';
-}
-
-h1, h2 {
-  font-family: $ss4-heading;
-}
-
-h3, h4 {
-  font-family: $ss4-heading;
-}
-
-h5, h6 {
-  font-family: $ss4-body;
-}
-
-// Source Serif 4 has a real bold weight; use it instead of small-caps
 strong, b {
-  font-family: $ss4-body;
   font-weight: 700;
   letter-spacing: normal;
 }
 
-// Small text (metadata, captions, footer)
-.site-footer p,
-figcaption,
-code {
-  font-family: $ss4-small;
-}
-
-// Blockquote decorative marks
-blockquote::before,
-blockquote::after {
-  font-family: $ss4-heading;
-}
-
-// Admonition labels
 .admonition-title {
-  font-family: $ss4-body;
   font-weight: 700;
 }
 
-// Chat names
-.chat-name {
-  font-family: $ss4-body;
+// -----------------------------------------------------------------------------
+// Optical sizing for small text
+// Source Serif 4 Caption is designed for small sizes; use it where the base
+// rules inherit body font but the text is actually small.
+// -----------------------------------------------------------------------------
+
+figcaption,
+.site-footer p {
+  font-family: $font-small;
 }
+
+// -----------------------------------------------------------------------------
+// Nav toggles
+// -----------------------------------------------------------------------------
 
 // Hide "smooth font" nav links; we're on the smooth site
 .nav-smooth, .nav-smooth-files {

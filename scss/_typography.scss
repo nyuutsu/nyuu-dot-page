@@ -187,13 +187,13 @@ html {
   // Root font size per device class; see Typography Scale in _variables.scss
   // for derivation. Smaller screens are closer to the face; the font can be
   // physically smaller while subtending the same angle on the retina.
-  font-size: 1rem;                                         // phone (~16px)
+  font-size: $root-font-phone;
 
-  @media (min-width: $breakpoint-tablet)  { font-size: 1.25rem; }   // ~20px
-  @media (min-width: $breakpoint-laptop)  { font-size: 1.375rem; }  // ~22px
-  @media (min-width: $breakpoint-desktop) { font-size: 1.5rem; }    // ~24px
-  @media (min-width: $breakpoint-large)   { font-size: 1.625rem; }  // ~26px
-  @media (min-width: $breakpoint-4k)      { font-size: 1.875rem; }  // ~30px
+  @media (min-width: $breakpoint-tablet)  { font-size: $root-font-tablet; }
+  @media (min-width: $breakpoint-laptop)  { font-size: $root-font-laptop; }
+  @media (min-width: $breakpoint-desktop) { font-size: $root-font-desktop; }
+  @media (min-width: $breakpoint-large)   { font-size: $root-font-large; }
+  @media (min-width: $breakpoint-4k)      { font-size: $root-font-4k; }
 }
 
 body {

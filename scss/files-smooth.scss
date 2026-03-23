@@ -1,4 +1,25 @@
-// Files page stylesheet: smooth variant (smooth-files.nyuu.page)
-// Same as files.scss with Source Serif 4 + Noto Serif JP overrides.
+// =============================================================================
+// Files Page Stylesheet: Smooth Variant (smooth-files.nyuu.page)
+// Same font configuration as smooth.scss; files-base provides the layout.
+// =============================================================================
+
+@use 'variables' with (
+  $font-body:          ('Source Serif 4', serif),
+  $font-body-sc:       ('Source Serif 4', serif),
+  $font-heading:       ('Source Serif 4 Display', 'Source Serif 4', serif),
+  $font-heading-sc:    ('Source Serif 4 Display', 'Source Serif 4', serif),
+  $font-subheading:    ('Source Serif 4 Display', 'Source Serif 4', serif),
+  $font-subheading-sc: ('Source Serif 4 Display', 'Source Serif 4', serif),
+  $font-small:         ('Source Serif 4 Caption', 'Source Serif 4', serif),
+  $font-small-sc:      ('Source Serif 4 Caption', 'Source Serif 4', serif),
+  $font-japanese:      'Noto Serif JP',
+
+  $root-font-tablet:  1.063rem,
+  $root-font-laptop:  1.125rem,
+  $root-font-desktop: 1.188rem,
+  $root-font-large:   1.25rem,
+  $root-font-4k:      1.375rem,
+);
+
 @use 'files-base';
 @use 'smooth-overrides';
