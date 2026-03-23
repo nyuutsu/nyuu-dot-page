@@ -78,8 +78,8 @@ scanForEmoji dirs = do
 -- | Copy a single emoji SVG, skipping if destination already exists
 -- (avoids retriggering Hakyll's file watcher during make watch)
 copySvg :: FilePath -> FilePath -> Int -> IO ()
-copySvg srcDir dstDir cp = do
-  let hex = codepointHex cp
+copySvg srcDir dstDir codepoint = do
+  let hex = codepointHex codepoint
       src = srcDir </> ("emoji_u" ++ hex ++ ".svg")
       dst = dstDir </> (hex ++ ".svg")
   dstExists <- doesFileExist dst

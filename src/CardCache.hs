@@ -285,14 +285,14 @@ loadFranchiseDir dir fileFilter initial foldFile =
     jsonFiles <- sort . filter fileFilter <$> listDirectory dir
     foldM processFile initial jsonFiles
   where
-    processFile acc filename = do
+    processFile result filename = do
       let path = dir </> filename
-      result <- decodeJSONFile path
-      case result of
+      decoded <- decodeJSONFile path
+      case decoded of
         Nothing -> do
           putStrLn $ "  Warning: Failed to parse " ++ path
-          return acc
-        Just cards -> return $ foldFile acc filename cards
+          return result
+        Just cards -> return $ foldFile result filename cards
 
 -- | Standard filter: all .json files
 isJSON :: String -> Bool
@@ -319,20 +319,20 @@ loadPokemon configDir =
     -- en.json is a set metadata index (set names, release dates), not card data
     isPokemonJSON f = isJSON f && takeBaseName f /= "en"
 
-    foldSet (acc, seen) filename cards =
+    foldSet (cardMap, seenNames) filename cards =
       let setCode = T.pack $ takeBaseName filename
-      in foldl' (addCard setCode) (acc, seen) cards
+      in foldl' (addCard setCode) (cardMap, seenNames) cards
 
-    addCard setCode (acc, seen) card =
+    addCard setCode (cardMap, seenNames) card =
       let name = pokemonName card
           imagePath = flattenImagePath (pokemonImage card)
           cardData = CardData name (formatPokemonAlt card) imagePath "pokemon"
           -- Always register set:name and pokemon:name
           withKeys = Map.insert (setCode <> ":" <> name) cardData
-                   $ Map.insert ("pokemon:" <> name) cardData acc
-      in if Set.member name seen
-         then (withKeys, seen)
-         else (Map.insert name cardData withKeys, Set.insert name seen)
+                   $ Map.insert ("pokemon:" <> name) cardData cardMap
+      in if Set.member name seenNames
+         then (withKeys, seenNames)
+         else (Map.insert name cardData withKeys, Set.insert name seenNames)
 
 -- | Load Yu-Gi-Oh cards from config/yugioh/*.json
 -- Keys: bare name, yugioh:name
@@ -340,13 +340,13 @@ loadYugioh :: FilePath -> IO (Map Text CardData)
 loadYugioh configDir =
   loadFranchiseDir (configDir </> "yugioh") isJSON Map.empty foldCards
   where
-    foldCards acc _ = foldl' addCard acc
+    foldCards cards _ = foldl' addCard cards
 
-    addCard acc card =
+    addCard cards card =
       let name = yugiohName card
           imagePath = flattenImagePath (yugiohImage card)
           cardData = CardData name (formatYugiohAlt card) imagePath "yugioh"
-      in insertKeyed "yugioh" name cardData acc
+      in insertKeyed "yugioh" name cardData cards
 
 -- | Load MTG cards from config/mtg/*.json
 -- Handles DFC: each face becomes its own entry
@@ -355,20 +355,20 @@ loadMtg :: FilePath -> IO (Map Text CardData)
 loadMtg configDir =
   loadFranchiseDir (configDir </> "mtg") isJSON Map.empty foldCards
   where
-    foldCards acc _ = foldl' addCard acc
+    foldCards cards _ = foldl' addCard cards
 
-    addCard acc card = case mtgCardFaces card of
+    addCard cards card = case mtgCardFaces card of
       Just faces@(front:_) ->
         -- DFC: each face gets its own entry, full name points to front face
         let fullCardData = CardData (mtgName card) (formatMtgFaceAlt front)
                              (flattenImagePath $ mtgFaceImage front) "mtg"
             faceEntries = Map.fromList $ concatMap faceKeys faces
         in insertKeyed "mtg" (mtgName card) fullCardData
-         $ Map.union faceEntries acc
+         $ Map.union faceEntries cards
       _ ->
         let cardData = CardData (mtgName card) (formatMtgCardAlt card)
                          (flattenImagePath $ mtgImage card) "mtg"
-        in insertKeyed "mtg" (mtgName card) cardData acc
+        in insertKeyed "mtg" (mtgName card) cardData cards
 
     faceKeys face =
       let cardData = CardData (mtgFaceName face) (formatMtgFaceAlt face)
@@ -527,4 +527,4 @@ decodeJSONFile path = do
   result <- try (BS.readFile path) :: IO (Either SomeException BS.ByteString)
   case result of
     Left _   -> return Nothing
-    Right bs -> return $ Aeson.decodeStrict bs
+    Right bytes -> return $ Aeson.decodeStrict bytes

@@ -35,10 +35,10 @@ transformInline _ x = [x]
 emojiInline :: Char -> Inline
 emojiInline c =
   let hex = T.pack (showHex (ord c) "")
-      ch  = T.singleton c
+      charText = T.singleton c
       src = "/images/emoji/" <> hex <> ".svg"
-      img = Image ("", ["emoji-img"], [("draggable", "false")]) [Str ch] (src, "")
-      hiddenText = Span ("", ["emoji-text"], [("aria-hidden", "true")]) [Str ch]
+      img = Image ("", ["emoji-img"], [("draggable", "false")]) [Str charText] (src, "")
+      hiddenText = Span ("", ["emoji-text"], [("aria-hidden", "true")]) [Str charText]
   in Span ("", ["emoji"], []) [img, hiddenText]
 
 -- | Split a text string around emoji characters, producing a mix of
@@ -48,17 +48,17 @@ processText assets = go T.empty
   where
     go buffer txt = case T.uncons txt of
       Nothing -> flush buffer []
-      Just (c, rest)
-        | Set.member (ord c) assets ->
+      Just (character, rest)
+        | Set.member (ord character) assets ->
             let rest' = stripVariationSelector rest
-            in flush buffer (emojiInline c : go T.empty rest')
+            in flush buffer (emojiInline character : go T.empty rest')
         | otherwise ->
-            go (T.snoc buffer c) rest
+            go (T.snoc buffer character) rest
 
     flush buffer rest
       | T.null buffer = rest
       | otherwise     = Str buffer : rest
 
     stripVariationSelector t = case T.uncons t of
-      Just ('\xFE0F', r) -> r
+      Just ('\xFE0F', remaining) -> remaining
       _ -> t

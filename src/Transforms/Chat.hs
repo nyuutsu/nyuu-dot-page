@@ -79,8 +79,8 @@ parseChat config blocks = map (buildMessage config) (groupByMessage blocks)
     -- accumulated content blocks that followed it.
     groupByMessage :: [Block] -> [ChatMessage]
     groupByMessage [] = []
-    groupByMessage bs =
-      let (groups, orphans) = foldr collectBlock ([], []) bs
+    groupByMessage inputBlocks =
+      let (groups, orphans) = foldr collectBlock ([], []) inputBlocks
       in case orphans of
            (_:_) -> trace "[WARN] Chat div has content before first @Speaker[key]: line" groups
            []    -> groups

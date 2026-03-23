@@ -14,21 +14,18 @@ module ImageDimensions
   , lookupDimensions
   ) where
 
-import Data.Char (toLower)
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
 import Data.Maybe (catMaybes)
 import Data.Text (Text)
 import qualified Data.Text as T
-import Control.Monad (forM)
-import FileUtils (withDirectoryOrDefault)
+import FileUtils (findFiles, withDirectoryOrDefault)
 import Foreign.C.String (withCString)
 import Foreign.C.Types (CChar, CInt(..), CUInt(..))
 import Foreign.Marshal.Alloc (alloca)
 import Foreign.Ptr (Ptr)
 import Foreign.Storable (peek)
-import System.Directory (listDirectory, doesDirectoryExist)
-import System.FilePath ((</>), takeExtension, makeRelative)
+import System.FilePath ((</>), makeRelative)
 
 -- | Dimensions for a single image
 data Dimensions = Dimensions
@@ -47,8 +44,7 @@ lookupDimensions path (ImageDimensions m) = Map.lookup path m
 scanImageDimensions :: FilePath -> IO ImageDimensions
 scanImageDimensions staticDir =
   withDirectoryOrDefault missingWarning imagesDir $ do
-    files <- findFilesRecursive imagesDir
-    let imageFiles = filter (isImageExt . map toLower . takeExtension) files
+    imageFiles <- findFiles [".png", ".jpg", ".jpeg", ".gif", ".webp"] imagesDir
     dimensions <- catMaybes <$> mapM (readDimensions staticDir) imageFiles
     putStrLn $ "Scanned dimensions for " ++ show (length dimensions) ++ " images"
     return $ ImageDimensions $ Map.fromList dimensions
@@ -64,17 +60,6 @@ scanImageDimensions staticDir =
 
 emptyDimensions :: ImageDimensions
 emptyDimensions = ImageDimensions Map.empty
-
-isImageExt :: String -> Bool
-isImageExt ext = ext `elem` [".png", ".jpg", ".jpeg", ".gif", ".webp"]
-
-findFilesRecursive :: FilePath -> IO [FilePath]
-findFilesRecursive dir = do
-  entries <- listDirectory dir
-  concat <$> forM entries (\entry -> do
-    let path = dir </> entry
-    isDir <- doesDirectoryExist path
-    if isDir then findFilesRecursive path else return [path])
 
 -- ---------------------------------------------------------------------------
 -- FFI binding to Rust imagesize crate
