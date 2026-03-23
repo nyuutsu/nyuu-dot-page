@@ -69,10 +69,10 @@ scanForEmoji dirs = do
   files <- concat <$> mapM (findFiles [".md", ".hs", ".scss"]) dirs
   contents <- mapM TIO.readFile files
   let allText = T.concat contents
-  return $ T.foldl' (\acc c ->
-    if isEmojiCodepoint (ord c)
-      then Set.insert (ord c) acc
-      else acc) Set.empty allText
+  return $ T.foldl' (\codepoints character ->
+    if isEmojiCodepoint (ord character)
+      then Set.insert (ord character) codepoints
+      else codepoints) Set.empty allText
 
 -- | Copy a single emoji SVG, skipping if destination already exists
 -- (avoids retriggering Hakyll's file watcher during make watch)
@@ -101,29 +101,34 @@ findFiles exts dir = do
   rest <- concat <$> mapM (findFiles exts) subdirs
   return (matching ++ rest)
 
+data EmojiRange = EmojiRange
+  { rangeStart :: !Int
+  , rangeEnd   :: !Int
+  }
+
 -- | Check if a codepoint falls in an emoji Unicode range
 isEmojiCodepoint :: Int -> Bool
-isEmojiCodepoint cp = any (uncurry inRange) emojiRanges
-  where inRange lo hi = cp >= lo && cp <= hi
+isEmojiCodepoint codepoint = any inRange emojiRanges
+  where inRange range = codepoint >= rangeStart range && codepoint <= rangeEnd range
 
-emojiRanges :: [(Int, Int)]
+emojiRanges :: [EmojiRange]
 emojiRanges =
-  [ (0x203C, 0x203C), (0x2049, 0x2049)
-  , (0x2122, 0x2122), (0x2139, 0x2139)
-  , (0x2194, 0x2199), (0x21A9, 0x21AA)
-  , (0x231A, 0x231B), (0x2328, 0x2328)
-  , (0x23CF, 0x23CF), (0x23E9, 0x23F3), (0x23F8, 0x23FA)
-  , (0x24C2, 0x24C2)
-  , (0x25AA, 0x25AB), (0x25B6, 0x25B6), (0x25C0, 0x25C0), (0x25FB, 0x25FE)
-  , (0x2600, 0x27BF)
-  , (0x2934, 0x2935), (0x2B05, 0x2B07), (0x2B1B, 0x2B1C)
-  , (0x2B50, 0x2B50), (0x2B55, 0x2B55)
-  , (0x3030, 0x3030), (0x303D, 0x303D), (0x3297, 0x3297), (0x3299, 0x3299)
-  , (0x1F000, 0x1F0FF), (0x1F100, 0x1F1FF), (0x1F200, 0x1F2FF)
-  , (0x1F300, 0x1F5FF), (0x1F600, 0x1F64F), (0x1F680, 0x1F6FF)
-  , (0x1F700, 0x1F77F), (0x1F780, 0x1F7FF), (0x1F800, 0x1F8FF)
-  , (0x1F900, 0x1F9FF), (0x1FA00, 0x1FA6F), (0x1FA70, 0x1FAFF)
-  , (0xE0020, 0xE007F)
+  [ EmojiRange 0x203C 0x203C, EmojiRange 0x2049 0x2049
+  , EmojiRange 0x2122 0x2122, EmojiRange 0x2139 0x2139
+  , EmojiRange 0x2194 0x2199, EmojiRange 0x21A9 0x21AA
+  , EmojiRange 0x231A 0x231B, EmojiRange 0x2328 0x2328
+  , EmojiRange 0x23CF 0x23CF, EmojiRange 0x23E9 0x23F3, EmojiRange 0x23F8 0x23FA
+  , EmojiRange 0x24C2 0x24C2
+  , EmojiRange 0x25AA 0x25AB, EmojiRange 0x25B6 0x25B6, EmojiRange 0x25C0 0x25C0, EmojiRange 0x25FB 0x25FE
+  , EmojiRange 0x2600 0x27BF
+  , EmojiRange 0x2934 0x2935, EmojiRange 0x2B05 0x2B07, EmojiRange 0x2B1B 0x2B1C
+  , EmojiRange 0x2B50 0x2B50, EmojiRange 0x2B55 0x2B55
+  , EmojiRange 0x3030 0x3030, EmojiRange 0x303D 0x303D, EmojiRange 0x3297 0x3297, EmojiRange 0x3299 0x3299
+  , EmojiRange 0x1F000 0x1F0FF, EmojiRange 0x1F100 0x1F1FF, EmojiRange 0x1F200 0x1F2FF
+  , EmojiRange 0x1F300 0x1F5FF, EmojiRange 0x1F600 0x1F64F, EmojiRange 0x1F680 0x1F6FF
+  , EmojiRange 0x1F700 0x1F77F, EmojiRange 0x1F780 0x1F7FF, EmojiRange 0x1F800 0x1F8FF
+  , EmojiRange 0x1F900 0x1F9FF, EmojiRange 0x1FA00 0x1FA6F, EmojiRange 0x1FA70 0x1FAFF
+  , EmojiRange 0xE0020 0xE007F
   ]
 
 codepointHex :: Int -> String

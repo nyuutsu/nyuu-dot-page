@@ -55,9 +55,9 @@ processText assets = go T.empty
         | otherwise ->
             go (T.snoc buffer c) rest
 
-    flush buf rest
-      | T.null buf = rest
-      | otherwise  = Str buf : rest
+    flush buffer rest
+      | T.null buffer = rest
+      | otherwise     = Str buffer : rest
 
     stripVariationSelector t = case T.uncons t of
       Just ('\xFE0F', r) -> r
