@@ -1,3 +1,14 @@
-// Files page stylesheet (files.nyuu.page)
-// Compiled separately from main.scss; shares variables with the main site.
+// =============================================================================
+// Files Page Stylesheet (files.nyuu.page)
+// Shares reset, typography, and layout with the main site; files-base adds
+// only file-listing-specific rules on top.
+// =============================================================================
+
+@use 'variables' as * with (
+  $asset-origin: 'https://nyuu.page',
+);
+
+@use 'reset';
+@use 'typography';
+@use 'layout';
 @use 'files-base';

@@ -148,6 +148,14 @@ $z-skip-link: 1000;
 $transition-speed: 0.15s;
 
 // -----------------------------------------------------------------------------
+// Asset Origin (configurable for cross-origin loading via !default)
+// The files page (files.nyuu.page) loads CSS cross-origin; asset URLs need an
+// absolute prefix. Main site uses '' (same-origin relative paths).
+// -----------------------------------------------------------------------------
+
+$asset-origin: '' !default;
+
+// -----------------------------------------------------------------------------
 // Font Stacks (configurable per site variant via !default)
 // Entry points override these with @use 'variables' with (...).
 // Actual @font-face declarations are in _typography.scss / _smooth-overrides.scss

@@ -1,83 +1,36 @@
 // =============================================================================
 // Files Page (browse.html)
-// Styles for the Caddy file-server template at files.nyuu.page.
-// Shares variables with the main site so colors, breakpoints, and font sizes
-// stay in sync without manual updates.
+// File-listing-specific styles for the Caddy file-server template at
+// files.nyuu.page. Shared reset, typography (font faces, base text styles),
+// and layout (header, footer, skip link, page container) come from the main
+// partials loaded by files.scss / files-smooth.scss.
+//
+// This file contains ONLY:
+//   - Overrides where the files page diverges from the main site
+//   - File-listing-specific components (table, grid, filter, breadcrumbs, etc.)
 // =============================================================================
 
 @use 'variables' as *;
 
 // -----------------------------------------------------------------------------
-// Reset
+// Base overrides
+// The shared partials set defaults for the main site's prose layout; the files
+// page is a file browser with tables, grids, and inline icons.
 // -----------------------------------------------------------------------------
-
-* { padding: 0; margin: 0; box-sizing: border-box; }
-
-// -----------------------------------------------------------------------------
-// Font Faces (absolute URLs; this CSS is loaded cross-origin on files.nyuu.page)
-// -----------------------------------------------------------------------------
-
-$font-origin: 'https://nyuu.page/fonts';
-
-@font-face {
-  font-family: 'IM Fell English';
-  src: url('#{$font-origin}/IMFellEnglish-Regular.woff2') format('woff2');
-  font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: 'IM Fell English SC';
-  src: url('#{$font-origin}/IMFellEnglish-SC.woff2') format('woff2');
-  font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: 'IM Fell Double Pica';
-  src: url('#{$font-origin}/IMFellDoublePica-Regular.woff2') format('woff2');
-  font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: 'IM Fell DW Pica';
-  src: url('#{$font-origin}/IMFellDWPica-Regular.woff2') format('woff2');
-  font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: 'Oradano-mincho-GSRR';
-  src: url('#{$font-origin}/OradanoGSRR.woff2') format('woff2');
-  font-weight: 400; font-style: normal; font-display: swap;
-  unicode-range: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
-}
-
-// -----------------------------------------------------------------------------
-// Base
-// -----------------------------------------------------------------------------
-
-html {
-  font-size: $root-font-phone;
-
-  @media (min-width: $breakpoint-tablet)  { font-size: $root-font-tablet; }
-  @media (min-width: $breakpoint-laptop)  { font-size: $root-font-laptop; }
-  @media (min-width: $breakpoint-desktop) { font-size: $root-font-desktop; }
-  @media (min-width: $breakpoint-large)   { font-size: $root-font-large; }
-  @media (min-width: $breakpoint-4k)      { font-size: $root-font-4k; }
-}
 
 body {
-  font-family: $font-body;
-  color: $color-text;
-  line-height: $line-height-loose;
   text-rendering: optimizespeed;
-  background-color: $color-bg-outer;
-  background-image: url('https://nyuu.page/images/backgrounds/body.webp');
-  background-repeat: repeat;
-  min-height: 100vh;
 }
 
+// _reset.scss sets img/svg to display:block; the files page needs inline
+// for table icons and SVG indicators
 img, svg {
+  display: inline;
   vertical-align: middle;
   z-index: 1;
 }
 
 img {
-  max-width: 100%;
   max-height: 100%;
   border-radius: $border-radius-md;
 }
@@ -88,6 +41,8 @@ td img {
   object-fit: cover;
 }
 
+// Reset _typography.scss link styles for the file listing (links are table
+// rows, not prose text)
 body, a, svg,
 .layout.current, .layout.current svg,
 .go-up {
@@ -98,22 +53,8 @@ body, a, svg,
 #layout-list, #layout-grid { cursor: pointer; }
 
 // -----------------------------------------------------------------------------
-// Layout: centered column with granite gutters
+// Layout overrides
 // -----------------------------------------------------------------------------
-
-.page {
-  width: 100%;
-  max-width: max(#{$ideal-line-length}, 50vw);
-  margin: 0 auto;
-  min-height: 100vh;
-  background-color: $color-bg-inner;
-  display: flex;
-  flex-direction: column;
-
-  @media (min-aspect-ratio: 21/9) {
-    max-width: $ideal-line-length;
-  }
-}
 
 .wrapper {
   max-width: 100%;
@@ -124,95 +65,30 @@ body, a, svg,
   padding-right: 5%;
 }
 
+// _layout.scss .site-main has padding for prose content; files page has none
+.site-main {
+  background-color: $color-bg-inner;
+  padding: 0;
+}
+
+main {
+  margin: 0 auto;
+}
+
 // -----------------------------------------------------------------------------
-// Site header (matches main site)
+// Site header/footer: files-specific additions
+// Shared header/footer styling comes from _layout.scss
 // -----------------------------------------------------------------------------
 
-.site-header {
-  background-image: url('https://nyuu.page/images/backgrounds/header.webp');
-  background-size: cover;
-  background-position: center;
-  padding: $space-md;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: $space-md;
-
-  @media (min-width: $breakpoint-md) {
-    padding: $space-md $space-xl;
-  }
-}
-
-.site-logo { display: block; text-decoration: none; }
-.site-logo:hover { opacity: 0.85; }
-.site-logo-img { height: 2.5rem; width: auto; }
-
-.site-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $space-sm;
-}
-
-.site-nav a {
-  padding: $space-xs $space-sm;
-  color: $color-text;
-  text-decoration: none;
-  border-radius: $border-radius-md;
-  background-color: $overlay-panel;
-  transition: background-color $transition-speed ease;
-}
-
-.site-nav a:hover {
-  background-color: $overlay-panel-hover;
-  color: $color-accent;
-}
-
+// Active page indicator (not in shared _layout.scss)
 .site-nav a[aria-current="page"] {
   color: $color-accent;
 }
 
-// -----------------------------------------------------------------------------
-// Site footer (matches main site)
-// -----------------------------------------------------------------------------
-
-.site-footer {
-  background-image: url('https://nyuu.page/images/backgrounds/footer.webp');
-  background-repeat: repeat;
-  padding: $space-lg $space-md;
-  border-top: 1px solid $border-subtle;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: $space-md;
-
-  @media (min-width: $breakpoint-md) {
-    padding: $space-lg $space-xl;
-  }
-}
-
+// Small optical cut for footer text (shared _layout.scss only sets font-size)
 .site-footer p {
-  color: $color-text-muted;
-  margin: 0;
   font-family: $font-small;
-  font-size: $font-size-sm;
 }
-
-.footer-icons {
-  display: flex;
-  gap: $space-md;
-  align-items: center;
-}
-
-.footer-icons a {
-  display: block;
-  opacity: 0.7;
-  transition: opacity $transition-speed ease;
-}
-
-.footer-icons a:hover { opacity: 1; }
-.footer-icons img { height: 1.5rem; width: auto; }
 
 // -----------------------------------------------------------------------------
 // Links
@@ -281,6 +157,7 @@ th:last-child, td:last-child { width: 5%; }
   padding-left: 3px;
 }
 
+// Override _typography.scss's h1 styling for the directory name display
 h1 {
   font-family: $font-heading;
   font-size: $font-size-lg;
@@ -304,19 +181,6 @@ h1 a:hover {
 }
 
 h1 a:first-child { margin: 0; }
-
-// -----------------------------------------------------------------------------
-// Main content
-// -----------------------------------------------------------------------------
-
-.site-main {
-  flex: 1;
-  background-color: $color-bg-inner;
-}
-
-main {
-  margin: 0 auto;
-}
 
 // -----------------------------------------------------------------------------
 // Meta bar
@@ -501,25 +365,6 @@ td .go-up {
 // -----------------------------------------------------------------------------
 // Accessibility
 // -----------------------------------------------------------------------------
-
-.skip-link {
-  position: absolute;
-  top: -100%;
-  left: $space-md;
-  background: $color-bg-inner;
-  color: $color-text;
-  padding: $space-sm $space-md;
-  border-radius: $border-radius-md;
-  z-index: $z-skip-link;
-  text-decoration: none;
-}
-
-.skip-link:focus { top: $space-md; }
-
-a:focus-visible {
-  outline: 2px solid $color-accent;
-  outline-offset: 2px;
-}
 
 .sr-only {
   position: absolute;

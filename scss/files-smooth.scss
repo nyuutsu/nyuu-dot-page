@@ -3,7 +3,9 @@
 // Same font configuration as smooth.scss; files-base provides the layout.
 // =============================================================================
 
-@use 'variables' with (
+@use 'variables' as * with (
+  $asset-origin: 'https://nyuu.page',
+
   $font-body:          ('Source Serif 4', serif),
   $font-body-sc:       ('Source Serif 4', serif),
   $font-heading:       ('Source Serif 4 Display', 'Source Serif 4', serif),
@@ -21,5 +23,8 @@
   $root-font-4k:      1.375rem,
 );
 
+@use 'reset';
+@use 'typography';
+@use 'layout';
 @use 'files-base';
 @use 'smooth-overrides';

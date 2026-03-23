@@ -16,7 +16,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 // IM Fell English: body text (13.5pt historical cut, van Dijck/Briot, 1672)
 @font-face {
   font-family: 'IM Fell English';
-  src: url('/fonts/IMFellEnglish-Regular.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/IMFellEnglish-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -25,7 +25,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 
 @font-face {
   font-family: 'IM Fell English';
-  src: url('/fonts/IMFellEnglish-Italic.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/IMFellEnglish-Italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -34,7 +34,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 
 @font-face {
   font-family: 'IM Fell English SC';
-  src: url('/fonts/IMFellEnglish-SC.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/IMFellEnglish-SC.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -44,7 +44,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 // IM Fell Great Primer: subheadings h3-h4 (17pt historical cut, de Walpergen, 1684)
 @font-face {
   font-family: 'IM Fell Great Primer';
-  src: url('/fonts/IMFellGreatPrimer-Regular.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/IMFellGreatPrimer-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -53,7 +53,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 
 @font-face {
   font-family: 'IM Fell Great Primer';
-  src: url('/fonts/IMFellGreatPrimer-Italic.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/IMFellGreatPrimer-Italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -62,7 +62,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 
 @font-face {
   font-family: 'IM Fell Great Primer SC';
-  src: url('/fonts/IMFellGreatPrimer-SC.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/IMFellGreatPrimer-SC.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -72,7 +72,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 // IM Fell Double Pica: headings h1-h2 (21pt historical cut, de Walpergen, 1684)
 @font-face {
   font-family: 'IM Fell Double Pica';
-  src: url('/fonts/IMFellDoublePica-Regular.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/IMFellDoublePica-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -81,7 +81,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 
 @font-face {
   font-family: 'IM Fell Double Pica';
-  src: url('/fonts/IMFellDoublePica-Italic.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/IMFellDoublePica-Italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -90,7 +90,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 
 @font-face {
   font-family: 'IM Fell Double Pica SC';
-  src: url('/fonts/IMFellDoublePica-SC.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/IMFellDoublePica-SC.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -100,7 +100,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 // IM Fell DW Pica: small/UI text (12.5pt historical cut, de Walpergen, 1692)
 @font-face {
   font-family: 'IM Fell DW Pica';
-  src: url('/fonts/IMFellDWPica-Regular.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/IMFellDWPica-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -109,7 +109,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 
 @font-face {
   font-family: 'IM Fell DW Pica';
-  src: url('/fonts/IMFellDWPica-Italic.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/IMFellDWPica-Italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -118,7 +118,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 
 @font-face {
   font-family: 'IM Fell DW Pica SC';
-  src: url('/fonts/IMFellDWPica-SC.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/IMFellDWPica-SC.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -129,7 +129,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 // Used for CJK characters in code blocks
 @font-face {
   font-family: 'Sarasa Mono J';
-  src: url('/fonts/SarasaMonoJ-Regular.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/SarasaMonoJ-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -137,7 +137,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 
 @font-face {
   font-family: 'Sarasa Mono J';
-  src: url('/fonts/SarasaMonoJ-Bold.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/SarasaMonoJ-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -147,7 +147,7 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 // Revival of 1909 Tsukiji Type Foundry metal type; chosen to pair with IM Fell
 @font-face {
   font-family: 'Oradano-mincho-GSRR';
-  src: url('/fonts/OradanoGSRR.woff2') format('woff2');
+  src: url('#{$asset-origin}/fonts/OradanoGSRR.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
