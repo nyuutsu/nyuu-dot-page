@@ -24,6 +24,7 @@ module CardCache
   , CardData(..)
   , buildCardCache
   , lookupCard
+  , normalizeQuotes
   ) where
 
 import Data.Aeson (FromJSON(..), (.:), (.:?), withObject)
@@ -423,7 +424,7 @@ extractCardSpans = query extractSpan
 
 -- | Normalize smart quotes to straight quotes for cache lookup.
 -- Pandoc's smart typography converts ' to U+2019 etc., but the card cache
--- uses straight quotes (from JSON data). Duplicated from Transforms.Cards.
+-- uses straight quotes (from JSON data).
 normalizeQuotes :: Text -> Text
 normalizeQuotes = T.map normalize
   where

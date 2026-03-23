@@ -19,20 +19,8 @@ import Text.Pandoc.Definition
 import Data.Text (Text)
 import qualified Data.Text as T
 import Debug.Trace (trace)
-import CardCache (CardCache, lookupCard, CardData(..))
+import CardCache (CardCache, lookupCard, CardData(..), normalizeQuotes)
 import Text.Pandoc.Shared (stringify)
-
--- | Normalize smart quotes to straight quotes
--- Pandoc's smart typography converts ' to ' (U+2019) etc.
--- Our cache uses straight quotes, so normalize before lookup.
-normalizeQuotes :: Text -> Text
-normalizeQuotes = T.map normalize
-  where
-    normalize '\x2019' = '\''  -- right single quote -> apostrophe
-    normalize '\x2018' = '\''  -- left single quote -> apostrophe
-    normalize '\x201C' = '"'   -- left double quote -> straight
-    normalize '\x201D' = '"'   -- right double quote -> straight
-    normalize c = c
 
 -- | Build card preview HTML
 -- setCode: Pokemon set code (e.g., "base1")
