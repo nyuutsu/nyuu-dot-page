@@ -382,7 +382,7 @@ which is a far cry from what we need it to be, which is:
 </div>
 ```
 
-We get it where it needs to be through **AST transformations**. These are short Haskell programs that walk the tree, find nodes matching a pattern, and replace them with richer structures. We have nine of them.
+We get it where it needs to be through **AST transformations**. These are short Haskell programs that walk the tree, find nodes matching a pattern, and replace them with richer structures. We have ten of them.
 
 #### Why the transforms are small
 
@@ -490,6 +490,7 @@ Each transform takes & returns a document tree. So you can chain them together:
 ```haskell
 allTransforms =
   japaneseTransform
+  . emojiTransform
   . figureLinkTransform
   . anchorTransform
   . imageDimensionsTransform
@@ -500,18 +501,24 @@ allTransforms =
   . forumPostTransform
 ```
 
-Some of these are independent. But, there are two dependency chains, and they converge:
+Some of these are independent. But, there are dependency chains that converge:
 
 ```
 cardNoticeTransform        forumPostTransform
   │ plants .card span        chatTransform
-  ▼                          admonitionTransform
-cardTransform                │ all create Image nodes
-  │ creates card Images      │ (avatars, icons)
-  ▼                          ▼
-imageDimensionsTransform ◄───┘
-  injects width + height
-  into every Image
+  │ also injects emoji       admonitionTransform
+  │ (🎴, ☞, ☜)              │ all create Image nodes
+  ▼                          │ (avatars, icons)
+cardTransform                ▼
+  │ creates card Images   imageDimensionsTransform ◄──┐
+  │ + injects 🎴 emoji      injects width + height    │
+  ▼                         into every Image          │
+emojiTransform ◄────────────────────────────────────┘
+  │ replaces emoji chars with <img> + hidden span
+  ▼
+japaneseTransform
+  runs last so it doesn't wrap emoji codepoints
+  in lang="ja" spans
 ```
 
 #### The odd one out
@@ -542,13 +549,73 @@ Emoji are rendered by **Blobmoji**, Google's blob-style emoji set.
 
 #### Self-hosting and subsetting
 
-This site self-hosts all of its fonts. It ships: 16, at time of writing. This makes file size a real-ish concern. The Japanese & emoji fonts are particularly heavy and we aren't using most of what's in either.
+This site self-hosts all of its fonts. It ships: 16, at time of writing. This makes file size a real-ish concern. The Japanese fonts are particularly heavy and we aren't using most of what's in either.
 
-Thus: subsetting. At build time, a script scans every markdown file for characters in each font's target Unicode ranges and produces a trimmed copy of that font containing only those characters. Thus: we serve a mere ~820 KB of fonts.
+Thus: subsetting. At build time, a script scans every markdown file for characters in each font's target Unicode ranges and produces a trimmed copy of that font containing only those characters. Thus: we serve ~875 KB of fonts.
 
-#### Emoji from scratch
+::: note
+> Thus: we serve ~875 KB of fonts.
+This claim will become stale, but, the real size ought to remain *pretty close* to this
+:::
 
-Color emoji turn out to be super fiddly. Chrome demands CBDT tables. Firefox demands SVG tables. Trying to subset an emoji font after the fact turned out to be an exercise in frustration. So, rather than subset an existing font we found it easier to have one of the build steps be "build the font from scratch to contain only the emoji we actually use". (That is: you run `make build` and making the emoji font is one of the things it'll do.)
+#### Smoothness
+
+We serve [smooth.nyuu.page](https://smooth.nyuu.page/), which is a mirror of the site that instead uses **Source Serif 4**.
+
+Using the 📣 **IM Fell Types** 📣 as "the font" is pretty opinionated, as is making them large enough that it's practical to see the fine detailing of the letters.
+
+The page you are reading makes a claim that's only true when *not* on the smooth domain:
+
+> In its place, we have `<strong>` render in **small caps**.
+
+#### Blob Emoji
+
+Color emoji turn out to be super fiddly. Chrome demands CBDT tables. Firefox demands SVG tables. Trying to subset an emoji font after the fact turned out to be an exercise in frustration.
+
+Initially, we solved this by having the build tool also build the font from scratch pre-subsetted, such that it was practical to have it contain only what we want, and have CBDT and SVG tables. It turned out that nigh-all mobile devices just ignore emoji font directives and instead use the system emoji font. Boo!
+
+We really want three properties:
+
+1. Unlikely to confuse screen-reader software
+
+2. Serves the blobmoji asset in all contexts
+
+3. Copy and paste works on the emoji
+
+Here is how we do this:
+
+0. We have the blobmoji svg assets, with the names patterned like this: `emoji_uXXXX.svg`
+
+1. A build script checks the markdown for emoji and includes the svg counterparts of ones we actually use
+
+2. Emoji-handling script replaces emoji with two-child `<span>`s like so:
+
+**Markdown**: 🌸
+
+**Generated HTML**:
+
+```html
+<span class="emoji">
+  <img class="emoji-img" src="/images/emoji/1f338.svg" alt="🌸" draggable="false">
+  <span class="emoji-text" aria-hidden="true">🌸</span>
+</span>
+```
+
+3. A CSS rule hides the inner span
+
+`<span class="emoji-text" aria-hidden="true">🌸</span>` is not visible, for this reason:
+
+```SCSS
+.emoji-text {
+  font-size: 0;
+  line-height: 0;
+  color: transparent;
+  position: absolute;
+  overflow: hidden;
+}
+```
+
+The result: visually everyone sees Blobmoji's identical SVG; copy-paste yields the real Unicode codepoint; screen readers announce it once.
 
 ## Source
 
