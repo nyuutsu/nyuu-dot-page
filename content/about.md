@@ -4,9 +4,9 @@ title: About
 
 # The guy
 
-This is the website of "nyuu", a quasianonymous dude online. When I made this site to hold my essays, I was a sysadmin at a small nonprofit. In the following year (2024) I was a software developer, at that same nonprofit. I then did a contract web development gig in early 2025 and since have been probably-retired. I have been househusbanding and programming for fun. Alyssa works for an AI lab.
+This is the website of "nyuu", a quasianonymous dude online. I have been a sysadmin and a web developer. I am now a househusband; my wife now works for an AI lab.
 
-Interests include: life extension, morphological freedom, using computers to automate repetitive tasks, to free people from unnecessary work, retro A/V and games stuff, excessive configuration, data hoarding, warning people about & sometimes rubbernecking about fraud especially as it pertains to crypto, poker, roguelikes.
+Interests include: automation, retro A/V and games, data hoarding, roguelikes, life extension / morphological freedom, poker, Japanese.
 
 # The website
 
