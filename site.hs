@@ -16,6 +16,7 @@ import Numeric (showHex)
 import Data.Time.Format (formatTime, parseTimeM, defaultTimeLocale)
 import Data.Time.Calendar (Day)
 import Hakyll
+import System.Environment (lookupEnv)
 import System.FilePath (takeBaseName, takeDirectory, (</>))
 import Text.Pandoc.Options
 import Text.Read (readMaybe)
@@ -30,15 +31,33 @@ import SyntaxMap (loadCustomSyntaxMap)
 -- Configuration
 --------------------------------------------------------------------------------
 
-config :: Configuration
-config = defaultConfiguration
-  { destinationDirectory = "_site"
-  , storeDirectory       = "_cache"
+-- | The two font flavors of the site. Each is a complete output tree.
+data Flavor = Textured | Smooth
+  deriving (Eq, Show, Enum, Bounded)
+
+-- | Textured is the canonical flavor; FLAVOR=smooth selects the mirror.
+flavorFromEnv :: Maybe String -> Flavor
+flavorFromEnv Nothing         = Textured
+flavorFromEnv (Just "smooth") = Smooth
+flavorFromEnv (Just other)    =
+  error ("unknown FLAVOR " ++ show other ++ "; expected \"smooth\" or unset")
+
+configFor :: Flavor -> Configuration
+configFor flavor = defaultConfiguration
+  { destinationDirectory = destination
+  , storeDirectory       = store
+  , tmpDirectory         = store </> "tmp"
   , providerDirectory    = "."
   , ignoreFile           = \path ->
       ignoreFile defaultConfiguration path
-      || path `elem` ["config", "scss", "src"]
+      -- Hakyll only auto-ignores its own output dirs; list both flavors'
+      -- so neither build scans the other's tree.
+      || path `elem` ["config", "scss", "src", "_site", "_site-smooth", "_cache", "_cache-smooth"]
   }
+  where
+    (destination, store) = case flavor of
+      Textured -> ("_site", "_cache")
+      Smooth   -> ("_site-smooth", "_cache-smooth")
 
 -- | RSS feed configuration
 feedConfig :: FeedConfiguration
@@ -121,9 +140,18 @@ canonicalUrlField = field "canonicalUrl" $ \item -> do
         Nothing -> "https://nyuu.page/"
         Just r  -> "https://nyuu.page/" <> stripIndexSuffix r
 
--- | Base context for all pages (canonical URL + defaults)
-siteContext :: Context String
-siteContext = canonicalUrlField <> defaultContext
+-- | Values that differ between the textured and smooth output trees.
+flavorContext :: Flavor -> Context String
+flavorContext Textured =
+  constField "stylesheet"  "/css/main.css" <>
+  constField "preloadFont" "/fonts/IMFellEnglish-Regular.woff2"
+flavorContext Smooth =
+  constField "stylesheet"  "/css/smooth.css" <>
+  constField "preloadFont" "/fonts/SourceSerif4-Regular.woff2"
+
+-- | Base context for all pages (flavor fields + canonical URL + defaults)
+siteContext :: Flavor -> Context String
+siteContext flavor = flavorContext flavor <> canonicalUrlField <> defaultContext
 
 -- | Format the "updated" metadata field for display (e.g. "January 28, 2026")
 -- Leaves the raw ISO value in $updated$ for the datetime attribute.
@@ -138,12 +166,12 @@ updatedField = field "updatedDisplay" $ \item -> do
         Just day -> return $ formatTime defaultTimeLocale "%B %e, %Y" (day :: Day)
 
 -- | Context for blog posts (includes formatted date + machine-readable ISO date)
-postContext :: Context String
-postContext =
+postContext :: Flavor -> Context String
+postContext flavor =
   dateField "date" "%B %e, %Y" <>
   dateField "isodate" "%Y-%m-%d" <>
   updatedField <>
-  siteContext
+  siteContext flavor
 
 -- | Computed field: SVG path for the project icon emoji.
 -- Reads the first character of the "icon" metadata, converts to a codepoint
@@ -172,7 +200,12 @@ sortByWeight items = do
 --------------------------------------------------------------------------------
 
 main :: IO ()
-main = hakyllWith config $ do
+main = do
+  flavor <- flavorFromEnv <$> lookupEnv "FLAVOR"
+  hakyllWith (configFor flavor) (siteRules flavor)
+
+siteRules :: Flavor -> Rules ()
+siteRules flavor = do
 
   ----------------------------------------------------------------------------
   -- Load config (runs before rules)
@@ -219,8 +252,8 @@ main = hakyllWith config $ do
     route contentRoute
     compile $
       sitePandocCompiler
-        >>= loadAndApplyTemplate "templates/page.html" siteContext
-        >>= applyDefault siteContext
+        >>= loadAndApplyTemplate "templates/page.html" (siteContext flavor)
+        >>= applyDefault (siteContext flavor)
 
   ----------------------------------------------------------------------------
   -- Project pages
@@ -231,8 +264,8 @@ main = hakyllWith config $ do
     route contentRoute
     compile $
       sitePandocCompiler
-        >>= loadAndApplyTemplate "templates/page.html" siteContext
-        >>= applyDefault siteContext
+        >>= loadAndApplyTemplate "templates/page.html" (siteContext flavor)
+        >>= applyDefault (siteContext flavor)
 
   ----------------------------------------------------------------------------
   -- Home page: project showcase + recent posts
@@ -246,9 +279,9 @@ main = hakyllWith config $ do
       let projectContext = emojiIconSrcField <> defaultContext
       let indexContext =
             listField "projects" projectContext (return projectPages) <>
-            listField "posts" postContext (return posts) <>
+            listField "posts" (postContext flavor) (return posts) <>
             constField "title" "Home" <>
-            siteContext
+            siteContext flavor
       makeItem ""
         >>= loadAndApplyTemplate "templates/index.html" indexContext
         >>= applyDefault indexContext
@@ -261,8 +294,8 @@ main = hakyllWith config $ do
     compile $
       sitePandocCompiler
         >>= saveSnapshot "content"  -- Save for RSS before templates
-        >>= loadAndApplyTemplate "templates/post.html" postContext
-        >>= applyDefault postContext
+        >>= loadAndApplyTemplate "templates/post.html" (postContext flavor)
+        >>= applyDefault (postContext flavor)
 
   ----------------------------------------------------------------------------
   -- Archive page: list of all posts
@@ -272,9 +305,9 @@ main = hakyllWith config $ do
     compile $ do
       posts <- recentFirst =<< loadAll "content/posts/*"
       let archiveContext =
-            listField "posts" postContext (return posts) <>
+            listField "posts" (postContext flavor) (return posts) <>
             constField "title" "Archive"             <>
-            siteContext
+            siteContext flavor
       makeItem ""
         >>= loadAndApplyTemplate "templates/archive.html" archiveContext
         >>= applyDefault archiveContext
@@ -289,7 +322,7 @@ main = hakyllWith config $ do
       projectPages <- sortByWeight =<< loadAll "content/projects/**"
       let sitemapContext =
             listField "projects" defaultContext (return projectPages) <>
-            listField "posts" postContext (return posts) <>
+            listField "posts" (postContext flavor) (return posts) <>
             defaultContext
       makeItem ""
         >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapContext
@@ -301,7 +334,7 @@ main = hakyllWith config $ do
   create ["rss.xml"] $ do
     route idRoute
     compile $ do
-      let feedContext = postContext <> bodyField "description"
+      let feedContext = postContext flavor <> bodyField "description"
       posts <- fmap (take 10) . recentFirst =<< loadAllSnapshots "content/posts/*" "content"
       renderRss feedConfig feedContext posts
         <&> fmap (replaceAll "/index\\.html" (const "/"))

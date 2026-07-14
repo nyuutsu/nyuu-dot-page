@@ -1,24 +1,15 @@
 # CLAUDE.md
 
-Hakyll static site. Haskell transforms on the Pandoc AST, SCSS
-styling, config in TOML/JSON.
+Hakyll static site. Haskell transforms on the Pandoc AST, SCSS styling, config in TOML/JSON.
 
 ## Project constraints
 
-- **No JavaScript.** All interactivity via CSS. If it genuinely
-  can't be done without JS, say so rather than silently adding
-  a script.
-- **Self-hosted assets.** Local fonts, no CDNs, no external
-  dependencies at runtime.
-- **Bilingual.** English and Japanese content; font stacks must
-  handle both.
-- **Accessible by default.** Semantic HTML, meaningful alt text,
-  `lang` attributes, CLS prevention. Do it right even when nobody
-  checks.
-- **Pandoc-native syntax.** Fenced divs, bracketed spans. Transforms
-  are pure `Pandoc -> Pandoc`. Config lives in TOML/JSON, not code.
-- **Respect settled patterns.** Don't propose alternatives to the
-  above without explicitly flagging the departure and explaining why.
+- **No JavaScript.** All interactivity via CSS. If it genuinely can't be done without JS, say so rather than silently adding a script.
+- **Self-hosted assets.** Local fonts, no CDNs, no external dependencies at runtime.
+- **Bilingual.** English and Japanese content; font stacks must handle both.
+- **Accessible by default.** Semantic HTML, meaningful alt text, `lang` attributes, CLS prevention. Do it right even when nobody checks.
+- **Pandoc-native syntax.** Fenced divs, bracketed spans. Transforms are pure `Pandoc -> Pandoc`. Config lives in TOML/JSON, not code.
+- **Respect settled patterns.** Don't propose alternatives to the above without explicitly flagging the departure and explaining why.
 
 ## Layout & Responsive Behavior
 
@@ -39,6 +30,13 @@ Verify at real sizes: phone (~375px), tablet (~768px), laptop (1366px), desktop 
 ### Current Structure
 
 `site.hs` is orchestration: config loading, route rules, clean URLs. All transform logic lives in `src/Transforms/*.hs`.
+
+### Font Flavors (twin trees)
+
+The site builds twice: textured (default; `_site/`, served at nyuu.page) and smooth (`FLAVOR=smooth`; `_site-smooth/`, served at smooth.nyuu.page). `flavorContext` in site.hs bakes the three per-flavor values into the HTML at build time: stylesheet (main.css/smooth.css), font preload (IM Fell/Source Serif 4), and files subdomain (files/smooth-files.nyuu.page). Everything else, including canonical URLs (always nyuu.page), is identical between trees. Caddy serves both trees as plain file servers — no runtime rewriting. The fileserver's smooth variant is handled by `/etc/caddy/browse.html` branching on the request Host.
+
+- `make build` builds both trees; `make deploy` rsyncs both to the droplet (`/var/dist/`, `/var/dist-smooth/`)
+- `make watch` previews textured at :8000; `make watch-smooth` previews smooth at :8001
 
 ### Extending the Build
 
@@ -63,7 +61,7 @@ nyuu-dot-page/
 ├── CLAUDE.md               # This file
 ├── site.hs                 # Hakyll generator
 ├── nyuu-dot-page.cabal     # Project config
-├── Makefile                # Build orchestration (make build)
+├── Makefile                # Build orchestration (make build / make deploy)
 │
 ├── config/                 # Configuration files (single source of truth)
 │   ├── admonitions.toml    # Admonition types: name, icon, colors
@@ -137,97 +135,57 @@ nyuu-dot-page/
 - Max 3 levels of SCSS nesting; flatten if deeper
 - No `!important`, no IDs for styling (only for anchor targets)
 - Section separators use the `// ----` style
-- Font stacks and root font sizes use `!default` in `_variables.scss`;
-  entry points configure them via `@use 'variables' with (...)`
-- `$asset-origin` (`!default`, empty for main site) prefixes all
-  `url()` paths; files page sets it to `'https://nyuu.page'`
-- New `@font-face` declarations use the `font-face()` mixin from
-  `_variables.scss`, not hand-written blocks
+- Font stacks and root font sizes use `!default` in `_variables.scss`; entry points configure them via `@use 'variables' with (...)`
+- `$asset-origin` (`!default`, empty for main site) prefixes all `url()` paths; files page sets it to `'https://nyuu.page'`
+- New `@font-face` declarations use the `font-face()` mixin from `_variables.scss`, not hand-written blocks
 
 ## Haskell style
 
-GHC2024 language edition. `OverloadedStrings` where Text literals
-are needed. Strict fields on data types by default. `-Wall` clean,
-zero warnings. No orphan instances.
+GHC2024 language edition. `OverloadedStrings` where Text literals are needed. Strict fields on data types by default. `-Wall` clean, zero warnings. No orphan instances.
 
-**Be idiomatic.** Use the right combinator when it fits (`fromMaybe`,
-`mapMaybe`, `concatMap`, `guard`, `groupBy`, `partition`, `on`).
-Don't reimplement what the standard library provides.
+**Be idiomatic.** Use the right combinator when it fits (`fromMaybe`, `mapMaybe`, `concatMap`, `guard`, `groupBy`, `partition`, `on`). Don't reimplement what the standard library provides.
 
-**Descriptive names.** `pokemonName` not `pkName`, `yugiohAttack`
-not `ygAtk`, `attackDamage` not `dmg`. Domain abbreviations that
-ARE the standard term stay abbreviated: CJK, CLS, DFC, MTG.
-When in doubt, spell it out.
+**Descriptive names.** `pokemonName` not `pkName`, `yugiohAttack` not `ygAtk`, `attackDamage` not `dmg`. Domain abbreviations that ARE the standard term stay abbreviated: CJK, CLS, DFC, MTG. When in doubt, spell it out.
 
-**No shadowing, no prime-naming.** Don't reuse a binding name in
-an inner scope. Don't use `x'` or `xs''` — if two things need
-names, find two real names.
+**No shadowing, no prime-naming.** Don't reuse a binding name in an inner scope. Don't use `x'` or `xs''` — if two things need names, find two real names.
 
 **Pattern matching** over if-chains. Guards over nested cases.
 
-**Sugar is good when it's free.** `where` clauses, operator
-sections, `<$>`, `<*>` — use them when they make code read better
-without hiding meaning.
+**Sugar is good when it's free.** `where` clauses, operator sections, `<$>`, `<*>` — use them when they make code read better without hiding meaning.
 
-**Composability.** Small functions that combine well. When a real
-pattern emerges, make a clean abstraction — three duplicated blocks
-are worse than one clear function.
+**Composability.** Small functions that combine well. When a real pattern emerges, make a clean abstraction — three duplicated blocks are worse than one clear function.
 
-**New code follows the same rules.** Every naming convention here
-applies equally to new code, refactors, and helpers introduced during
-changes. If a rename pass cleaned something up, the same patterns
-shouldn't come back in through new helpers or variables.
-This includes test code.
+**New code follows the same rules.** Every naming convention here applies equally to new code, refactors, and helpers introduced during changes. If a rename pass cleaned something up, the same patterns shouldn't come back in through new helpers or variables. This includes test code.
 
 **Qualified imports** for containers (`Map`, `Text`, `ByteString`).
 
-**Comments explain WHY, not WHAT.** If a comment restates the code,
-delete it.
+**Comments explain WHY, not WHAT.** If a comment restates the code, delete it.
 
-**Proposals should be elegant** — but we discuss fit with the
-project's direction before committing.
+**Proposals should be elegant** — but we discuss fit with the project's direction before committing.
 
-**Upgrade existing code** when touching it. Better names, better
-combinators, clearer structure.
+**Upgrade existing code** when touching it. Better names, better combinators, clearer structure.
 
-**Heavy IO goes to Rust** when needed — Rust via FFI for
-performance-critical work, pure domain logic stays in Haskell.
-This project doesn't use Rust currently but the preference applies
-if it ever needs systems-level work.
+**Heavy IO goes to Rust** when needed — Rust via FFI for performance-critical work, pure domain logic stays in Haskell. This project doesn't use Rust currently but the preference applies if it ever needs systems-level work.
 
-Derive what's natural for the type. Closed enumerations should
-have `Enum, Bounded`.
+Derive what's natural for the type. Closed enumerations should have `Enum, Bounded`.
 
 ### Project-specific
 
-- All external data loaded via `preprocess` in `site.hs` and
-  threaded through transforms — no `unsafePerformIO`.
-- `Debug.Trace` for build warnings in pure transforms (pragmatic
-  choice — the alternatives add more ceremony than they're worth).
+- All external data loaded via `preprocess` in `site.hs` and threaded through transforms — no `unsafePerformIO`.
+- `Debug.Trace` for build warnings in pure transforms (pragmatic choice — the alternatives add more ceremony than they're worth).
 - Each transform is its own module with a single exported function.
-- `Transforms.hs` composes all transforms via `.`; ordering
-  constraints documented there.
+- `Transforms.hs` composes all transforms via `.`; ordering constraints documented there.
 
 ## Working together
 
-The user is learning Haskell alongside building. Teaching is part
-of the work — not separate from it.
+The user is learning Haskell alongside building. Teaching is part of the work — not separate from it.
 
-- Explain new concepts before using them — combinators, type
-  signatures, patterns. Say what they mean and why they work.
-  Lecture freely.
-- Teach the user to write Haskell, not just watch it appear.
-  Explain what to write and why, then have them write it.
-- Go slow on structural changes and new abstractions. Discuss
-  before committing. No bulk code drops.
-- When upgrading code to better patterns, show before and after,
-  explain what improved.
-- If something isn't clear, stop and explain. Understanding
-  matters more than progress.
-- Commit messages describe what changed and why, in imperative mood
-  ("Add X" rather than "Added X"). Keep subject lines under 72
-  characters and put detail in the body when it's needed. Avoid
-  em dashes in commit messages.
+- Explain new concepts before using them — combinators, type signatures, patterns. Say what they mean and why they work. Lecture freely.
+- Teach the user to write Haskell, not just watch it appear. Explain what to write and why, then have them write it.
+- Go slow on structural changes and new abstractions. Discuss before committing. No bulk code drops.
+- When upgrading code to better patterns, show before and after, explain what improved.
+- If something isn't clear, stop and explain. Understanding matters more than progress.
+- Commit messages describe what changed and why, in imperative mood ("Add X" rather than "Added X"). Keep subject lines under 72 characters and put detail in the body when it's needed. Avoid em dashes in commit messages.
 
 ## Widget System
 
@@ -395,8 +353,7 @@ Uses integer zoom (2x → 3x → 4x) based on viewport width to keep pixels cris
 
 ### Code Blocks
 
-Pandoc handles syntax highlighting at build time. No client-side JavaScript.
-Line numbers always display.
+Pandoc handles syntax highlighting at build time. No client-side JavaScript. Line numbers always display.
 
 **Basic:**
 ````markdown
@@ -415,8 +372,7 @@ int main(void) {
 ```
 ````
 
-**Supported languages:** 155+ via Pandoc (haskell, python, rust, javascript, c, etc.).
-For unsupported languages (e.g., Solidity), use `javascript` or omit the language tag.
+**Supported languages:** 155+ via Pandoc (haskell, python, rust, javascript, c, etc.). For unsupported languages (e.g., Solidity), use `javascript` or omit the language tag.
 
 **Long lines:** Horizontal scroll via `overflow-x: auto`.
 
@@ -465,8 +421,7 @@ Unknown keys use "default" with a build warning.
 - `config/pyproject.toml` — fonttools, brotli (for font-subset.py)
 - `config/blobmoji/pyproject.toml` — nanoemoji, fonttools, brotli, resvg-cli (heavier deps, own venv)
 
-First-time setup: `cd config && uv sync` and `cd config/blobmoji && uv sync`.
-The Makefile calls font-subset.py via `uv run --project config`; blobmoji manages its own venv internally.
+First-time setup: `cd config && uv sync` and `cd config/blobmoji && uv sync`. The Makefile calls font-subset.py via `uv run --project config`; blobmoji manages its own venv internally.
 
 ### Card Cache (Haskell)
 
@@ -557,8 +512,7 @@ make build  # Runs font-subset.py automatically
 
 ### Adding a new font
 
-Every font ships subsetted — only glyphs actually used in content.
-The mechanism varies by font type:
+Every font ships subsetted — only glyphs actually used in content. The mechanism varies by font type:
 
 **Text fonts** (Latin, CJK, monospace) — subsetted via `font-subset.py`:
 1. Add full `.woff2` file to `config/fonts-src/`

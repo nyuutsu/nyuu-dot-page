@@ -10,11 +10,7 @@ status: proto
 Just want the patch for some reason? Get it [here](https://files.nyuu.page/dm4y-patch.bps).
 :::
 
-::: warning
-This is a long-running project as I'm frequently working on other things. I anticipate finishing it within the month (month of March 2026) but make no promises.
-:::
-
-In late 2024 I started translating [Yu-Gi-Oh! Duel Monsters 4: Battle of Great Duelists](https://yugipedia.com/wiki/Yu-Gi-Oh!_Duel_Monsters_4:_Battle_of_Great_Duelists) into English. This resulted in a [cool blog post](https://nyuu.page/posts/2024-10-15-romhack/).
+In late 2024 I started translating [Yu-Gi-Oh! Duel Monsters 4: Battle of Great Duelists](https://yugipedia.com/wiki/Yu-Gi-Oh!_Duel_Monsters_4:_Battle_of_Great_Duelists) into English. This resulted in a [cool blog post](/posts/2024-10-15-romhack/).
 
 I translated 2/3 of the cards. The text fields were subject to *brutal* space limits that spoiled a lot of the fun of making the translation. I took a detour to attempt to patch/translate the menus and hit a wall.
 

@@ -674,3 +674,22 @@ details {
 .forum-content details {
   margin-block: 0;
 }
+
+// -----------------------------------------------------------------------------
+// Archive subscribe link (RSS)
+// -----------------------------------------------------------------------------
+
+.archive-subscribe {
+  margin-block: $space-sm $space-lg;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-xs;
+  }
+
+  img {
+    height: 1em;
+    width: auto;
+  }
+}

@@ -63,7 +63,7 @@ They mostly did a thorough job of not 1:1 using Magic jargon. Except for how the
 
 I am going to explain mechanics by alluding and comparing to what *Magic* does.
 
-Quoting myself in ["Pokemon Trading Card Game" design review](/posts/early-pokemon):
+Quoting myself in ["Pokemon Trading Card Game" design review](/posts/2023-02-13-early-pokemon/):
 
 > An important idea in trading card games: over the course of the game, the amount of "swinginess" that happens in each turn should increase. The first turn should have puny little effects that represent tiny swings in "who is winning". Later turns should have increasingly large effects & so large swings in "who is winning and by how much". Analogous maybe to the "material advantage" bars shown by chess apps? Most collectible card games have a mechanic meant to achieve this.
 

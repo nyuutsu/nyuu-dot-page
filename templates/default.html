@@ -6,10 +6,10 @@
   <title>$if(title)$$title$ | $endif$nyuu.page</title>
 
   <!-- Font preload (critical for first paint) -->
-  <link rel="preload" href="/fonts/IMFellEnglish-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="$preloadFont$" as="font" type="font/woff2" crossorigin>
 
   <!-- Styles -->
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="$stylesheet$">
   <link rel="icon" type="image/webp" href="/images/favicon.webp">
 
   <!-- RSS -->
@@ -50,12 +50,9 @@ $endif$
         <a href="/about/">About</a>
         <a href="/contact/">Contact</a>
         <a href="/archive/">Archive</a>
-        <a href="https://files.nyuu.page">Files</a>
+        <a href="https://slap.nyuu.page">Slap</a>
         <a href="https://smooth.nyuu.page$url$" class="nav-smooth">Smooth font</a>
-        <!-- Protocol-relative (//nyuu.page) so Caddy's replace directive,
-             which rewrites "https://nyuu.page" to "https://smooth.nyuu.page",
-             does not rewrite this link. The browser resolves // to https. -->
-        <a href="//nyuu.page$url$" class="nav-textured">Textured font</a>
+        <a href="https://nyuu.page$url$" class="nav-textured">Textured font</a>
       </nav>
     </header>
 
@@ -77,6 +74,9 @@ $endif$
         </a>
         <a href="https://en.wikipedia.org/wiki/Special:Contributions/Nyuuposting" aria-label="Wikipedia: Nyuuposting">
           <img src="/images/icons/wikipedia.webp" alt="" aria-hidden="true">
+        </a>
+        <a href="/rss.xml" aria-label="RSS feed">
+          <img src="/images/icons/rss.svg" alt="" aria-hidden="true">
         </a>
       </nav>
     </footer>

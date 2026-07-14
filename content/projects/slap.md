@@ -2,7 +2,7 @@
 title: "slap"
 icon: "🩹"
 description: "ROM patcher supporting IPS, BPS, UPS, PPF, VCDIFF, and more."
-weight: 4
+weight: 2
 status: wip
 nolink: true
 ---

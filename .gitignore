@@ -1,6 +1,8 @@
-# Hakyll output
+# Hakyll output (textured + smooth flavor trees)
 _site/
 _cache/
+_site-smooth/
+_cache-smooth/
 
 # Compiled CSS (regenerate with: sass scss/main.scss css/main.css)
 css/
