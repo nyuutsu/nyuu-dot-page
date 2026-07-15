@@ -68,10 +68,13 @@ nyuu-dot-page/
 │   ├── avatars.toml        # Avatar key → filename mappings
 │   ├── font-subset.py      # Subsets Latin/JP fonts to used chars
 │   ├── pyproject.toml      # Python deps for font-subset.py (uv)
+│   ├── font-subset.py      # Subsets Latin/JP fonts to used chars
+│   ├── make-wordmark.py    # Regenerates static/images/wordmark.svg (outlined-path logo)
 │   ├── fonts-src/          # Pool fonts (input to font-subset.py)
 │   │   ├── IMFell{English,GreatPrimer,DoublePica,DWPica}-*.woff2  # ~90-113KB → ~41-51KB after subsetting
 │   │   ├── OradanoGSRR.woff2             # 5.4MB → ~38KB after subsetting (Japanese body)
-│   │   └── SarasaMonoJ-{Regular,Bold}.woff2  # ~9MB → ~50KB after subsetting (monospace)
+│   │   ├── SarasaMonoJ-{Regular,Bold}.woff2  # ~9MB → ~50KB after subsetting (monospace)
+│   │   └── Baloo2-ExtraBold.woff2        # 96KB → ~1KB (slap button; pinned charset "slap")
 │   ├── blobmoji/           # Emoji font builder
 │   │   ├── pyproject.toml  # Heavier deps (nanoemoji), own venv
 │   │   ├── svg-fixed/      # Source SVGs (1686 emoji)
@@ -472,6 +475,9 @@ make build  # Runs font-subset.py automatically
 - `IMFell{English,GreatPrimer,DoublePica,DWPica}-*.woff2` — IM Fell Types family (4 optical sizes, each with Regular/Italic/SC)
 - `OradanoGSRR.woff2` — Japanese body font (1909 Tsukiji revival; only used characters kept)
 - `SarasaMonoJ-{Regular,Bold}.woff2` — Monospace (Iosevka + Source Han Sans; Latin + CJK for code)
+- Header UI micro-subsets with pinned charsets (`"text"` entries in FONTS, `"source"` names the pool font): `IMFellEnglish-Toggle` ("textured"), `SourceSerif4-Toggle` ("font: smooth"), `Baloo2-Slap` ("slap"). Both flavor trees load these (~6KB total) so the flavor toggle can render each label in its own face.
+
+**Wordmark (via make-wordmark.py):** `static/images/wordmark.svg` is generated, not hand-drawn — "nyuu.page" shaped in IM Fell English Italic by HarfBuzz, outlined to raw paths (stroke layer under fill; no font referenced at render time). Rerun `uv run --project config config/make-wordmark.py` only if the text or the pool italic changes.
 
 **Fonts subsetted (via blobmoji/build-subset.py):**
 - `Blobmoji.woff2` — Emoji (built from scratch with nanoemoji, includes only emoji used in content)

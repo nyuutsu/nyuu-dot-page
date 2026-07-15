@@ -50,6 +50,9 @@ static/fonts/SourceSerif4Caption-Regular.woff2
 static/fonts/SourceSerif4Caption-It.woff2
 static/fonts/NotoSerifJP-Regular.woff2
 static/fonts/NotoSerifJP-Bold.woff2
+static/fonts/IMFellEnglish-Toggle.woff2
+static/fonts/SourceSerif4-Toggle.woff2
+static/fonts/Baloo2-Slap.woff2
 
 # Blobmoji outputs (regenerated during make build)
 static/fonts/Blobmoji.woff2

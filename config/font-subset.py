@@ -153,6 +153,11 @@ FONTS = {
     # Noto Serif JP — smooth site Japanese text
     "NotoSerifJP-Regular.woff2": {"ranges": CJK_RANGES, "always_include": set()},
     "NotoSerifJP-Bold.woff2": {"ranges": CJK_RANGES, "always_include": set()},
+    # Fixed-charset micro-subsets for header UI. "text" pins the exact characters (no content scan);
+    # "source" names the pool font when the output is a second cut of a font subsetted above.
+    "IMFellEnglish-Toggle.woff2": {"source": "IMFellEnglish-Regular.woff2", "text": "textured"},
+    "SourceSerif4-Toggle.woff2": {"source": "SourceSerif4-Regular.woff2", "text": "font: smooth"},
+    "Baloo2-Slap.woff2": {"source": "Baloo2-ExtraBold.woff2", "text": "slap"},
 }
 
 
@@ -242,16 +247,18 @@ def main():
     updated = False
 
     for font_name, config in FONTS.items():
-        source = FONTS_SRC / font_name
+        source = FONTS_SRC / config.get("source", font_name)
         target = FONTS_OUT / font_name
 
         if not source.exists():
             print(f"Warning: {source} not found, skipping")
             continue
 
-        # Scan for characters
-        chars = scan_content(config["ranges"])
-        chars = chars | config.get("always_include", set())
+        # Fixed charset if pinned, otherwise scan content
+        if "text" in config:
+            chars = set(config["text"])
+        else:
+            chars = scan_content(config["ranges"]) | config.get("always_include", set())
         current_hash = compute_hash(chars, source)
 
         # Check cache

@@ -7,15 +7,19 @@
 -- - Blog posts with archive
 --------------------------------------------------------------------------------
 
+import Data.Bits (xor)
+import Data.ByteString qualified as ByteString
 import Data.Functor ((<&>))
 import Data.List (isSuffixOf, sortBy)
 import Data.Maybe (fromMaybe)
 import Data.Ord (comparing)
 import Data.Char (ord)
+import Data.Word (Word64)
 import Numeric (showHex)
 import Data.Time.Format (formatTime, parseTimeM, defaultTimeLocale)
 import Data.Time.Calendar (Day)
 import Hakyll
+import Hakyll.Core.Dependencies (DependencySelector (IdentifierDependency), contentDependency)
 import System.Environment (lookupEnv)
 import System.FilePath (takeBaseName, takeDirectory, (</>))
 import Text.Pandoc.Options
@@ -140,18 +144,34 @@ canonicalUrlField = field "canonicalUrl" $ \item -> do
         Nothing -> "https://nyuu.page/"
         Just r  -> "https://nyuu.page/" <> stripIndexSuffix r
 
+-- | Which compiled stylesheet a flavor ships; single source of truth for the link href and the version hash.
+stylesheetSource :: Flavor -> FilePath
+stylesheetSource Textured = "css/main.css"
+stylesheetSource Smooth   = "css/smooth.css"
+
+-- | FNV-1a hash of a file's bytes, as hex. Changes exactly when the file changes.
+-- Used to version asset URLs: browsers cache them for a year by URL, so a content-derived
+-- query string makes every deploy a cache miss and every non-deploy a cache hit.
+contentVersion :: FilePath -> IO String
+contentVersion path = do
+  bytes <- ByteString.readFile path
+  pure $ showHex (ByteString.foldl' fnv1a fnvOffsetBasis bytes) ""
+  where
+    fnvOffsetBasis = 0xcbf29ce484222325 :: Word64
+    fnv1a acc byte = (acc `xor` fromIntegral byte) * 0x100000001b3
+
 -- | Values that differ between the textured and smooth output trees.
-flavorContext :: Flavor -> Context String
-flavorContext Textured =
-  constField "stylesheet"  "/css/main.css" <>
-  constField "preloadFont" "/fonts/IMFellEnglish-Regular.woff2"
-flavorContext Smooth =
-  constField "stylesheet"  "/css/smooth.css" <>
-  constField "preloadFont" "/fonts/SourceSerif4-Regular.woff2"
+flavorContext :: Flavor -> String -> Context String
+flavorContext flavor cssVersion =
+  constField "stylesheet"  ("/" <> stylesheetSource flavor <> "?v=" <> cssVersion) <>
+  constField "preloadFont" (preloadFont flavor)
+  where
+    preloadFont Textured = "/fonts/IMFellEnglish-Regular.woff2"
+    preloadFont Smooth   = "/fonts/SourceSerif4-Regular.woff2"
 
 -- | Base context for all pages (flavor fields + canonical URL + defaults)
-siteContext :: Flavor -> Context String
-siteContext flavor = flavorContext flavor <> canonicalUrlField <> defaultContext
+siteContext :: Flavor -> String -> Context String
+siteContext flavor cssVersion = flavorContext flavor cssVersion <> canonicalUrlField <> defaultContext
 
 -- | Format the "updated" metadata field for display (e.g. "January 28, 2026")
 -- Leaves the raw ISO value in $updated$ for the datetime attribute.
@@ -166,12 +186,12 @@ updatedField = field "updatedDisplay" $ \item -> do
         Just day -> return $ formatTime defaultTimeLocale "%B %e, %Y" (day :: Day)
 
 -- | Context for blog posts (includes formatted date + machine-readable ISO date)
-postContext :: Flavor -> Context String
-postContext flavor =
+postContext :: Flavor -> String -> Context String
+postContext flavor cssVersion =
   dateField "date" "%B %e, %Y" <>
   dateField "isodate" "%Y-%m-%d" <>
   updatedField <>
-  siteContext flavor
+  siteContext flavor cssVersion
 
 -- | Computed field: SVG path for the project icon emoji.
 -- Reads the first character of the "icon" metadata, converts to a codepoint
@@ -217,8 +237,15 @@ siteRules flavor = do
   imageDims <- preprocess $ scanImageDimensions "static"
   syntaxMap <- preprocess $ loadCustomSyntaxMap "config/syntax"
                               (writerSyntaxMap defaultHakyllWriterOptions)
+  cssVersion <- preprocess $ contentVersion (stylesheetSource flavor)
+  let pageContext = siteContext flavor cssVersion
+  let blogPostContext = postContext flavor cssVersion
   let writerOptions = defaultHakyllWriterOptions { writerSyntaxMap = syntaxMap }
   let sitePandocCompiler = pandocCompilerWithTransform readerOptions writerOptions (allTransforms admonitionConfig avatarConfig cardCache imageDims emojiAssets)
+
+  -- Pages bake in the stylesheet's content-hash URL, so they must rebuild when the stylesheet changes;
+  -- Hakyll's tracker can't see context values, so the dependency is declared explicitly.
+  let withStylesheetDependency = rulesExtraDependencies [contentDependency (IdentifierDependency (fromFilePath (stylesheetSource flavor)))]
 
   ----------------------------------------------------------------------------
   -- Static files: fonts, images
@@ -248,30 +275,30 @@ siteRules flavor = do
   -- Static pages: about, contact
   -- Uses contentRoute for clean URLs
   ----------------------------------------------------------------------------
-  match (fromList ["content/about.md", "content/contact.md"]) $ do
+  withStylesheetDependency $ match (fromList ["content/about.md", "content/contact.md"]) $ do
     route contentRoute
     compile $
       sitePandocCompiler
-        >>= loadAndApplyTemplate "templates/page.html" (siteContext flavor)
-        >>= applyDefault (siteContext flavor)
+        >>= loadAndApplyTemplate "templates/page.html" pageContext
+        >>= applyDefault pageContext
 
   ----------------------------------------------------------------------------
   -- Project pages
   -- Flat: content/projects/foo.md -> /projects/foo/
   -- Nested: content/projects/foo/bar.md -> /projects/foo/bar/
   ----------------------------------------------------------------------------
-  match "content/projects/**" $ do
+  withStylesheetDependency $ match "content/projects/**" $ do
     route contentRoute
     compile $
       sitePandocCompiler
-        >>= loadAndApplyTemplate "templates/page.html" (siteContext flavor)
-        >>= applyDefault (siteContext flavor)
+        >>= loadAndApplyTemplate "templates/page.html" pageContext
+        >>= applyDefault pageContext
 
   ----------------------------------------------------------------------------
   -- Home page: project showcase + recent posts
   -- Projects loaded from content/projects/, sorted by weight
   ----------------------------------------------------------------------------
-  match "content/index.md" $ do
+  withStylesheetDependency $ match "content/index.md" $ do
     route $ constRoute "index.html"
     compile $ do
       posts <- fmap (take 5) . recentFirst =<< loadAll "content/posts/*"
@@ -279,9 +306,9 @@ siteRules flavor = do
       let projectContext = emojiIconSrcField <> defaultContext
       let indexContext =
             listField "projects" projectContext (return projectPages) <>
-            listField "posts" (postContext flavor) (return posts) <>
+            listField "posts" blogPostContext (return posts) <>
             constField "title" "Home" <>
-            siteContext flavor
+            pageContext
       makeItem ""
         >>= loadAndApplyTemplate "templates/index.html" indexContext
         >>= applyDefault indexContext
@@ -289,25 +316,25 @@ siteRules flavor = do
   ----------------------------------------------------------------------------
   -- Blog posts
   ----------------------------------------------------------------------------
-  match "content/posts/*" $ do
+  withStylesheetDependency $ match "content/posts/*" $ do
     route contentRoute
     compile $
       sitePandocCompiler
         >>= saveSnapshot "content"  -- Save for RSS before templates
-        >>= loadAndApplyTemplate "templates/post.html" (postContext flavor)
-        >>= applyDefault (postContext flavor)
+        >>= loadAndApplyTemplate "templates/post.html" blogPostContext
+        >>= applyDefault blogPostContext
 
   ----------------------------------------------------------------------------
   -- Archive page: list of all posts
   ----------------------------------------------------------------------------
-  create ["archive/index.html"] $ do
+  withStylesheetDependency $ create ["archive/index.html"] $ do
     route idRoute
     compile $ do
       posts <- recentFirst =<< loadAll "content/posts/*"
       let archiveContext =
-            listField "posts" (postContext flavor) (return posts) <>
+            listField "posts" blogPostContext (return posts) <>
             constField "title" "Archive"             <>
-            siteContext flavor
+            pageContext
       makeItem ""
         >>= loadAndApplyTemplate "templates/archive.html" archiveContext
         >>= applyDefault archiveContext
@@ -322,7 +349,7 @@ siteRules flavor = do
       projectPages <- sortByWeight =<< loadAll "content/projects/**"
       let sitemapContext =
             listField "projects" defaultContext (return projectPages) <>
-            listField "posts" (postContext flavor) (return posts) <>
+            listField "posts" blogPostContext (return posts) <>
             defaultContext
       makeItem ""
         >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapContext
@@ -334,7 +361,7 @@ siteRules flavor = do
   create ["rss.xml"] $ do
     route idRoute
     compile $ do
-      let feedContext = postContext flavor <> bodyField "description"
+      let feedContext = blogPostContext <> bodyField "description"
       posts <- fmap (take 10) . recentFirst =<< loadAllSnapshots "content/posts/*" "content"
       renderRss feedConfig feedContext posts
         <&> fmap (replaceAll "/index\\.html" (const "/"))

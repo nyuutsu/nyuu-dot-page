@@ -11,3 +11,7 @@ Interests include: automation, retro A/V and games, data hoarding, roguelikes, l
 # The website
 
 This website is an exercise in "building the sort of thing I want there to be more of". For an overview, see the [project page](/projects/nyuu-page/).
+
+# The contact information
+
+If you are inclined to do so: [nyuu@nyuu.page](mailto:nyuu@nyuu.page)

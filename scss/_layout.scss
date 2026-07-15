@@ -47,14 +47,19 @@ body {
 // -----------------------------------------------------------------------------
 
 .site-header {
-  background-image: url('#{$asset-origin}/images/backgrounds/header.webp');
+  // Light scrim only; text legibility comes from $text-halo-dark on each item, not from darkening the art
+  background-image:
+    linear-gradient(rgba(20, 17, 14, 0.2), rgba(20, 17, 14, 0.2)),
+    url('#{$asset-origin}/images/backgrounds/header.webp');
   background-size: cover;
   background-position: center;
   padding: $space-md;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  // Logo pushes everything else right via margin, rather than a wrapper grouping nav+toggle:
+  // this lets the toggle wrap to its own row before the nav has to move, instead of both evacuating together
+  justify-content: flex-end;
   gap: $space-md;
 
   @media (min-width: $breakpoint-md) {
@@ -66,6 +71,7 @@ body {
 .site-logo {
   display: block;
   text-decoration: none;
+  margin-right: auto;
 
   &:hover {
     opacity: 0.85;
@@ -81,19 +87,18 @@ body {
 .site-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-sm;
+  align-items: center;
+  gap: $space-md;
 
-  a {
-    padding: $space-xs $space-sm;
-    color: $color-text;
+  a:not(.slap-btn) {
+    // Link-colored like body links: cyan means clickable everywhere on the site
+    color: $color-accent;
     text-decoration: none;
-    border-radius: $border-radius-md;
-    background-color: $overlay-panel;
-    transition: background-color $transition-speed ease;
+    text-shadow: $text-halo-dark;
+    transition: color $transition-speed ease;
 
     &:hover {
-      background-color: $overlay-panel-hover;
-      color: $color-accent;
+      color: $color-accent-hover;
     }
 
     &:focus-visible {
@@ -102,6 +107,7 @@ body {
     }
   }
 }
+
 
 // -----------------------------------------------------------------------------
 // Main Content

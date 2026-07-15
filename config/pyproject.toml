@@ -5,4 +5,5 @@ requires-python = ">=3.11"
 dependencies = [
     "fonttools",
     "brotli",
+    "uharfbuzz>=0.55.0",
 ]

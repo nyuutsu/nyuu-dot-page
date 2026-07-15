@@ -18,7 +18,11 @@
 @use 'layout';
 @use 'components';
 
-// Hide "textured font" nav link; we're on the textured (main) site
-.nav-textured {
+// Flavor toggle: we're the textured (main) site, so hide the textured-link cell and the smooth-current cell.
+// Qualified selectors (0-2-1) so they outrank the segments' own display rule (0-2-0).
+.nav-textured,
+.flavor-toggle a.nav-textured,
+.flavor-current-smooth,
+.flavor-toggle span.flavor-current-smooth {
   display: none;
 }

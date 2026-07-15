@@ -68,8 +68,13 @@ figcaption,
 // Nav toggles
 // -----------------------------------------------------------------------------
 
-// Hide "smooth font" nav links; we're on the smooth site
-.nav-smooth, .nav-smooth-files {
+// Flavor toggle: we're the smooth site, so hide the smooth-link cell and the textured-current cell.
+// Qualified selectors (0-2-1) so they outrank the segments' own display rule (0-2-0).
+.nav-smooth,
+.nav-smooth-files,
+.flavor-toggle a.nav-smooth,
+.flavor-current-textured,
+.flavor-toggle span.flavor-current-textured {
   display: none;
 }
 

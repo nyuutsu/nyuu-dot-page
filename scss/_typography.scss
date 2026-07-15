@@ -42,6 +42,12 @@ $unicode-japanese: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
 // Oradano Mincho GSRR: 1909 Tsukiji Type Foundry metal type revival, pairs with IM Fell
 @include font-face('Oradano-mincho-GSRR', 'OradanoGSRR', $range: $unicode-japanese);
 
+// Header UI micro-subsets: each file carries only its component's glyphs, so both flavor trees pay a few KB instead of a full second family.
+// Charsets are pinned in config/font-subset.py ("text" entries).
+@include font-face('IM Fell English Toggle', 'IMFellEnglish-Toggle');
+@include font-face('Source Serif 4 Toggle', 'SourceSerif4-Toggle');
+@include font-face('Baloo 2', 'Baloo2-Slap', $weight: 800);
+
 // ---- Inline emoji (Blobmoji SVG images) ----
 
 .emoji {

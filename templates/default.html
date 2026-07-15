@@ -43,17 +43,24 @@ $endif$
   <div class="page">
     <header class="site-header">
       <a href="/" class="site-logo">
-        <img src="/images/logo.svg" alt="nyuu.page" class="site-logo-img">
+        <img src="/images/wordmark.svg" alt="nyuu.page" class="site-logo-img" width="333" height="100">
       </a>
       <nav class="site-nav" aria-label="Main navigation">
         <a href="/">Home</a>
         <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
         <a href="/archive/">Archive</a>
-        <a href="https://slap.nyuu.page">Slap</a>
-        <a href="https://smooth.nyuu.page$url$" class="nav-smooth">Smooth font</a>
-        <a href="https://nyuu.page$url$" class="nav-textured">Textured font</a>
+        <a href="https://slap.nyuu.page" class="slap-btn"><img src="/images/icons/slap-bandage.svg" alt="" width="30" height="30"><span>slap</span></a>
       </nav>
+      <div class="toggle-group">
+        <span class="toggle-label" id="flavor-label">font:</span>
+        <span class="flavor-toggle">
+          <span class="seg seg-fell flavor-current-textured" aria-current="true">textured</span>
+          <a class="seg seg-fell nav-textured" href="https://nyuu.page$url$" aria-describedby="flavor-label">textured</a>
+          <span class="seg-slash" aria-hidden="true">/</span>
+          <a class="seg seg-serif nav-smooth" href="https://smooth.nyuu.page$url$" aria-describedby="flavor-label">smooth</a>
+          <span class="seg seg-serif flavor-current-smooth" aria-current="true">smooth</span>
+        </span>
+      </div>
     </header>
 
     <main id="main" class="site-main">

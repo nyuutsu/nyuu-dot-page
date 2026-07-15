@@ -693,3 +693,126 @@ details {
     width: auto;
   }
 }
+
+// -----------------------------------------------------------------------------
+// Slap button (header link to slap.nyuu.page)
+// 'Baloo 2' ships as a four-glyph "slap" subset (config/font-subset.py); the icon is Blobmoji's bandage, U+1FA79
+// -----------------------------------------------------------------------------
+
+.slap-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.28em 0.85em 0.28em 0.5em;
+  background: #fff;
+  border-radius: 999px;
+  text-decoration: none;
+  transform: rotate(-4deg);
+  box-shadow:
+    0 3px 0 rgba(90, 51, 39, 0.15),
+    0 6px 12px rgba(90, 51, 39, 0.16);
+  transition: transform $transition-speed ease, box-shadow $transition-speed ease;
+
+  img {
+    width: 1.5em;
+    height: 1.5em;
+    display: block;
+  }
+
+  span {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 1.35rem;
+    line-height: 1;
+    color: #f26b43;
+  }
+
+  // Hover feedback is lift + shadow only; the tilt stays constant
+  &:hover {
+    transform: rotate(-4deg) translateY(-2px);
+    box-shadow:
+      0 5px 0 rgba(90, 51, 39, 0.15),
+      0 9px 16px rgba(90, 51, 39, 0.2);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slap-btn {
+    transition: none;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Flavor toggle (textured <-> smooth), header-right
+// The active flavor is inert cream text, the other is a link. Each option renders in its own face
+// via single-word font subsets (config/font-subset.py), which is why two toggle-only families exist.
+// The template carries all four cells; each flavor's entry stylesheet hides its two (main.scss / _smooth-overrides.scss).
+// -----------------------------------------------------------------------------
+
+.toggle-group {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  font-size: 0.9rem;
+  text-shadow: $text-halo-dark;
+
+  // Hairline before the toggle, as a pseudo-element so it can never wrap onto a different row than the control it divides.
+  // Pointless once the header wraps on small screens, so it only exists from tablet up.
+  @media (min-width: $breakpoint-md) {
+    &::before {
+      content: '';
+      width: 1px;
+      align-self: stretch;
+      background: rgba(255, 255, 255, 0.3);
+      margin-right: $space-xs;
+    }
+  }
+}
+
+.toggle-label {
+  color: $color-text;
+}
+
+.flavor-toggle {
+  display: inline-flex;
+  align-items: baseline;
+  gap: $space-xs;
+
+  .seg-fell {
+    font-family: 'IM Fell English Toggle', serif;
+  }
+
+  .seg-serif {
+    font-family: 'Source Serif 4 Toggle', serif;
+  }
+
+  .seg-slash {
+    color: $color-text-muted;
+  }
+
+  // Current flavor: inert, cream; the face difference (Fell vs Source Serif) marks it beyond color alone
+  span.seg {
+    color: #f2e7cf;
+  }
+
+  a.seg {
+    // Link-colored like everything clickable; gray label, cream state, cyan action
+    color: $color-accent;
+    text-decoration: none;
+    transition: color $transition-speed ease;
+
+    &:hover {
+      color: $color-accent-hover;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-accent;
+      outline-offset: 2px;
+    }
+  }
+}
