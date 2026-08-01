@@ -1,53 +1,34 @@
 ---
 title: "DM4 Translation"
 icon: "🕹️"
-description: "English patch for Yu-Gi-Oh! Duel Monsters 4 (GBC). Ongoing."
-weight: 3
-status: proto
+description: "English patch for Yu-Gi-Oh! Duel Monsters 4 (GBC)."
+weight: 2
+status: wip
 ---
 
-::: tip
-Just want the patch for some reason? Get it [here](https://files.nyuu.page/dm4y-patch.bps).
+In late 2024 I started translating [Yu-Gi-Oh! Duel Monsters 4: Battle of Great Duelist](https://yugipedia.com/wiki/Yu-Gi-Oh!_Duel_Monsters_4:_Battle_of_Great_Duelists) into English. This resulted in a [cool blog post](/posts/2024-10-15-romhack/).
+
+::: {.tip title="Change of Plans circa 2026 August 1st"}
+This project page *used* to be a half-finished patch and some cope about how I'd *totally* finish the patch *later*.
+
+I have now *probably* finished the patch. A bit of QC remains, as does writing the suppementary material, such as this page. When *that's* done, which should be sometime within the first week of 2026 August, I'll put it online and tell people and so on.
 :::
 
-In late 2024 I started translating [Yu-Gi-Oh! Duel Monsters 4: Battle of Great Duelists](https://yugipedia.com/wiki/Yu-Gi-Oh!_Duel_Monsters_4:_Battle_of_Great_Duelists) into English. This resulted in a [cool blog post](/posts/2024-10-15-romhack/).
+If you're seeing this glorified "hey this page is 🏗️ UNDER CONSTRUCTION 🚧" page and you might be interested in the patch, read on. Or, consider getting notified via [RSS feed](https://nyuu.page/rss.xml); I will blab when done.
 
-I translated 2/3 of the cards. The text fields were subject to *brutal* space limits that spoiled a lot of the fun of making the translation. I took a detour to attempt to patch/translate the menus and hit a wall.
+*Maybe I finished `slap` first and my wife wanted to share it, and you might be interested decided to look around? If so, hello and thank you for visiting!*
 
-I found a charming Japanese → Chinese translation that fixed many of my pain points & resolved to use its plumbing in my translation. I re-translated all the cards, the script, the menus, the in-game field menus & such, the title screen, & the *this is only playable on the game-boy color* error screen.
-
-I have yet to finish the tooling for actually inserting the script & the dynamic in-battle text. As such this is patch is incomplete. But I'm quite proud of the parts that are done. On request I'm making it available as-is.
-
-## Title & credits
+Per *this screen*
 
 ![Credit screen](/images/projects/dm4-translation/credit-screen.webp){.gbc alt="GBC screen reading: Lovingly delocalized by nyuu. When a crossed-swords icon appears, more info is available on https://dm4.nyuu.page/. Freely distributed, without exception."}
 
-![Translated title screen](/images/projects/dm4-translation/title-screen.webp){.gbc alt="Title screen showing the Yu-Gi-Oh! Duel Monsters 4 logo with subtitle Battle of Great Duelist, Yugi Deck. Begin Anew and Continue options at the bottom."}
+In a few places we had more to say than we were able to fit on the screen. We put in work to make sure everything essential made it in, and everything that *is* in is a superset of what the official English translation (and even the original Japanese) covers. But, we had more to say.
 
-![GBC-only error screen](/images/projects/dm4-translation/gbc-only-screen.webp){.gbc alt="Error screen reading: This game is designed for use on GAME BOY COLOR only. Shows Yu-Gi-Oh! Duel Monsters 4: Battle of Great Duelist beneath character portraits of Yugi, Kaiba, and Jounouchi."}
+The more-that-we-have-to-say can be found here: [dm4.nyuu.page](https://dm4.nyuu.page). I am thusfar calling it the "dm4 companion"; the name will probably stick.
 
-## Menus
+Right now the *structure* and the *data* is right. The presentation is like 98% done. The *text* is largely structural boilerplate, wherein I took notes on what needed to be said and either blathered or and an LLM just say some blather based on the notes and the page struture. This of course is going to be rewritten properly. By the time I am showing people this page, the real text will be in place.
 
-![Main menu](/images/projects/dm4-translation/main-menu.webp){.gbc alt="Main menu screen with five options: Campaign, Trade, Versus, Record, and Password, arranged on an ornate blue stone background."}
+We've also cooked up a *save editor*. It's in the browser and is delightfully [FP-y](https://en.wikipedia.org/wiki/Functional_programming) and [declarative](https://en.wikipedia.org/wiki/Declarative_programming). At time of writing this sentence, it it isn't online yet. It'll probably be rolled into the companion.
 
-![Record screen](/images/projects/dm4-translation/record-screen.webp){.gbc alt="Record screen listing duelists with win/loss tallies: Ryota Kajiki, Siamun Muran, Esper Roba, Ryuzaki, and Insector Haga, all showing zero wins and losses."}
+We also have a *mighty git repository* tracking the project history. It is *full of copyrighted material* and is a huge mess, useless to all but myself. I will tidy it up, shallow-clone it, and share that tidied version. But I'm not going to delay "shipping", for that.
 
-![Password entry](/images/projects/dm4-translation/password-entry.webp){.gbc alt="Password entry screen with an eight-digit input field showing all zeroes."}
-
-## Cards
-
-![Card detail for Wriggle](/images/projects/dm4-translation/card-wriggle.webp){.gbc alt="Card detail screen for Wriggle: Insect type, stats 300 attack 350 defense, Forest-Taxon. Description reads: It deals direct damage equal to its attack to the opponent."}
-
-![Card detail for Killer Snake](/images/projects/dm4-translation/card-killer-snake.webp){.gbc alt="Card detail screen for Killer Snake: Reptile type, stats 300 attack 250 defense, Water-Taxon. Description reads: This venomous snake has wings and can fly through the sky, but struggles with ground movement."}
-
-## Patch
-
-[https://files.nyuu.page/dm4y-patch.bps](https://files.nyuu.page/dm4y-patch.bps)
-
-## Coming next
-
-The script and in-battle dialogue are translated but not yet inserted. Here's what that looks like in dev:
-
-![Siamun pre-duel dialogue](/images/projects/dm4-translation/dialogue-siamun.webp){.gbc alt="Siamun standing in a stone chamber, saying: Show this old one what you can do. Defeat me 5 times with a deck wherein your heart dwells."}
-
-![Dinosaur Ryuzaki pre-duel dialogue](/images/projects/dm4-translation/dialogue-ryuzaki.webp){.gbc alt="Dinosaur Ryuzaki adjusting his hat, saying: I'm Dinosaur Ryuzaki, and just like the name says, I'm a dinosaur duelist!"}

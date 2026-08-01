@@ -1,7 +1,7 @@
 ---
 title: "Cinnabar Coast"
 icon: "🏝️"
-description: "Pokemon Generation I & II save editor with thorough validation logic."
+description: "Pokémon Generation I & II save editor"
 weight: 5
 status: wip
 nolink: true

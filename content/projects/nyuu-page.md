@@ -1,8 +1,8 @@
 ---
 title: "nyuu.page"
 icon: "📍"
-description: "You are here."
-weight: 1
+description: "You are here"
+weight: 4
 ---
 
 ::: tip
