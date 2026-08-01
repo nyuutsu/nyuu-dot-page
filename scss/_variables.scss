@@ -20,6 +20,7 @@ $color-heading: #ffffff;
 // Accents
 $color-accent: #81ecec;
 $color-accent-hover: #ff9ff3;
+$color-amber: #e7b25a;  // the wordmark/favicon dot; also hardcoded in config/make-{wordmark,favicon}.py
 
 // Overlays (semantic names for common semi-transparent patterns)
 $overlay-darken: rgba(0, 0, 0, 0.35);

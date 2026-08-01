@@ -1,6 +1,7 @@
 ---
 title: "Magic has a linkrot problem"
 date: 2023-02-14
+dropcap: true
 ---
 
 Magic and Magic-related websites have a problem: a lot of their links don't work! In some cases, this is understandable. For example, "[the dojo](https://mtg.fandom.com/wiki/The_Dojo)" has been defunct for twenty years, so it is perhaps unreasonable to be mad at them for the original link to "[who's the beatdown](https://articles.starcitygames.com/articles/whos-the-beatdown/)" breaking.

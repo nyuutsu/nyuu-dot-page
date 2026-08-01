@@ -1,6 +1,7 @@
 ---
 title: "Early Yu-Gi-Oh! Was Weird"
 date: 2023-02-12
+dropcap: true
 updated: 2025-05-13
 ---
 

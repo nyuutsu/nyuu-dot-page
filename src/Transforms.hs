@@ -17,6 +17,8 @@ module Transforms
   , cardTransform
   , cardNoticeTransform
   , figureLinkTransform
+    -- * Per-page transforms (composed in site.hs, not part of allTransforms)
+  , dropcapTransform
   ) where
 
 import Text.Pandoc.Definition (Pandoc)
@@ -36,6 +38,7 @@ import Transforms.ForumPost (forumPostTransform)
 import Transforms.Cards (cardTransform)
 import Transforms.CardNotice (cardNoticeTransform)
 import Transforms.FigureLink (figureLinkTransform)
+import Transforms.Dropcap (dropcapTransform)
 
 -- | Combined transform that applies all transformations
 -- Config loaded from config/*.toml and config/*.json files

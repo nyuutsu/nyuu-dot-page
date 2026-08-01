@@ -485,3 +485,38 @@ strong, b {
 em, i {
   font-style: italic;
 }
+
+// -----------------------------------------------------------------------------
+// Drop caps (versals)
+// Opt-in via `dropcap: true`; the .dropcap / .dropcap-<letter> classes come from Transforms/Dropcap.hs.
+// ::first-letter keeps the word whole for screen readers; the per-letter classes exist because a
+// pseudo-element can't be selected by its content.
+// -----------------------------------------------------------------------------
+
+.dropcap {
+  display: flow-root;  // contain the float so the versal doesn't bleed into the next block
+
+  > p:first-child::first-letter {
+    float: left;
+    font-family: $font-heading;
+    font-size: 4.6em;
+    line-height: 0.8;
+    padding: 0.06em 0.1em 0 0;
+    color: $color-amber;
+  }
+
+  // in the smooth flavor $font-body-sc is the plain body face, so this small-caps opening line no-ops there
+  > p:first-child::first-line {
+    font-family: $font-body-sc;
+  }
+}
+
+.dropcap-j > p:first-child::first-letter {
+  font-size: 4.15em;  // J's tail descends; a smaller versal keeps it within three lines
+  padding: 0.1em 0.12em 0 0;
+}
+
+.dropcap-q > p:first-child::first-letter {
+  font-size: 4.15em;
+  padding: 0.1em 0.42em 0 0;  // the Q swash sweeps right; the text must start clear of it
+}

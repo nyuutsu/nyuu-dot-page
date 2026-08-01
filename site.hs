@@ -24,7 +24,7 @@ import System.Environment (lookupEnv)
 import System.FilePath (takeBaseName, takeDirectory, (</>))
 import Text.Pandoc.Options
 import Text.Read (readMaybe)
-import Transforms (allTransforms)
+import Transforms (allTransforms, dropcapTransform)
 import Config (loadAdmonitionConfig, loadAvatarConfig)
 import CardCache (buildCardCache)
 import Emoji (buildEmojiAssets)
@@ -241,7 +241,16 @@ siteRules flavor = do
   let pageContext = siteContext flavor cssVersion
   let blogPostContext = postContext flavor cssVersion
   let writerOptions = defaultHakyllWriterOptions { writerSyntaxMap = syntaxMap }
-  let sitePandocCompiler = pandocCompilerWithTransform readerOptions writerOptions (allTransforms admonitionConfig avatarConfig cardCache imageDims emojiAssets)
+  let baseTransforms = allTransforms admonitionConfig avatarConfig cardCache imageDims emojiAssets
+  -- Pages opt into a drop cap with `dropcap: true` frontmatter. The flag is Hakyll
+  -- metadata, invisible to the pure transform chain, so the choice is made here.
+  let sitePandocCompiler = do
+        identifier <- getUnderlying
+        dropcapFlag <- getMetadataField identifier "dropcap"
+        let transforms = if dropcapFlag == Just "true"
+                           then dropcapTransform . baseTransforms
+                           else baseTransforms
+        pandocCompilerWithTransform readerOptions writerOptions transforms
 
   -- Pages bake in the stylesheet's content-hash URL, so they must rebuild when the stylesheet changes;
   -- Hakyll's tracker can't see context values, so the dependency is declared explicitly.

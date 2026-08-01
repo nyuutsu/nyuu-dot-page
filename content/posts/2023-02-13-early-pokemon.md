@@ -1,6 +1,7 @@
 ---
 title: "Early ‘Pokemon Trading Card Game’ Design Review"
 date: 2023-02-13
+dropcap: true
 ---
 
 ::: cards
