@@ -308,10 +308,10 @@ insertKeyed franchise name cardData =
 -- Franchise loaders
 -- =============================================================================
 
--- | Load Pokemon cards from config/pokemon/*.json
--- Keys: bare name (first occurrence), pokemon:name, set:name
--- Pokemon is the only franchise that tracks first-occurrence for bare names
--- (reprints across sets shouldn't overwrite the original bare-name entry).
+-- | Load Pokemon cards. Keys: bare name, pokemon:name, set:name.
+-- One name spans many printings here, unlike the other franchises, so the unqualified keys are first-set-wins:
+-- files load in sorted order and the WotC set codes sort chronologically (base1..base4, basep),
+-- so a card's original printing wins and a set added later can't steal the name. Reprints stay reachable via set:name.
 loadPokemon :: FilePath -> IO (Map Text CardData)
 loadPokemon configDir =
   fst <$> loadFranchiseDir (configDir </> "pokemon") isPokemonJSON (Map.empty, Set.empty) foldSet
@@ -327,12 +327,12 @@ loadPokemon configDir =
       let name = pokemonName card
           imagePath = flattenImagePath (pokemonImage card)
           cardData = CardData name (formatPokemonAlt card) imagePath "pokemon"
-          -- Always register set:name and pokemon:name
-          withKeys = Map.insert (setCode <> ":" <> name) cardData
-                   $ Map.insert ("pokemon:" <> name) cardData cardMap
+          withSetKey = Map.insert (setCode <> ":" <> name) cardData cardMap
       in if Set.member name seenNames
-         then (withKeys, seenNames)
-         else (Map.insert name cardData withKeys, Set.insert name seenNames)
+         then (withSetKey, seenNames)
+         else ( Map.insert name cardData
+              $ Map.insert ("pokemon:" <> name) cardData withSetKey
+              , Set.insert name seenNames )
 
 -- | Load Yu-Gi-Oh cards from config/yugioh/*.json
 -- Keys: bare name, yugioh:name
