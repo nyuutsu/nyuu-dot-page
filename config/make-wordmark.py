@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """
-Wordmark Generator - Renders the site logo as an outlined-path SVG.
+Wordmark Generator - the site logo as an outlined-path SVG.
 
-Shapes "nyuu.page" in IM Fell English Italic via HarfBuzz (so kerning is real), then converts every glyph to raw path data.
-The output references no font: it renders identically in every browser, is immune to the <img> sandbox, and costs the smooth tree zero font bytes.
-
-Colors and stroke ratio come from the approved logo assets (2026-07): cream fill, amber full stop, heavy dark stroke painted underneath.
+"nyuu.page" shaped in IM Fell English Italic via HarfBuzz (real kerning), then every glyph flattened to raw paths.
+Referencing no font, it renders identically everywhere, ignores the <img> sandbox, and costs the smooth tree zero font bytes.
 
 Usage: uv run --project config config/make-wordmark.py
 Rerun only when the wordmark text or the pool italic font changes.
@@ -30,9 +28,9 @@ OUTPUT_SVG = SCRIPT_DIR.parent / "static/images/wordmark.svg"
 
 TEXT = "nyuu.page"
 FILL = "#F2E7CF"
-FULL_STOP_FILL = "#E7B25A"
+FULL_STOP_FILL = "#E7B25A"  # matches ACCENT in make-favicon.py and $color-amber in scss/_variables.scss
 STROKE = "#14110E"
-STROKE_EM = 22 / 132  # stroke width : font size, from the approved lockup
+STROKE_EM = 22 / 132  # stroke width : font size
 PADDING_EM = 0.04
 
 FULL_STOP_CLUSTER = TEXT.index(".")
