@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>$if(title)$$title$ | $endif$nyuu.page</title>
 
+  <!-- Dark canvas before the stylesheet arrives; without these, a hard refresh flashes white -->
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#1a1a1a">
+  <style>html{background:#1a1a1a}</style>
+
   <!-- Font preload (critical for first paint) -->
   <link rel="preload" href="$preloadFont$" as="font" type="font/woff2" crossorigin>
 
