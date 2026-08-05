@@ -24,6 +24,7 @@ executable site
                   , Transforms.ForumPost
                   , Transforms.ImageDimensions
                   , Transforms.Japanese
+                  , Transforms.Tables
   hs-source-dirs:   src, .
   build-depends:
     , base           >= 4.19 && < 5

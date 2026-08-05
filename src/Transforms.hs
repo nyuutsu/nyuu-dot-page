@@ -17,6 +17,7 @@ module Transforms
   , cardTransform
   , cardNoticeTransform
   , figureLinkTransform
+  , tableTransform
     -- * Per-page transforms (composed in site.hs, not part of allTransforms)
   , dropcapTransform
   ) where
@@ -38,6 +39,7 @@ import Transforms.ForumPost (forumPostTransform)
 import Transforms.Cards (cardTransform)
 import Transforms.CardNotice (cardNoticeTransform)
 import Transforms.FigureLink (figureLinkTransform)
+import Transforms.Tables (tableTransform)
 import Transforms.Dropcap (dropcapTransform)
 
 -- | Combined transform that applies all transformations
@@ -59,12 +61,15 @@ import Transforms.Dropcap (dropcapTransform)
 --      (must follow cardTransform/cardNoticeTransform which inject emoji,
 --       must precede japaneseTransform so emoji aren't wrapped in lang="ja")
 --  10. japaneseTransform - wrap CJK text (runs last to process all text)
+--  11. tableTransform - reset column widths, wrap tables for horizontal
+--      scrolling (no ordering constraints)
 --
 -- Note: Figures are handled by Pandoc's implicit_figures extension.
 -- Use ![Caption](image){alt="accessibility text"} syntax.
 allTransforms :: AdmonitionConfig -> AvatarConfig -> CardCache -> ImageDimensions -> EmojiAssets -> Pandoc -> Pandoc
 allTransforms admonitionConfig avatarConfig cardCache imageDims emojiAssets =
-  japaneseTransform
+  tableTransform
+  . japaneseTransform
   . emojiTransform emojiAssets
   . figureLinkTransform
   . anchorTransform

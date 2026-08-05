@@ -819,3 +819,56 @@ details {
     }
   }
 }
+
+// -----------------------------------------------------------------------------
+// Data tables
+// Pandoc pipe tables arrive wrapped in .table-wrap by Transforms/Tables.hs.
+// Set like a printed book: horizontal rules only, no boxes; mono digits, so the columns align.
+// -----------------------------------------------------------------------------
+
+.table-wrap {
+  overflow-x: auto;
+  margin-block-end: $space-md;
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    line-height: $line-height-normal;
+  }
+
+  caption {
+    text-align: left;
+    padding-block-end: $space-sm;
+  }
+
+  th,
+  td {
+    padding: $space-xs $space-sm;
+    white-space: nowrap;
+  }
+
+  thead th {
+    font-family: $font-small-sc;
+    font-weight: 400;
+    font-size: $font-size-sm;
+    letter-spacing: 0.03em;
+    border-block-end: 2px solid rgba($color-text, 0.35);
+  }
+
+  td,
+  tbody th {
+    font-family: $font-mono;
+    font-weight: 400;
+    font-size: $font-size-sm;
+    border-block-end: 1px solid rgba($color-text, 0.12);
+  }
+
+  tbody tr:hover {
+    background: rgba($color-text, 0.05);
+  }
+}
