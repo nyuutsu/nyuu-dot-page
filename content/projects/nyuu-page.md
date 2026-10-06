@@ -2,7 +2,7 @@
 title: "nyuu.page"
 icon: "📍"
 description: "You are here"
-weight: 4
+weight: 5
 ---
 
 ::: tip
@@ -572,50 +572,7 @@ The page you are reading makes a claim that's only true when *not* on the smooth
 
 Color emoji turn out to be super fiddly. Chrome demands CBDT tables. Firefox demands SVG tables. Trying to subset an emoji font after the fact turned out to be an exercise in frustration.
 
-Initially, we solved this by having the build tool also build the font from scratch pre-subsetted, such that it was practical to have it contain only what we want, and have CBDT and SVG tables. It turned out that nigh-all mobile devices just ignore emoji font directives and instead use the system emoji font. Boo!
-
-We really want three properties:
-
-1. Unlikely to confuse screen-reader software
-
-2. Serves the blobmoji asset in all contexts
-
-3. Copy and paste works on the emoji
-
-Here is how we do this:
-
-0. We have the blobmoji svg assets, with the names patterned like this: `emoji_uXXXX.svg`
-
-1. A build script checks the markdown for emoji and includes the svg counterparts of ones we actually use
-
-2. Emoji-handling script replaces emoji with two-child `<span>`s like so:
-
-**Markdown**: 🌸
-
-**Generated HTML**:
-
-```html
-<span class="emoji">
-  <img class="emoji-img" src="/images/emoji/1f338.svg" alt="🌸" draggable="false">
-  <span class="emoji-text" aria-hidden="true">🌸</span>
-</span>
-```
-
-3. A CSS rule hides the inner span
-
-`<span class="emoji-text" aria-hidden="true">🌸</span>` is not visible, for this reason:
-
-```SCSS
-.emoji-text {
-  font-size: 0;
-  line-height: 0;
-  color: transparent;
-  position: absolute;
-  overflow: hidden;
-}
-```
-
-The result: visually everyone sees Blobmoji's identical SVG; copy-paste yields the real Unicode codepoint; screen readers announce it once.
+The strategy previously described here did not play nice with safari. This section will describe what ended up working.
 
 ## Source
 

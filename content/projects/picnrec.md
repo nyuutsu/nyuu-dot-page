@@ -2,7 +2,7 @@
 title: "PicNRec for Everyone"
 icon: "📷"
 description: "Multiplatform client for the Game Boy Camera PicNRec"
-weight: 3
+weight: 4
 ---
 
 ::: tip

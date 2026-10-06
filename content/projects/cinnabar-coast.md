@@ -2,7 +2,7 @@
 title: "Cinnabar Coast"
 icon: "🏝️"
 description: "Pokémon Generation I & II save editor"
-weight: 5
+weight: 6
 status: wip
 nolink: true
 ---
