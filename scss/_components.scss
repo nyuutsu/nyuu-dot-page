@@ -792,6 +792,36 @@ details {
 }
 
 // -----------------------------------------------------------------------------
+// Game clips — GBA video shown at 240x160, two to a row on wider screens
+// -----------------------------------------------------------------------------
+
+.game-clips {
+  display: grid;
+  grid-template-columns: 240px;
+  justify-content: space-evenly;
+  row-gap: $space-md;
+  margin-block: $space-md;
+
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: repeat(2, 240px);
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  video {
+    display: block;
+    width: 240px;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;  // Firefox fallback
+  }
+}
+
+// -----------------------------------------------------------------------------
 // Flavor toggle (textured <-> smooth), header-right
 // The active flavor is inert cream text, the other is a link. Each option renders in its own face
 // via single-word font subsets (config/font-subset.py), which is why two toggle-only families exist.
