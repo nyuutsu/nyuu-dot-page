@@ -43,6 +43,14 @@ $color-greentext: #789922;       // 4chan canonical greentext color
 $color-code-inline: #c9a0dc;     // Inline code text (lavender)
 $color-code-text: #cfcfc2;       // Base code block text
 
+// The companion sites' colours for each page: face, lit edge, shaded edge, drop shadow
+$companion-colors: (
+  home:   (#a6debe, #bae5cc, #54bc80, #348e5b),
+  editor: (#efdb9f, #f3e3b4, #dfb63a, #ab871c),
+  patch:  (#f2bcb2, #f6cfc8, #d96a57, #a93e2e),
+);
+$color-companion-ink: #000;
+
 // -----------------------------------------------------------------------------
 // Spacing
 // Based on a consistent scale using rem. Actual px depends on device class;

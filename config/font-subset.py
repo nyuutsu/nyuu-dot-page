@@ -153,6 +153,8 @@ FONTS = {
     # Noto Serif JP — smooth site Japanese text
     "NotoSerifJP-Regular.woff2": {"ranges": CJK_RANGES, "always_include": set()},
     "NotoSerifJP-Bold.woff2": {"ranges": CJK_RANGES, "always_include": set()},
+    # Quicksand — the companion sites' font, for links to them (variable, weights 300–700)
+    "Quicksand-Variable.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
     # Fixed-charset micro-subsets for header UI. "text" pins the exact characters (no content scan);
     # "source" names the pool font when the output is a second cut of a font subsetted above.
     "IMFellEnglish-Toggle.woff2": {"source": "IMFellEnglish-Regular.woff2", "text": "textured"},

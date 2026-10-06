@@ -3,6 +3,8 @@
 // Reusable UI elements: cards, post lists, admonitions
 // =============================================================================
 
+@use 'sass:list';
+@use 'sass:map';
 @use 'variables' as *;
 
 // -----------------------------------------------------------------------------
@@ -747,6 +749,45 @@ details {
 @media (prefers-reduced-motion: reduce) {
   .slap-btn {
     transition: none;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Companion link — a link to a game's companion site (ddm.nyuu.page, dm4.nyuu.page), styled like the buttons there
+// -----------------------------------------------------------------------------
+
+@mixin companion-colours($colours) {
+  --face: #{list.nth($colours, 1)};
+  --face-lit: #{list.nth($colours, 2)};
+  --face-shade: #{list.nth($colours, 3)};
+  --face-drop: #{list.nth($colours, 4)};
+}
+
+// Inline, so a link inside a sentence doesn't push the lines apart.
+// It takes the colours of the page it links to when the link names one, as {.companion-link .to-editor} does; otherwise home's green.
+.companion-link {
+  @include companion-colours(map.get($companion-colors, home));
+  padding: 0.1em 0.6em;
+  margin: 0 0.1em;
+  white-space: nowrap;  // never split across two lines
+  font-family: 'Quicksand', sans-serif;
+  color: $color-companion-ink;
+  text-decoration: none;
+  background: var(--face);
+  border: 3px solid;
+  border-color: var(--face-lit) var(--face-shade) var(--face-shade) var(--face-lit);
+  box-shadow: 4px 4px 0 var(--face-drop);
+
+  @each $page, $colours in $companion-colors {
+    &.to-#{$page} {
+      @include companion-colours($colours);
+    }
+  }
+
+  &:hover,
+  &:focus {
+    color: $color-companion-ink;
+    background: color-mix(in srgb, var(--face) 93%, white);
   }
 }
 

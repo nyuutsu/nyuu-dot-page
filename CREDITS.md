@@ -14,3 +14,4 @@
 - **Sarasa Mono J** (Iosevka + Source Han Sans) — [SIL Open Font License 1.1](https://scripts.sil.org/OFL)
 - **Source Serif 4** by Frank Grießhammer (Adobe) — [SIL Open Font License 1.1](https://scripts.sil.org/OFL)
 - **Noto Serif JP** by Google — [SIL Open Font License 1.1](https://scripts.sil.org/OFL)
+- **Quicksand** by The Quicksand Project Authors — [SIL Open Font License 1.1](https://scripts.sil.org/OFL)
