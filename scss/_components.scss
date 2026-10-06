@@ -917,9 +917,11 @@ details {
     padding-block-end: $space-sm;
   }
 
+  // Browsers center <th> by default, and both the header row and the row-label column are <th>
   th,
   td {
     padding: $space-xs $space-sm;
+    text-align: start;
     white-space: nowrap;
   }
 
