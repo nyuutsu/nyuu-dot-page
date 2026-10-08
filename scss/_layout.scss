@@ -29,7 +29,12 @@ body {
   width: 100%;
   max-width: $max-width-page;
   min-height: 100vh;
-  background-color: $color-bg-inner;
+  // Paper: a faint grain over a soft vignette.
+  // The grain is its own file rather than inline here: the server's security policy only lets images load from nyuu.page itself.
+  background:
+    url('#{$asset-origin}/images/backgrounds/paper-grain.svg'),
+    radial-gradient(ellipse at 50% 40%, transparent 55%, rgba($color-paper-shade, 0.12)),
+    $color-bg-inner;
   display: flex;
   flex-direction: column;
 
@@ -47,7 +52,7 @@ body {
 // -----------------------------------------------------------------------------
 
 .site-header {
-  // Light scrim only; text legibility comes from $text-halo-dark on each item, not from darkening the art
+  // Light scrim only; text legibility comes from the outline on each item (lettering-on-dark), not from darkening the art
   background-image:
     linear-gradient(rgba(20, 17, 14, 0.2), rgba(20, 17, 14, 0.2)),
     url('#{$asset-origin}/images/backgrounds/header.webp');
@@ -91,18 +96,17 @@ body {
   gap: $space-md;
 
   a:not(.slap-btn) {
-    // Link-colored like body links: cyan means clickable everywhere on the site
-    color: $color-accent;
+    // Underlined on hover to mark them as links
+    @include lettering-on-dark;
     text-decoration: none;
-    text-shadow: $text-halo-dark;
-    transition: color $transition-speed ease;
+    text-underline-offset: 0.2em;
 
     &:hover {
-      color: $color-accent-hover;
+      text-decoration: underline;
     }
 
     &:focus-visible {
-      outline: 2px solid $color-accent;
+      outline: 2px solid $color-text-on-dark;
       outline-offset: 2px;
     }
   }
@@ -142,9 +146,8 @@ body {
     padding: $space-lg $space-xl;
   }
 
-  // Muted copyright text
   p {
-    color: $color-text-muted;
+    color: $color-text-on-dark;
     margin: 0;
     font-size: $font-size-sm;
   }

@@ -8,35 +8,41 @@
 // Colors
 // -----------------------------------------------------------------------------
 
-// Backgrounds (two-layer effect: outer body, inner content areas)
-$color-bg-outer: #1a1a1a;
-$color-bg-inner: #222222;
+// Backgrounds: the desk (outer body) and the paper (the page column)
+$color-bg-outer: #120f0d;
+$color-bg-inner: #efe5cc;
 
-// Text
-$color-text: #e0e0e0;
-$color-text-muted: #9a9a9a;
-$color-heading: #ffffff;
+// Ink
+$color-text: #2a2019;
+$color-heading: #1a120c;
 
 // Accents
-$color-accent: #81ecec;
-$color-accent-hover: #ff9ff3;
-$color-amber: #e7b25a;  // the wordmark/favicon dot; also hardcoded in config/make-{wordmark,favicon}.py
+$color-accent: #2b4a9b;        // lapis blue: links, § marks, the drop initial
+$color-accent-hover: #a3455f;  // rose
+
+// The paper's own shadow colour: sunk areas, the vignette, and the grain (in _layout.scss) all use it
+$color-paper-shade: rgb(90, 60, 30);
 
 // Surfaces: areas set into the page or lifted off it
-$surface-sunk: rgba(0, 0, 0, 0.3);           // code, blockquotes, panels, the chat box
-$surface-sunk-deep: rgba(0, 0, 0, 0.6);      // a sunk panel under the pointer; labels that sit on a border
-$surface-raised: rgba(255, 255, 255, 0.05);  // chat bubbles, forum replies, a table row under the pointer
+$surface-sunk: rgba($color-paper-shade, 0.09);       // code, blockquotes, panels, the chat box
+$surface-sunk-deep: rgba($color-paper-shade, 0.16);  // a sunk panel under the pointer; labels that sit on a border
+$surface-raised: rgba(255, 252, 240, 0.5);      // chat bubbles, forum replies, kbd keys, a table row under the pointer
 
 // Rules are drawn in the text colour, so they follow the ink whatever the ground
-$rule: rgba($color-text, 0.1);
-$rule-strong: rgba($color-text, 0.35);
+$rule: rgba($color-text, 0.28);
+$rule-strong: rgba($color-text, 0.5);
 
 // Accent tints, by strength
 $accent-faint: rgba($color-accent, 0.1);
 $accent-mid: rgba($color-accent, 0.3);
 $accent-strong: rgba($color-accent, 0.5);
 
-$shadow: rgba(0, 0, 0, 0.5);
+$shadow: rgba($color-text, 0.35);
+
+// Words on the dark header art and footer tile are lettered like the wordmark:
+// cream letters outlined in near-black (the same pair config/make-wordmark.py draws the logo with)
+$color-text-on-dark: #f2e7cf;
+$color-outline-on-dark: #14110e;
 
 // Note: Admonition colors are defined in config/admonitions.toml
 
@@ -44,11 +50,8 @@ $shadow: rgba(0, 0, 0, 0.5);
 // Component Colors
 // -----------------------------------------------------------------------------
 
-$color-kbd-bg: #4a4050;
-$color-kbd-border: #736571;
 $color-greentext: #789922;       // 4chan canonical greentext color
-$color-code-inline: #c9a0dc;     // Inline code text (lavender)
-$color-code-text: #cfcfc2;       // Base code block text
+$color-code-inline: #5b3524;     // Inline code text
 
 // The companion sites' colours for each page: face, lit edge, shaded edge, drop shadow
 $companion-colors: (
@@ -218,27 +221,21 @@ $root-font-4k:      1.875rem !default;     // ~30px
   }
 }
 
-// Dark halo for light text over the header artwork; a micro-scrim in shadow form, the same idea as the wordmark's stroke
-$text-halo-dark: 0 1px 2px rgba(20, 17, 14, 0.95), 0 1px 4px rgba(20, 17, 14, 0.9), 0 0 10px rgba(20, 17, 14, 0.75);
-
-// 8-direction text-shadow for white outline on text over dark backgrounds
-@mixin text-outline($alpha: 0.4) {
-  text-shadow:
-    -1px -1px 0 rgba(255, 255, 255, $alpha),
-     1px -1px 0 rgba(255, 255, 255, $alpha),
-    -1px  1px 0 rgba(255, 255, 255, $alpha),
-     1px  1px 0 rgba(255, 255, 255, $alpha),
-     0   -1px 0 rgba(255, 255, 255, $alpha),
-     0    1px 0 rgba(255, 255, 255, $alpha),
-    -1px  0   0 rgba(255, 255, 255, $alpha),
-     1px  0   0 rgba(255, 255, 255, $alpha);
+// paint-order puts the outline behind the letter, so only its outer half shows and the letter keeps its full weight.
+@mixin lettering-on-dark {
+  color: $color-text-on-dark;
+  -webkit-text-stroke: 0.16em $color-outline-on-dark;
+  paint-order: stroke fill;
 }
 
-// drop-shadow equivalent of text-outline for inline emoji images
-@mixin emoji-outline($alpha: 0.4) {
+// Outline for the blobmoji (inline emoji, admonition icons, chat heads), so their pale edges hold against the paper.
+// Lapis by default; a few thin, dark drawings pass white instead, so the line doesn't swallow their details.
+$color-emoji-outline: #2b4a9b;
+
+@mixin emoji-outline($colour: $color-emoji-outline) {
   filter:
-    drop-shadow(-1px -1px 0 rgba(255, 255, 255, $alpha))
-    drop-shadow( 1px -1px 0 rgba(255, 255, 255, $alpha))
-    drop-shadow(-1px  1px 0 rgba(255, 255, 255, $alpha))
-    drop-shadow( 1px  1px 0 rgba(255, 255, 255, $alpha));
+    drop-shadow(-1px -1px 0 rgba($colour, 0.9))
+    drop-shadow( 1px -1px 0 rgba($colour, 0.9))
+    drop-shadow(-1px  1px 0 rgba($colour, 0.9))
+    drop-shadow( 1px  1px 0 rgba($colour, 0.9));
 }

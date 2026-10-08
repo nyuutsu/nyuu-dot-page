@@ -3,7 +3,6 @@
 // Font faces, headings, body text, links, code
 // =============================================================================
 
-@use 'sass:list';
 @use 'variables' as *;
 
 // -----------------------------------------------------------------------------
@@ -64,6 +63,7 @@ $unicode-japanese: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
   vertical-align: -0.2em;
   display: inline;
   object-fit: contain;
+  @include emoji-outline;
 }
 
 // Hidden but selectable; copy-paste picks up the real emoji character
@@ -218,7 +218,7 @@ figure {
       background: url('/images/emoji/1f50d.svg') no-repeat center / contain;
       pointer-events: none;
       // drop-shadow outline for visibility over any image
-      @include emoji-outline(0.85);
+      @include emoji-outline;
     }
   }
 }
@@ -244,6 +244,7 @@ a {
   &:hover,
   &:focus {
     color: $color-accent-hover;
+    text-decoration-thickness: 0.12em;
   }
 
   &:focus-visible {
@@ -330,53 +331,33 @@ pre {
 
   // Base code text color
   code {
-    color: $color-code-text;
+    color: $color-text;
   }
 }
 
-// Syntax highlighting colors (Pandoc token classes, breezedark-inspired)
-$syntax-colors: (
-  co: #7a7c7d,  // Comment
-  an: #3f8058,  // Annotation
-  cv: #7f8c8d,  // CommentVar
-  do: #a43340,  // Documentation
-  kw: #c9a0dc,  // Keyword (lavender)
-  cf: #fdbc4b,  // ControlFlow (yellow)
-  op: #cfcfc2,  // Operator
-  st: #f44f4f,  // String (coral red)
-  ch: #3daee9,  // Char
-  sc: #3daee9,  // SpecialChar
-  ss: #da4453,  // SpecialString
-  vs: #da4453,  // VerbatimString
-  dv: #f67400,  // DecVal (orange)
-  bn: #f67400,  // BaseN
-  fl: #f67400,  // Float
-  dt: #5dade2,  // DataType (light blue)
-  at: #2980b9,  // Attribute
-  fu: #8e44ad,  // Function (purple)
-  va: #27aeae,  // Variable (teal)
-  cn: #27aeae,  // Constant
-  bu: #7f8c8d,  // BuiltIn
-  im: #27ae60,  // Import (green)
-  pp: #27ae60,  // Preprocessor
-  ot: #27ae60,  // Other (often type signatures)
-  ex: #0099ff,  // Extension
-  wa: #da4453,  // Warning
-  in: #c45b00,  // Information
-);
-$syntax-bold: (kw, cf, cn, ex);
+// Code colours: a palette of its own, separate from the page's link colours.
+// Pandoc tags each piece of highlighted code with a two-letter class (span.kw, span.co, ...); each group below says in words what it is.
+// Anything not listed stays in the code block's ink.
 
-@each $class, $color in $syntax-colors {
-  code span.#{$class} {
-    color: $color;
-    @if list.index($syntax-bold, $class) { font-weight: 700; }
-  }
-}
+// Keywords
+code span.kw { color: #6b3a8c; font-weight: 700; }
 
-// Tokens with unique properties beyond color + weight
-code span.er { color: #da4453; text-decoration: underline; }  // Error
-code span.al { color: #95da4c; background: #4d1f24; font-weight: 700; }  // Alert
-code span.re { color: #2980b9; background: #153042; }  // RegionMarker
+// Control flow (if, for, return), types, imports
+code span.cf { color: #2b4c7e; font-weight: 700; }
+code span.dt, code span.at, code span.im, code span.pp, code span.ot { color: #2b4c7e; }
+
+// Strings and characters
+code span.st, code span.ch, code span.sc, code span.ss, code span.vs { color: #2e6b30; }
+
+// Numbers, constants, variables
+code span.dv, code span.bn, code span.fl, code span.cn, code span.va { color: #8a5a00; }
+
+// Comments and documentation
+code span.co, code span.cv, code span.do, code span.an { color: #1d6a65; font-style: italic; }
+
+// Errors and alerts
+code span.er { text-decoration: underline wavy #8a5a00; }
+code span.al { color: #8a5a00; font-weight: 700; }
 
 // -----------------------------------------------------------------------------
 // Line Numbers
@@ -400,7 +381,7 @@ code span.re { color: #2980b9; background: #153042; }  // RegionMarker
   inset-inline-start: 0;
   width: 2.5em;
   text-align: end;
-  color: #7a7c7d;
+  color: #1d6a65;  // the comments' teal
   border-inline-end: 1px solid $rule;
   padding-inline-end: 0.5em;
   margin-inline-end: 0.5em;
@@ -505,7 +486,7 @@ em, i {
     font-size: 4.6em;
     line-height: 0.8;
     padding: 0.06em 0.1em 0 0;
-    color: $color-amber;
+    color: $color-accent;
   }
 
   // in the smooth flavor $font-body-sc is the plain body face, so this small-caps opening line no-ops there

@@ -24,7 +24,6 @@
 }
 
 .project-card {
-  // Solid dark background (matches navbar style)
   background: $surface-sunk;
   border-radius: $border-radius-md;
   padding: $space-lg;
@@ -53,11 +52,6 @@
     margin-block-end: 0;
   }
 
-}
-
-// Project icon (emoji, inline in heading)
-.project-icon .emoji-img {
-  @include emoji-outline;
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +113,7 @@
 
 // Plain title (nolink): muted, clearly not interactive
 .project-title-text {
-  color: $color-text-muted;
+  color: $color-text;
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +143,7 @@
 .post-list-date {
   display: block;
   font-size: $font-size-sm;
-  color: $color-text-muted;
+  color: $color-text;
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +152,7 @@
 
 .post-meta {
   font-size: $font-size-sm;
-  color: $color-text-muted;
+  color: $color-text;
   margin-block-end: $space-xl;
   padding-block-end: $space-md;
   border-bottom: 1px solid $rule;
@@ -192,7 +186,7 @@
   .card-notice-details {
     margin-block-start: $space-sm;
     font-size: $font-size-sm;
-    color: $color-text-muted;
+    color: $color-text;
 
     p {
       margin: 0;
@@ -209,11 +203,6 @@
 //
 // Path convention: relative paths get /images/cards/ prepended
 // -----------------------------------------------------------------------------
-
-// Hanafuda emoji used as card indicator: white outline for visibility
-.hanafuda .emoji-img {
-  @include emoji-outline;
-}
 
 .card-preview {
   position: relative;
@@ -261,40 +250,36 @@
 //   :::
 // -----------------------------------------------------------------------------
 
-// Base admonition styles - floating label above box
-// Colors come from inline CSS custom properties (set by transform from config)
+// A ruled note: a double rule above and below in the type's colour, the paper's sunk tint,
+// and the title run into the first line ("Note. The text...").
+// The type colour arrives as --adm-border, set inline by the transform from config/admonitions.toml.
 .admonition {
-  position: relative;
-  padding: $space-md;
-  padding-block-start: $space-lg;
   margin-block: $space-xl $space-md;
-  border-radius: 0.5em;  // em-based: scales with surrounding font size
-  border-inline-start: 4px solid;
-  // Use CSS custom properties set by transform (from config/admonitions.toml)
-  background: var(--adm-bg);
-  border-color: var(--adm-border);
+  padding: $space-sm $space-md;
+  border-block: 3px double var(--adm-border);
+  background: $surface-sunk;
 
-  // Floating label with icon
+  // Floated so the first paragraph's text wraps on beside it, making the title part of that line
   .admonition-title {
-    position: absolute;
-    inset-block-start: -0.75rem;
-    inset-inline-start: 1em;
-    display: inline-flex;
-    align-items: center;
-    gap: $space-sm;
-    background: $surface-sunk-deep;
-    padding: 0.2em 0.6em;
-    border-radius: $border-radius-md;
+    float: inline-start;
+    margin-inline-end: 0.4em;
     font-family: $font-body-sc;
-    font-weight: 400;
     letter-spacing: 0.03em;
-    font-size: $font-size-sm;
-    color: $color-heading;
+    color: var(--adm-border);
+
+    // The run-in title's full stop, so markdown never has to type it
+    &::after {
+      content: ".";
+    }
   }
 
   .admonition-icon {
-    width: 1.25em;
+    display: inline;  // the reset makes images blocks; this one belongs in the line
+    width: 1.1em;
     height: auto;
+    vertical-align: -0.15em;  // seat the icon on the text baseline
+    @include emoji-outline;
+    margin-inline-end: 0.3em;
   }
 
   .admonition-content {
@@ -372,10 +357,10 @@ kbd {
   font-size: $font-size-sm;
   padding: 0.1em 0.4em;
   border-radius: 0.25em;  // em-based: scales with font size
-  border: 1px solid $color-kbd-border;
+  border: 1px solid $rule-strong;
   border-bottom-width: 2px;
-  box-shadow: 0 1px 0 $color-kbd-border;
-  background: $color-kbd-bg;
+  box-shadow: 0 1px 0 $rule-strong;
+  background: $surface-raised;
   color: $color-text;
 }
 
@@ -451,6 +436,15 @@ kbd {
   height: 2.5rem;
   border-radius: 0.1em;  // em-based: scales with font size
   flex-shrink: 0;
+  @include emoji-outline;
+}
+
+// Clippy (the note icon and the chatbot's head) and the hanafuda card are thin, dark drawings: a white outline lets their details show.
+// Picked out by image file, since nothing else in the markup tells them apart.
+.admonition-icon[src$="note.webp"],
+.chat-avatar[src$="avatar-chatbot.webp"],
+.hanafuda .emoji-img {
+  @include emoji-outline(white);
 }
 
 .chat-bubble {
@@ -609,13 +603,13 @@ img.inset {
 
 .forum-title {
   font-size: $font-size-sm;
-  color: $color-text-muted;
+  color: $color-text;
   font-style: italic;
 }
 
 .forum-posts {
   font-size: $font-size-sm;
-  color: $color-text-muted;
+  color: $color-text;
 }
 
 .forum-content {
@@ -649,7 +643,7 @@ details {
 
     &::after {
       content: " (interact to read more)";
-      color: $color-text-muted;
+      color: $color-text;
       font-size: $font-size-sm;
       font-style: italic;
     }
@@ -823,7 +817,7 @@ details {
 
 // -----------------------------------------------------------------------------
 // Flavor toggle (textured <-> smooth), header-right
-// The active flavor is inert cream text, the other is a link. Each option renders in its own face
+// The active flavor is inert text, the other is a link. Each option renders in its own face
 // via single-word font subsets (config/font-subset.py), which is why two toggle-only families exist.
 // The template carries all four cells; each flavor's entry stylesheet hides its two (main.scss / _smooth-overrides.scss).
 // -----------------------------------------------------------------------------
@@ -833,7 +827,7 @@ details {
   align-items: center;
   gap: $space-sm;
   font-size: 0.9rem;
-  text-shadow: $text-halo-dark;
+  @include lettering-on-dark;
 
   // Hairline before the toggle, as a pseudo-element so it can never wrap onto a different row than the control it divides.
   // Pointless once the header wraps on small screens, so it only exists from tablet up.
@@ -846,10 +840,6 @@ details {
       margin-right: $space-xs;
     }
   }
-}
-
-.toggle-label {
-  color: $color-text;
 }
 
 .flavor-toggle {
@@ -865,27 +855,19 @@ details {
     font-family: 'Source Serif 4 Toggle', serif;
   }
 
-  .seg-slash {
-    color: $color-text-muted;
-  }
-
-  // Current flavor: inert, cream; the face difference (Fell vs Source Serif) marks it beyond color alone
-  span.seg {
-    color: #f2e7cf;
-  }
-
+  // The flavor you can switch to is always underlined; the current one is plain, and also shows in its own face
   a.seg {
-    // Link-colored like everything clickable; gray label, cream state, cyan action
-    color: $color-accent;
-    text-decoration: none;
-    transition: color $transition-speed ease;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
 
     &:hover {
-      color: $color-accent-hover;
+      text-decoration-thickness: 2px;
     }
 
     &:focus-visible {
-      outline: 2px solid $color-accent;
+      outline: 2px solid $color-text-on-dark;
       outline-offset: 2px;
     }
   }

@@ -31,11 +31,12 @@ import System.FilePath ((</>), dropExtension, takeExtension)
 type EmojiAssets = Set Int
 
 -- | Codepoints to always copy even if not found in scanned content.
--- Needed for assets referenced from CSS (which isn't processed by the
--- Pandoc transform but still needs the SVG file).
+-- Needed for emoji used outside the markdown (from CSS, or from the
+-- files.nyuu.page template on the server), which no scan can see.
 alwaysIncluded :: Set Int
 alwaysIncluded = Set.fromList
   [ 0x1F50D  -- 🔍 CSS background-image for clickable figure overlay
+  , 0x1F4C1  -- 📁 folder icon on files.nyuu.page
   ]
 
 -- | Scan Blobmoji SVG library, copy used emoji to output, return available set.

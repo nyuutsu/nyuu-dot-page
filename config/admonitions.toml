@@ -8,39 +8,39 @@ key = "note"
 name = "Note"
 icon = "note.webp"
 bg = "#304f60"
-border = "#007acc"
+border = "#2b4a9b"
 
 [[type]]
 key = "info"
 name = "Info"
 icon = "blobwizard.webp"
 bg = "#304f60"
-border = "#007acc"
+border = "#2b4a9b"
 
 [[type]]
 key = "warning"
 name = "Warning"
 icon = "blobnervous.webp"
 bg = "#66512c"
-border = "#ffcc00"
+border = "#8a5a00"
 
 [[type]]
 key = "caution"
 name = "Caution"
 icon = "blobnervous.webp"
 bg = "#66512c"
-border = "#ffcc00"
+border = "#8a5a00"
 
 [[type]]
 key = "tip"
 name = "Tip"
 icon = "blobfingerguns.webp"
 bg = "#2d4a3e"
-border = "#27ae60"
+border = "#2e6b30"
 
 [[type]]
 key = "danger"
 name = "Danger"
 icon = "blobstop.webp"
 bg = "#4a2d2d"
-border = "#e74c3c"
+border = "#9a2a1c"

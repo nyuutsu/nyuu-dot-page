@@ -80,11 +80,6 @@ main {
 // Shared header/footer styling comes from _layout.scss
 // -----------------------------------------------------------------------------
 
-// Active page indicator (not in shared _layout.scss)
-.site-nav a[aria-current="page"] {
-  color: $color-accent;
-}
-
 // Small optical cut for footer text (shared _layout.scss only sets font-size)
 .site-footer p {
   font-family: $font-small;
@@ -127,13 +122,13 @@ th:last-child, td:last-child { width: 5%; }
 .size, .timestamp {
   font-family: $font-small;
   font-size: $font-size-sm;
-  color: $color-text-muted;
+  color: $color-text;
 }
 
 .grid .size {
   font-size: 0.75rem;
   margin-top: 0.5em;
-  color: $color-text-muted;
+  color: $color-text;
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +147,7 @@ th:last-child, td:last-child { width: 5%; }
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 1px;
-  color: $color-text-muted;
+  color: $color-text;
   margin-bottom: 5px;
   padding-left: 3px;
 }
@@ -165,7 +160,7 @@ h1 {
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
-  color: $color-text-muted;
+  color: $color-text;
 }
 
 h1 a, th a { color: $color-heading; }
@@ -194,7 +189,7 @@ h1 a:first-child { margin: 0; }
   border-bottom: 1px solid $rule;
   padding-top: 1em;
   padding-bottom: 1em;
-  color: $color-text-muted;
+  color: $color-text;
 }
 
 #summary {
@@ -233,7 +228,7 @@ h1 a:first-child { margin: 0; }
   z-index: 2;
 }
 
-#filter::placeholder { color: $color-text-muted; }
+#filter::placeholder { color: $color-text; }
 
 #filter:focus {
   outline: 2px solid $color-accent;
@@ -245,7 +240,7 @@ h1 a:first-child { margin: 0; }
 // Layout toggles
 // -----------------------------------------------------------------------------
 
-.layout, .layout svg { color: $color-text-muted; }
+.layout, .layout svg { color: $color-text; }
 .layout.current, .layout.current svg { color: $color-accent; }
 
 // -----------------------------------------------------------------------------
@@ -306,8 +301,23 @@ td .go-up {
 // -----------------------------------------------------------------------------
 
 // Tabler icons use stroke="currentColor"; color sets the icon appearance
-.listing .icon-tabler { color: $color-text-muted; }
-.listing .icon-tabler-folder-filled { color: #ffb900; }
+.listing .icon-tabler { color: $color-text; }
+
+// Folders are the blob folder emoji, outlined like the other blobmoji
+.listing .icon-folder {
+  @include emoji-outline;
+}
+
+// Symlinked folders: an arrow drawn over the folder's lower-left corner
+.icon-folder-link {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-folder-link-arrow {
+  position: absolute;
+  inset: 0;
+}
 
 // -----------------------------------------------------------------------------
 // Size bars
