@@ -144,7 +144,7 @@ th:last-child, td:last-child { width: 5%; }
   padding-top: 15px;
   padding-bottom: 15px;
   background-color: $color-bg-inner;
-  border-bottom: 1px solid $border-subtle;
+  border-bottom: 1px solid $rule;
 }
 
 .breadcrumbs {
@@ -176,7 +176,7 @@ h1 a {
 }
 
 h1 a:hover {
-  background: rgba($color-accent, 0.15);
+  background: $accent-faint;
   color: $color-accent;
 }
 
@@ -191,7 +191,7 @@ h1 a:first-child { margin: 0; }
   gap: 1em;
   font-family: $font-small;
   font-size: $font-size-sm;
-  border-bottom: 1px solid $border-subtle;
+  border-bottom: 1px solid $rule;
   padding-top: 1em;
   padding-bottom: 1em;
   color: $color-text-muted;
@@ -224,10 +224,10 @@ h1 a:first-child { margin: 0; }
 
 #filter {
   padding: 0.5em 1em 0.5em 2.5em;
-  border: 1px solid $border-subtle;
+  border: 1px solid $rule;
   border-radius: $border-radius-md;
   font-family: $font-body;
-  background: $overlay-code;
+  background: $surface-sunk;
   color: $color-text;
   position: relative;
   z-index: 2;
@@ -262,7 +262,7 @@ tbody tr, tbody tr a, .entry a {
 }
 
 tbody tr:hover, .grid .entry a:hover {
-  background-color: rgba($color-accent, 0.05);
+  background-color: $accent-faint;
 }
 
 th, td { text-align: left; }
@@ -320,7 +320,7 @@ td .go-up {
 }
 
 .sizebar-bar {
-  background-color: rgba($color-accent, 0.1);
+  background-color: $accent-faint;
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   z-index: 0;
@@ -355,10 +355,10 @@ td .go-up {
   justify-content: center;
   padding: 1.5em;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: $surface-sunk;
 }
 
-.grid .entry a:hover { background-color: rgba($color-accent, 0.05); }
+.grid .entry a:hover { background-color: $accent-faint; }
 .grid .entry svg { width: 75px; height: 75px; }
 .grid .entry img { max-height: 200px; object-fit: cover; }
 .grid .entry .name { margin-top: 1em; }

@@ -131,7 +131,7 @@ body {
   background-image: url('#{$asset-origin}/images/backgrounds/footer.webp');
   background-repeat: repeat;
   padding: $space-lg $space-md;
-  border-top: 1px solid $border-subtle;
+  border-top: 1px solid $rule;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

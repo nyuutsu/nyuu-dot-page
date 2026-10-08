@@ -293,7 +293,7 @@ code {
   font-family: $font-mono;
   font-size: $font-size-sm;
   color: $color-code-inline;
-  background: $overlay-code;
+  background: $surface-sunk;
   padding: $space-xs $space-sm;
   border-radius: $border-radius-md;
 }
@@ -307,7 +307,7 @@ pre {
   font-family: $font-mono;
   font-size: $font-size-sm;
   line-height: $line-height-normal;
-  background: $overlay-code;
+  background: $surface-sunk;
   padding: $space-md;
   border-radius: $border-radius-md;
   overflow-x: auto;
@@ -401,7 +401,7 @@ code span.re { color: #2980b9; background: #153042; }  // RegionMarker
   width: 2.5em;
   text-align: end;
   color: #7a7c7d;
-  border-inline-end: 1px solid $border-subtle;
+  border-inline-end: 1px solid $rule;
   padding-inline-end: 0.5em;
   margin-inline-end: 0.5em;
   user-select: none;
@@ -414,7 +414,7 @@ code span.re { color: #2980b9; background: #153042; }  // RegionMarker
 
 blockquote {
   position: relative;
-  background: $overlay-darken;
+  background: $surface-sunk;
   border-inline-start: 3px solid $color-accent;
   border-radius: 0 $border-radius-md $border-radius-md 0;
   padding: $space-md $space-lg;
@@ -462,7 +462,7 @@ blockquote {
 
 hr {
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid $rule-strong;
   margin-block: $space-xl;
 }
 

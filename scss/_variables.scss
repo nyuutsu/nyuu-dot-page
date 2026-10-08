@@ -22,14 +22,21 @@ $color-accent: #81ecec;
 $color-accent-hover: #ff9ff3;
 $color-amber: #e7b25a;  // the wordmark/favicon dot; also hardcoded in config/make-{wordmark,favicon}.py
 
-// Overlays (semantic names for common semi-transparent patterns)
-$overlay-darken: rgba(0, 0, 0, 0.35);
-$overlay-panel: rgba(0, 0, 0, 0.4);
-$overlay-panel-hover: rgba(0, 0, 0, 0.6);
-$overlay-code: rgba(0, 0, 0, 0.3);
+// Surfaces: areas set into the page or lifted off it
+$surface-sunk: rgba(0, 0, 0, 0.3);           // code, blockquotes, panels, the chat box
+$surface-sunk-deep: rgba(0, 0, 0, 0.6);      // a sunk panel under the pointer; labels that sit on a border
+$surface-raised: rgba(255, 255, 255, 0.05);  // chat bubbles, forum replies, a table row under the pointer
 
-// Borders
-$border-subtle: rgba(255, 255, 255, 0.1);
+// Rules are drawn in the text colour, so they follow the ink whatever the ground
+$rule: rgba($color-text, 0.1);
+$rule-strong: rgba($color-text, 0.35);
+
+// Accent tints, by strength
+$accent-faint: rgba($color-accent, 0.1);
+$accent-mid: rgba($color-accent, 0.3);
+$accent-strong: rgba($color-accent, 0.5);
+
+$shadow: rgba(0, 0, 0, 0.5);
 
 // Note: Admonition colors are defined in config/admonitions.toml
 

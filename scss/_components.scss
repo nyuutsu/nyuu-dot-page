@@ -25,16 +25,16 @@
 
 .project-card {
   // Solid dark background (matches navbar style)
-  background: $overlay-panel;
+  background: $surface-sunk;
   border-radius: $border-radius-md;
   padding: $space-lg;
-  border: 1px solid rgba($color-accent, 0.15);
+  border: 1px solid $accent-faint;
   position: relative;
   transition: background-color $transition-speed ease, border-color $transition-speed ease;
 
   &:has(a):hover {
-    background: $overlay-panel-hover;
-    border-color: rgba($color-accent, 0.3);
+    background: $surface-sunk-deep;
+    border-color: $accent-mid;
   }
 
   h2 {
@@ -133,7 +133,7 @@
 
 .post-list-item {
   padding-block: $space-md;
-  border-bottom: 1px solid $border-subtle;
+  border-bottom: 1px solid $rule;
 
   &:last-child {
     border-bottom: none;
@@ -161,7 +161,7 @@
   color: $color-text-muted;
   margin-block-end: $space-xl;
   padding-block-end: $space-md;
-  border-bottom: 1px solid $border-subtle;
+  border-bottom: 1px solid $rule;
 }
 
 .post-updated {
@@ -176,7 +176,7 @@
 // Hidden on touch devices where hover previews don't apply
 
 .card-notice {
-  background: rgba(0, 0, 0, 0.25);
+  background: $surface-sunk;
   border-inline-start: 3px solid $color-accent;
   padding: $space-md;
   margin-block: $space-lg;
@@ -233,7 +233,7 @@
   inset-inline-start: 0;
   max-width: 250px;
   border-radius: $border-radius-lg;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px $shadow;
   pointer-events: none;
 }
 
@@ -282,7 +282,7 @@
     display: inline-flex;
     align-items: center;
     gap: $space-sm;
-    background: $overlay-panel-hover;
+    background: $surface-sunk-deep;
     padding: 0.2em 0.6em;
     border-radius: $border-radius-md;
     font-family: $font-body-sc;
@@ -436,7 +436,7 @@ kbd {
   gap: $space-md;
   margin-block: $space-md;
   padding: $space-md;
-  background: rgba(0, 0, 0, 0.2);
+  background: $surface-sunk;
   border-radius: $border-radius-lg;
 }
 
@@ -454,7 +454,7 @@ kbd {
 }
 
 .chat-bubble {
-  background: rgba(255, 255, 255, 0.08);
+  background: $surface-raised;
   padding: $space-sm $space-md;
   border-radius: 0 $border-radius-chat-bubble $border-radius-chat-bubble $border-radius-chat-bubble;
   max-width: 80%;
@@ -550,8 +550,8 @@ img.inset {
   gap: $space-md;
   margin-block: $space-md;
   padding: $space-md;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid $border-subtle;
+  background: $surface-raised;
+  border: 1px solid $rule;
   border-radius: $border-radius-md;
 
   @media (max-width: $breakpoint-md) {
@@ -570,7 +570,7 @@ img.inset {
   gap: $space-xs;
   min-width: 8rem;
   padding-inline-end: $space-md;
-  border-inline-end: 1px solid $border-subtle;
+  border-inline-end: 1px solid $rule;
   flex-shrink: 0;
   text-align: center;
 
@@ -579,7 +579,7 @@ img.inset {
     flex-wrap: wrap;
     gap: $space-sm;
     border-inline-end: none;
-    border-block-end: 1px solid $border-subtle;
+    border-block-end: 1px solid $rule;
     padding-inline-end: 0;
     padding-block-end: $space-sm;
     min-width: auto;
@@ -592,7 +592,7 @@ img.inset {
   height: 4rem;
   border-radius: $border-radius-md;
   object-fit: cover;
-  background: rgba(255, 255, 255, 0.05);
+  background: $surface-raised;
 
   @media (max-width: $breakpoint-md) {
     width: 2.5rem;
@@ -638,7 +638,7 @@ img.inset {
 
 details {
   margin-block: $space-md;
-  border-inline-start: 2px solid rgba($color-accent, 0.3);
+  border-inline-start: 2px solid $accent-mid;
   padding-inline-start: $space-md;
 
   summary {
@@ -664,7 +664,7 @@ details {
   }
 
   &[open] {
-    border-color: rgba($color-accent, 0.5);
+    border-color: $accent-strong;
 
     summary {
       margin-block-end: $space-sm;
@@ -930,7 +930,7 @@ details {
     font-weight: 400;
     font-size: $font-size-sm;
     letter-spacing: 0.03em;
-    border-block-end: 2px solid rgba($color-text, 0.35);
+    border-block-end: 2px solid $rule-strong;
   }
 
   td,
@@ -938,10 +938,10 @@ details {
     font-family: $font-mono;
     font-weight: 400;
     font-size: $font-size-sm;
-    border-block-end: 1px solid rgba($color-text, 0.12);
+    border-block-end: 1px solid $rule;
   }
 
   tbody tr:hover {
-    background: rgba($color-text, 0.05);
+    background: $surface-raised;
   }
 }
