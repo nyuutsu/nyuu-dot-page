@@ -76,16 +76,6 @@ main {
 }
 
 // -----------------------------------------------------------------------------
-// Site header/footer: files-specific additions
-// Shared header/footer styling comes from _layout.scss
-// -----------------------------------------------------------------------------
-
-// Small optical cut for footer text (shared _layout.scss only sets font-size)
-.site-footer p {
-  font-family: $font-small;
-}
-
-// -----------------------------------------------------------------------------
 // Links
 // -----------------------------------------------------------------------------
 

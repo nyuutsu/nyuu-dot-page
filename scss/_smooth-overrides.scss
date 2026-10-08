@@ -7,8 +7,7 @@
 // configuring _variables.scss via @use ... with (). This file only contains:
 //   1. @font-face declarations (the actual typeface files)
 //   2. SC→bold: IM Fell uses separate SC font cuts; Source Serif uses bold weight
-//   3. Optical sizing for small text (Caption cut for figcaption/footer)
-//   4. Nav toggles
+//   3. Nav toggles
 // =============================================================================
 
 @use 'variables' as *;
@@ -51,17 +50,6 @@ strong, b {
 
 .admonition-title {
   font-weight: 700;
-}
-
-// -----------------------------------------------------------------------------
-// Optical sizing for small text
-// Source Serif 4 Caption is designed for small sizes; use it where the base
-// rules inherit body font but the text is actually small.
-// -----------------------------------------------------------------------------
-
-figcaption,
-.site-footer p {
-  font-family: $font-small;
 }
 
 // -----------------------------------------------------------------------------

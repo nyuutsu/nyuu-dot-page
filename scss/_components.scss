@@ -9,34 +9,36 @@
 
 // -----------------------------------------------------------------------------
 // Project Cards (for home page)
-// Responsive grid: 1 column on mobile, 2 columns on tablet+
+// One card per row, so titles have the room to stay on one line
 // -----------------------------------------------------------------------------
 
 .project-grid {
   display: grid;
-  gap: $space-lg;
+  gap: $space-md;
   margin-block: $space-xl;
-
-  // 2-column max for better card proportions
-  @media (min-width: $breakpoint-md) {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 .project-card {
   background: $surface-sunk;
   border-radius: $border-radius-md;
-  padding: $space-lg;
+  padding: $space-md;
   border: 1px solid $accent-faint;
   position: relative;
   transition: background-color $transition-speed ease, border-color $transition-speed ease;
+  // A short description sits beside its title when the line has room, and drops below it when it doesn't
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: $space-md;
 
   &:has(a):hover {
     background: $surface-sunk-deep;
     border-color: $accent-mid;
   }
 
+  // Smaller than the section heading above: it names one project, not a section
   h2 {
+    font-size: calc(1rem * pow(var(--type-scale-step), 2));
     margin-block-start: 0;
     margin-block-end: $space-sm;
 
@@ -49,9 +51,8 @@
 
   p {
     color: $color-text;
-    margin-block-end: 0;
+    margin-block: 0;
   }
-
 }
 
 // -----------------------------------------------------------------------------
@@ -142,6 +143,7 @@
 
 .post-list-date {
   display: block;
+  font-family: $font-small;
   font-size: $font-size-sm;
   color: $color-text;
 }
@@ -151,6 +153,7 @@
 // -----------------------------------------------------------------------------
 
 .post-meta {
+  font-family: $font-small;
   font-size: $font-size-sm;
   color: $color-text;
   margin-block-end: $space-xl;
@@ -185,6 +188,7 @@
 
   .card-notice-details {
     margin-block-start: $space-sm;
+    font-family: $font-small;
     font-size: $font-size-sm;
     color: $color-text;
 
@@ -271,6 +275,13 @@
     &::after {
       content: ".";
     }
+  }
+
+  // A run-in title only suits running text; before a list, quote or code it takes its own line
+  &:has(.admonition-content > :first-child:not(p)) .admonition-title {
+    float: none;
+    display: block;
+    margin-block-end: $space-sm;
   }
 
   .admonition-icon {
@@ -602,12 +613,14 @@ img.inset {
 }
 
 .forum-title {
+  font-family: $font-small;
   font-size: $font-size-sm;
   color: $color-text;
   font-style: italic;
 }
 
 .forum-posts {
+  font-family: $font-small;
   font-size: $font-size-sm;
   color: $color-text;
 }
@@ -816,7 +829,7 @@ details {
 }
 
 // -----------------------------------------------------------------------------
-// Flavor toggle (textured <-> smooth), header-right
+// Flavor toggle (textured <-> smooth), header-right: the label, then the two options stacked like a small menu.
 // The active flavor is inert text, the other is a link. Each option renders in its own face
 // via single-word font subsets (config/font-subset.py), which is why two toggle-only families exist.
 // The template carries all four cells; each flavor's entry stylesheet hides its two (main.scss / _smooth-overrides.scss).
@@ -826,7 +839,8 @@ details {
   display: inline-flex;
   align-items: center;
   gap: $space-sm;
-  font-size: 0.9rem;
+  font-size: $font-size-sm;
+  line-height: $line-height-tight;
   @include lettering-on-dark;
 
   // Hairline before the toggle, as a pseudo-element so it can never wrap onto a different row than the control it divides.
@@ -844,8 +858,15 @@ details {
 
 .flavor-toggle {
   display: inline-flex;
-  align-items: baseline;
-  gap: $space-xs;
+  flex-direction: column;
+  align-items: flex-start;
+
+  // Each option at least 24px tall, WCAG's minimum tap target, so the two stacked links are easy to hit apart on a phone
+  .seg {
+    display: flex;
+    align-items: center;
+    min-height: 24px;
+  }
 
   .seg-fell {
     font-family: 'IM Fell English Toggle', serif;

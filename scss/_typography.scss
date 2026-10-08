@@ -80,16 +80,7 @@ $unicode-japanese: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
 // -----------------------------------------------------------------------------
 
 html {
-  // Root font size per device class; see Typography Scale in _variables.scss
-  // for derivation. Smaller screens are closer to the face; the font can be
-  // physically smaller while subtending the same angle on the retina.
-  font-size: $root-font-phone;
-
-  @media (min-width: $breakpoint-tablet)  { font-size: $root-font-tablet; }
-  @media (min-width: $breakpoint-laptop)  { font-size: $root-font-laptop; }
-  @media (min-width: $breakpoint-desktop) { font-size: $root-font-desktop; }
-  @media (min-width: $breakpoint-large)   { font-size: $root-font-large; }
-  @media (min-width: $breakpoint-4k)      { font-size: $root-font-4k; }
+  font-size: $root-font-size;
 }
 
 body {
@@ -97,7 +88,7 @@ body {
   font-size: $font-size-base;
   font-weight: 400;
   color: $color-text;
-  line-height: $line-height-loose;
+  line-height: $line-height-normal;
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +102,7 @@ body {
 
 // -----------------------------------------------------------------------------
 // Headings
-// Using clamp() for fluid sizing without breakpoints
+// Sizes come from the type scale in _variables.scss
 // -----------------------------------------------------------------------------
 
 h1, h2, h3, h4, h5, h6 {
@@ -133,20 +124,33 @@ h5, h6 {
   font-family: $font-body;
 }
 
+// Each heading is a whole number of steps above body text
+h1, h2, h3, h4 {
+  --type-scale-step: #{$type-scale-step-phone};
+
+  @media (min-width: $breakpoint-md) {
+    --type-scale-step: #{$type-scale-step};
+  }
+}
+
 h1 {
-  font-size: clamp($font-size-2xl, 5vw, $font-size-3xl);
+  font-size: calc(1rem * pow(var(--type-scale-step), 4));
   margin-block-start: 0;
 }
 
 h2 {
-  font-size: clamp($font-size-xl, 4vw, $font-size-2xl);
+  font-size: calc(1rem * pow(var(--type-scale-step), 3));
 }
 
 h3 {
-  font-size: $font-size-lg;
+  font-size: calc(1rem * pow(var(--type-scale-step), 2));
 }
 
-h4, h5, h6 {
+h4 {
+  font-size: calc(1rem * var(--type-scale-step));
+}
+
+h5, h6 {
   font-size: $font-size-base;
 }
 
@@ -191,6 +195,7 @@ figure {
   }
 
   figcaption {
+    font-family: $font-small;
     font-size: $font-size-sm;
     color: $color-text;
     margin-block-start: $space-xs;

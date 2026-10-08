@@ -555,6 +555,7 @@ Thus: subsetting. At build time, a script scans every markdown file for characte
 
 ::: note
 > Thus: we serve ~875 KB of fonts.
+
 This claim will become stale, but, the real size ought to remain *pretty close* to this
 :::
 
