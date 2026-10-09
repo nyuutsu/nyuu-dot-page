@@ -7,6 +7,8 @@ to static/fonts/. Each font has its own Unicode range detection.
 
 Uses hash-based caching to skip rebuilds when character sets unchanged.
 
+The IM Fell italics' swashes are prepared by fell_swashes.py before subsetting.
+
 Usage: ./font-subset.py
 Run before building the site (or use `make build`).
 
@@ -19,13 +21,20 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
+
+from fell_swashes import prepare_swashes
 
 SCRIPT_DIR = Path(__file__).parent
 PROJECT_ROOT = SCRIPT_DIR.parent
 FONTS_SRC = SCRIPT_DIR / "fonts-src"
 FONTS_OUT = PROJECT_ROOT / "static/fonts"
 HASH_FILE = FONTS_OUT / ".font-subset-cache.json"
+FELL_SWASHES = SCRIPT_DIR / "fell_swashes.py"
+
+# Features a prepared Fell italic keeps through subsetting, on top of pyftsubset's defaults
+SWASH_FEATURES = ["swsh"]
 
 # Unicode ranges for scanning
 LATIN_RANGES = [
@@ -119,25 +128,26 @@ CODE_EXTRA_RANGES = [
 MONO_RANGES = LATIN_RANGES + CJK_RANGES + CODE_EXTRA_RANGES
 
 # Font configurations: font filename -> unicode ranges to scan for
+# "swashes": True prepares the font's swashes before subsetting (see fell_swashes.py)
 # Note: Blobmoji is NOT subsetted (handled by blobmoji/build-subset.py)
 FONTS = {
     "OradanoGSRR.woff2": {"ranges": CJK_RANGES, "always_include": set()},
     # IM Fell English — body text
     # Manicules (☜ ☞) included: used in card notice widget, from the same typeface
     "IMFellEnglish-Regular.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE | {'\u261C', '\u261E'}},
-    "IMFellEnglish-Italic.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
+    "IMFellEnglish-Italic.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE, "swashes": True},
     "IMFellEnglish-SC.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
     # IM Fell Great Primer — subheadings (h3, h4)
     "IMFellGreatPrimer-Regular.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
-    "IMFellGreatPrimer-Italic.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
+    "IMFellGreatPrimer-Italic.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE, "swashes": True},
     "IMFellGreatPrimer-SC.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
     # IM Fell Double Pica — headings (h1, h2)
     "IMFellDoublePica-Regular.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
-    "IMFellDoublePica-Italic.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
+    "IMFellDoublePica-Italic.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE, "swashes": True},
     "IMFellDoublePica-SC.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
     # IM Fell DW Pica — small UI text
     "IMFellDWPica-Regular.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
-    "IMFellDWPica-Italic.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
+    "IMFellDWPica-Italic.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE, "swashes": True},
     "IMFellDWPica-SC.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
     "SarasaMonoJ-Regular.woff2": {"ranges": MONO_RANGES, "always_include": MONO_ALWAYS_INCLUDE},
     "SarasaMonoJ-Bold.woff2": {"ranges": MONO_RANGES, "always_include": MONO_ALWAYS_INCLUDE},
@@ -186,7 +196,7 @@ def scan_content(ranges):
     return found
 
 
-def compute_hash(chars, source_path):
+def compute_hash(chars: set[str], source_path: Path, swashes: bool) -> str:
     """Compute hash of character set and source font mtime for cache validation."""
     # Sort codepoints for deterministic hash
     sorted_codepoints = sorted(ord(c) for c in chars)
@@ -194,6 +204,9 @@ def compute_hash(chars, source_path):
     # Include source font mtime so edits to the font itself bust the cache
     mtime = str(os.path.getmtime(source_path))
     content = content + "|" + mtime
+    # A prepared font also changes whenever the preparation steps do
+    if swashes:
+        content += "|" + hashlib.sha256(FELL_SWASHES.read_bytes()).hexdigest()
     return hashlib.sha256(content.encode()).hexdigest()[:16]
 
 
@@ -212,7 +225,7 @@ def save_cache(cache):
     HASH_FILE.write_text(json.dumps(cache, indent=2))
 
 
-def subset_font(source, target, codepoints):
+def subset_font(source: Path, target: Path, codepoints: set[str], extra_features: list[str]) -> None:
     """Create subset using pyftsubset."""
     if not codepoints:
         print(f"  [WARN] No characters found for {source.name} — subsetting to space only")
@@ -227,6 +240,8 @@ def subset_font(source, target, codepoints):
         "--flavor=woff2",
         f"--output-file={target}",
     ]
+    if extra_features:
+        cmd.append(f"--layout-features+={','.join(extra_features)}")
 
     try:
         subprocess.run(cmd, check=True, capture_output=True)
@@ -261,7 +276,8 @@ def main():
             chars = set(config["text"])
         else:
             chars = scan_content(config["ranges"]) | config.get("always_include", set())
-        current_hash = compute_hash(chars, source)
+        swashes = config.get("swashes", False)
+        current_hash = compute_hash(chars, source, swashes)
 
         # Check cache
         cached_hash = cache.get(font_name)
@@ -272,7 +288,13 @@ def main():
         print(f"Processing {font_name}...")
         print(f"  Found {len(chars)} characters (hash: {current_hash})")
 
-        subset_font(source, target, chars)
+        if swashes:
+            with tempfile.TemporaryDirectory() as workspace:
+                prepared = Path(workspace) / source.name
+                prepare_swashes(source, prepared)
+                subset_font(prepared, target, chars, SWASH_FEATURES)
+        else:
+            subset_font(source, target, chars, [])
 
         orig_size = source.stat().st_size
         new_size = target.stat().st_size

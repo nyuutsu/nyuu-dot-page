@@ -92,6 +92,15 @@ body {
 }
 
 // -----------------------------------------------------------------------------
+// Italic swashes
+// The flourished capitals, and the k and e flourishes before . ! ?, from the Fell italics as prepared by config/fell_swashes.py
+// -----------------------------------------------------------------------------
+
+em, i, cite, figcaption, blockquote {
+  font-feature-settings: "swsh";
+}
+
+// -----------------------------------------------------------------------------
 // Japanese Text
 // Auto-wrapped in <span lang="ja"> by Pandoc transform for accessibility
 // -----------------------------------------------------------------------------
