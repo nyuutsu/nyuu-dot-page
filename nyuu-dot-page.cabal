@@ -18,6 +18,7 @@ executable site
                   , Transforms.CardNotice
                   , Transforms.Cards
                   , Transforms.Chat
+                  , Transforms.CompanionExcerpt
                   , Transforms.Dropcap
                   , Transforms.Emoji
                   , Transforms.FigureLink

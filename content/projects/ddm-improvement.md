@@ -54,7 +54,10 @@ This is an improvement patch for the game *Yu-Gi-Oh! Dungeon Dice Monsters* ("DD
 </div>
 ```
 
-### What does it change?
+::: companion-excerpt
+### 🪄 What this is
+
+This site is a reference for a Dungeon Dice Monsters (GBA) improvement patch. It's *also* a good reference for the base game, btw.
 
 Some of what the patch does:
 
@@ -69,6 +72,7 @@ Some of what the patch does:
 - You can have at most *one* of any die in your pool, so the best pool isn't just Time Wizards, Battle Warriors, & Energy Discs.
 
 [everything the patch changes →](https://ddm.nyuu.page/patch){.companion-link .to-patch}
+:::
 
 ## How do I get this?
 

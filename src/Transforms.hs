@@ -13,6 +13,7 @@ module Transforms
   , anchorTransform
   , admonitionTransform
   , chatTransform
+  , companionExcerptTransform
   , forumPostTransform
   , cardTransform
   , cardNoticeTransform
@@ -35,6 +36,7 @@ import Transforms.Emoji (emojiTransform)
 import Transforms.Anchors (anchorTransform)
 import Transforms.Admonitions (admonitionTransform)
 import Transforms.Chat (chatTransform)
+import Transforms.CompanionExcerpt (companionExcerptTransform)
 import Transforms.ForumPost (forumPostTransform)
 import Transforms.Cards (cardTransform)
 import Transforms.CardNotice (cardNoticeTransform)
@@ -63,6 +65,8 @@ import Transforms.Dropcap (dropcapTransform)
 --  10. japaneseTransform - wrap CJK text (runs last to process all text)
 --  11. tableTransform - reset column widths, wrap tables for horizontal
 --      scrolling (no ordering constraints)
+--  12. companionExcerptTransform - quote a companion site's section as a
+--      credited figure (no ordering constraints)
 --
 -- Note: Figures are handled by Pandoc's implicit_figures extension.
 -- Use ![Caption](image){alt="accessibility text"} syntax.
@@ -71,6 +75,7 @@ allTransforms admonitionConfig avatarConfig cardCache imageDims emojiAssets =
   tableTransform
   . japaneseTransform
   . emojiTransform emojiAssets
+  . companionExcerptTransform
   . figureLinkTransform
   . anchorTransform
   . imageDimensionsTransform imageDims

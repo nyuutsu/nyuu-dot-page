@@ -783,9 +783,10 @@ details {
   color: $color-companion-ink;
   text-decoration: none;
   background: var(--face);
-  border: 3px solid;
+  border: $companion-key-bevel solid;
   border-color: var(--face-lit) var(--face-shade) var(--face-shade) var(--face-lit);
-  box-shadow: 4px 4px 0 var(--face-drop);
+  // The outline keeps the pale lit edge from melting into the paper
+  box-shadow: 0 0 0 1px var(--face-drop), $companion-key-drop $companion-key-drop 0 var(--face-drop);
 
   @each $page, $colours in $companion-colors {
     &.to-#{$page} {
@@ -797,6 +798,77 @@ details {
   &:focus {
     color: $color-companion-ink;
     background: color-mix(in srgb, var(--face) 93%, white);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Companion excerpt: a little piece of a companion site, quoted here in its own frame (Transforms/CompanionExcerpt.hs)
+// -----------------------------------------------------------------------------
+
+.companion-excerpt {
+  @include companion-colours(map.get($companion-colors, home));
+  display: flex;
+  flex-direction: column;
+  width: auto;  // figures shrink to fit their image; an excerpt spans the column
+  margin-block: $space-xl;
+
+  @each $page, $colours in $companion-colors {
+    &.to-#{$page} {
+      @include companion-colours($colours);
+    }
+  }
+
+  // The credit sits above the frame; Pandoc writes it after the quote
+  figcaption {
+    order: -1;
+    margin-block: 0 $space-sm;
+    font-family: $font-body-sc;
+    font-style: normal;
+    letter-spacing: 0.03em;
+    text-align: start;
+
+    &::before {
+      content: "\261E";
+      content: "\261E" / "";
+      font-family: $font-ornaments, $font-body-sc;
+      margin-inline-end: 0.4em;
+    }
+  }
+
+  blockquote {
+    margin: 0;
+    padding: $space-lg;
+    font-family: 'Quicksand', sans-serif;
+    font-size: $font-size-sm;
+    font-style: normal;
+    line-height: $line-height-normal;
+    background: none;
+    border: $companion-panel-frame solid;
+    border-color: var(--face-lit) var(--face-shade) var(--face-shade) var(--face-lit);
+    border-radius: 0;
+    box-shadow:
+      0 0 0 1px var(--face-drop),
+      $companion-panel-drop $companion-panel-drop 0 var(--face-drop),
+      inset 0 0 0 1px var(--face-drop);
+
+    &::before,
+    &::after {
+      content: none;
+    }
+
+    > :first-child {
+      margin-block-start: 0;
+    }
+  }
+
+  :is(h2, h3, h4) {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: $font-size-lg;
+
+    a::before {
+      content: none;
+    }
   }
 }
 

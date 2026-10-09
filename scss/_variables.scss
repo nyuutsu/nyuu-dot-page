@@ -62,6 +62,13 @@ $companion-colors: (
 );
 $color-companion-ink: #000;
 
+// How the companion sites build things, in their own measures: a key is a coloured face with a thin bevel,
+// a panel is paper in a thick frame; both stand on a hard drop shadow
+$companion-key-bevel: 3px;
+$companion-key-drop: 4px;
+$companion-panel-frame: 12px;
+$companion-panel-drop: 5px;
+
 // -----------------------------------------------------------------------------
 // Spacing
 // rem-based, so spacing grows with the root font size
