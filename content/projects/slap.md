@@ -31,6 +31,8 @@ It knows six verbs:
 
 - **info** — patch → its metadata
 
+---
+
 # appendix
 
 ## correctness
@@ -56,6 +58,8 @@ some:
 > BPS appears to allow "copying stuff from other parts of the output, before anything has been put there". Is this coherent or no?
 
 > PPF3 doesn't track file sizes, and allows undo. The wire can describe growth, but in a way where if you do so, undoing becomes incoherent. The OG tool looks to me like it intends to block actually doing growth or shrinking, but in a way that I suspect didn't work. What do we *do* if the user creates a size-changing undo-bearing PPF3? What if they want to use the PPF3 undo feature; for format-structural reasons it is impossible to detect that the user is trying to truncate-via-undo.
+
+---
 
 and so on. On creation we are conservative: emit things any tool could apply just fine. On application we have attempted to support the entire "expressive range" of each format. Doing this means figuring out where "the line" is.
 
@@ -153,6 +157,8 @@ On application we lose more cells than we win; at cartridge sizes the gaps are t
 
 - applyppf3 and the ninja appliers modify a file in place instead of writing a fresh output, so each timed run is handed a pre-made copy, and making the copy is not timed. At 520MiB most of slap's apply time is writing the 520MiB output; an in-place applier writes only the changed bytes. That row is two different jobs sharing a table.
 :::
+
+---
 
 ### in the browser
 

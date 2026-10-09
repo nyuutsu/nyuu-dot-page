@@ -29,6 +29,8 @@ Aside: the first set has 102 cards. The card-type breakdown is 69 Pokemon, 26, t
 
 Evolution could be great if the evolved forms were sufficiently stronger (more health, more damage per energy, more raw damage) than the non-evolving Pokemon. They aren't; evolving isn't profitable. Your attacks get stronger, which is flashy and cool! But your attacks also get more expensive, which is a huge problem and makes it impossible to *actually do damage*.
 
+---
+
 An important idea in trading card games: over the course of the game, the amount of "swinginess" that happens in each turn should increase. The first turn should have puny little effects that represent tiny swings in "who is winning". Later turns should have increasingly large effects & so large swings in "who is winning and by how much". Analogous maybe to the "material advantage" bars shown by chess apps? Most collectible card games have a mechanic meant to achieve this.
 
 * Magic has "you need mana to cast spells. You get mana from lands. You can play one land per turn. Thus, you can do more expensive (and therefore stronger) things the longer the game goes on".
@@ -46,6 +48,8 @@ Roughly a quarter of every competitively viable early Pokemon deck consists of u
 We know that every viable deck runs the maximum allowed amount of the above cards, since blowing up your opponent's resources is pretty much the strongest thing you can be doing. In fact: every viable deck has something like *thirty* cards (half of the deck!) in common with all other viable decks, since there are so many overwhelmingly generically powerful effects in the format.
 
 Attacks must be cheap to be viable, since your opponent is going to be constantly destroying your energies. Attacks of evolved Pokemon are *expensive*; they'll often cost three or four energy pips. Evolutions overall are too hard to get into play and too easy to end up unable to act due to lack of energy. The more reliable strategy is to pick from a shortlist of powerful non-evolving options: [Hitmonchan]{.card source="pokemon"} of [Electabuzz]{.card source="pokemon"} [Mewtwo]{.card set="base1"} [Chansey]{.card set="base1"}. The next two sets, Jungle and Fossil, were designed similarly: they added many Pokemon, but the ones with competitive relevance continued to be efficient non-evolving Pokemon ([Moltres]{.card set="base3"} [Magmar]{.card set="base3"}-[Scyther]{.card source="pokemon"} [Mewtwo]{.card set="base1"}); The Jungle and Fossil additions didn't change the "evolved is a really big downside" dynamic.
+
+---
 
 Pokemon had large competitive tournaments almost immediately after it was brought to the US. This is unusual for a new trading card game; it's common for competitive support to emerge only later. In the case of Pokemon, this early competitive support means lots of people got to go to tournaments and experience playing against "a deck consisting of efficient non-evolving pokemon and energy destruction"!
 

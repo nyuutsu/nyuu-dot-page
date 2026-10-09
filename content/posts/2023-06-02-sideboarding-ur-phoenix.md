@@ -263,12 +263,8 @@ Burn and boardwipes in
 
 Expensive spells out
 
----
-
 ### Conclusion
 
 Good luck!
-
----
 
 [U Spirits Decklist]: https://www.mtggoldfish.com/archetype/pioneer-mono-blue-spirits

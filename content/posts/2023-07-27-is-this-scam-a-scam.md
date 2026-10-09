@@ -80,8 +80,6 @@ Youtuber "Atomic Shrimp" gets into [extended conversations with email scammers] 
 
 This makes a bit more sense to me than that an email about how "the IRS demands Steam gift cards!" is actually playing 4-d chess.
 
----
-
 [pig-butcher]: https://www.inquirer.com/news/pig-butchering-online-dating-cryptocurrency-scam-20230510.html
 [r/scams]: https://old.reddit.com/r/scams/
 [noble lie]: https://en.wikipedia.org/wiki/Noble_lie

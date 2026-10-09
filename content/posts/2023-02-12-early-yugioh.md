@@ -70,6 +70,8 @@ Quoting myself in ["Pokemon Trading Card Game" design review](/posts/2023-02-13-
 
 > Yu-Gi-Oh has the mechanic of "you need creatures to win. You can play one creature per turn. Larger creatures require you to sacrifice in-play creatures. So, large creatures cost cards and time."
 
+---
+
 Yu-Gi-Oh doesn't have mana. Most cards can be cast for free; the main resource, so far as I can tell, is card advantage. The pace / swinginess of the game is mediated by "normal summoning" and "stars".
 
 * Normal summoning: you can play no more than one creature per turn. Loosely analogous to how in Magic you can play only one land per turn. Much like Magic's land drops, there are ways to get around this "one per turn" limitation & play more creatures.
@@ -154,6 +156,8 @@ E1's [contents](https://yugioh.fandom.com/wiki/Set_Card_Galleries:Legend_of_Blue
 
     Fusions aren't meaningfully stronger than their component material. They're *slightly* stronger than their components, but the components are often really bad. You can often play stronger things of a given cost *for free*.
 
+---
+
 Much of the strangeness is downstream of how E1 is not "an english translation of the first Japanese set". E1 is "assorted cards sourced from various sets printed in the first year and a half of the Japanese game". And during the timeframe those sets were printed in, there was a *fuckton* of power creep.
 
 The first [Japanese set](https://yugioh.fandom.com/wiki/Vol.1) comes out in January of '99. Sets continue to come out at a rate of about one per month. Which might sound *deliriously quick* to someone used to the Magic standard-legal set release schedule, but, these sets are *small*; 40-50 cards small. They're also fairly reprint heavy.
@@ -173,6 +177,8 @@ Checking the exact number of sets is hard, due to the aforementioned lack of goo
 * J1's strongest 4★ has an attack of ⚔1200. The set contains three ⚔1200 creatures. J1 had exactly one 4★; the limited cardpool forced you to include some 3★s and probably some 2 and/or 1★s also. The player probably does not have the ability to field playsets of all the ⚔1200 creatures *anyway* since there are no card shops or vendors other than "the vending machine the packs come from".
 
 By the time all the sets drawn on in E1 set had come out, the power level for a ≤5★ had risen *considerably*, in terms of how strong the individual options were, and in how many options existed. You no longer had to include a bunch of bad stuff just to reach the deck size requirement.
+
+---
 
 As for how the cards *selected for inclusion in E1* were selected: my best guess is that the localizers were selecting for iconic-ness and for hitting a target amount of cards at each amount of ★s, even though at this point 1★ 2★ and 3★ were now basically design relics rather than meaningful content in their own right. The same is probably true of the fusions. It certainly wasn't done to improve the play experience or average competitive relevance of a typical pack.
 

@@ -22,6 +22,8 @@ The link points to [here](https://magic.wizards.com/en/articles/archive/designin
 
 That article is pretty old, but, it's not like its dead content or anything. Mark Rosewater's posts link extensively to his older posts, which is why I ended up finding the above oddity. The big vendors do these site reorganizations that change the location (or remove entirely) older articles and then don't update the links to those articles to match the new location. It's pretty hit or miss whether the on-hover card images in a given article will work five years down the line.
 
+---
+
 It'd be nice if the community would stop migrating all its strategy discussions and resources into the unindexable Discord walled garden, too. I figure doing so is at least partially a response to "stuff on Magic websites is too impermanent", but, Discord-hosted content can be fragile too and there's less recourse if something goes wrong.
 
 I'm not really sure what the solution here is. Maybe there could be a browser extension, where you give it a whitelist of websites, and on those sites if you try to access 404ed content, the extension Googles or DDGs for terms that *ought* to find a working link to the content, and serves up the search results, or seamlessly takes you to the first result.

@@ -19,6 +19,8 @@ This was hubris. I got *way* too into agonizing over every little detail. It is 
 It has a bunch of cute little widgets, such as this note box thing.
 :::
 
+---
+
 The site "is" three things:
 
 1. assets: posts, images, style info, & templates describing how these things fit together
@@ -264,6 +266,8 @@ int main(void) {
 The trick to displaying the above block is to wrap it in a *four*-backtick block.
 :::
 
+---
+
 ## Architecture
 
 The [features](#features) section is about outputs. This section is about process.
@@ -381,6 +385,8 @@ which is a far cry from what we need it to be, which is:
   </div>
 </div>
 ```
+
+---
 
 We get it where it needs to be through **AST transformations**. These are short Haskell programs that walk the tree, find nodes matching a pattern, and replace them with richer structures. We have ten of them.
 

@@ -37,6 +37,8 @@ The only significant difference between tab behavior then and now is: in the ori
 
 [![several tabs on http://gnu.org/ the tab navigation arrows in SimulBrowse 3.0.1](/images/vertical-space/simulbrowse-3-zoom.webp "several tabs on http://gnu.org/ the tab navigation arrows in SimulBrowse 3.0.1")](/images/vertical-space/simulbrowse-3-zoom.webp){.gbc}
 
+---
+
 No later than 2004—
 
 ::: note
@@ -74,6 +76,8 @@ The activities that *aren't* browsing endless feeds are still mostly vertically 
 Regardless of what you're up to, giving yourself more vertical space to do it in will probably make the experience better.
 
 Lemma: getting rid of the horizontal tab bar and repurposing its space might be nice.
+
+---
 
 Horizontal space is considerably less valuable. I see three reasons for this:
 
@@ -153,8 +157,8 @@ Giving a *robust* tutorial for replicating this arrangement would involve writin
 }
 ```
 
-Most people use Chrome, which so far as I can tell doesn't allow modifying the UI to hide the original tab bar. People have made [Chrome extensions](https://chrome.google.com/webstore/detail/tree-style-tab/oicakdoenlelpjnkoljnaakdofplkgnd?hl=en) that supplement the bar with a shortcut-invokable tree [popup], which isn't what I'm used to, but has its own kind of charm. Regardless: consider demanding a better tab experience from your favorite browser. We can do better than The Bar.
-
 ---
+
+Most people use Chrome, which so far as I can tell doesn't allow modifying the UI to hide the original tab bar. People have made [Chrome extensions](https://chrome.google.com/webstore/detail/tree-style-tab/oicakdoenlelpjnkoljnaakdofplkgnd?hl=en) that supplement the bar with a shortcut-invokable tree [popup], which isn't what I'm used to, but has its own kind of charm. Regardless: consider demanding a better tab experience from your favorite browser. We can do better than The Bar.
 
 [popup]: /images/vertical-space/chrome-tst.webp
