@@ -133,8 +133,8 @@ MONO_RANGES = LATIN_RANGES + CJK_RANGES + CODE_EXTRA_RANGES
 FONTS = {
     "OradanoGSRR.woff2": {"ranges": CJK_RANGES, "always_include": set()},
     # IM Fell English — body text
-    # Manicules (☜ ☞) included: used in card notice widget, from the same typeface
-    "IMFellEnglish-Regular.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE | {'\u261C', '\u261E'}},
+    # Ornaments drawn by CSS rather than typed, so the content scan can't find them: the manicules ☜ ☞ and the leaf
+    "IMFellEnglish-Regular.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE | {'\u261C', '\u261E', '\uE047'}},
     "IMFellEnglish-Italic.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE, "swashes": True},
     "IMFellEnglish-SC.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
     # IM Fell Great Primer — subheadings (h3, h4)
@@ -165,11 +165,13 @@ FONTS = {
     "NotoSerifJP-Bold.woff2": {"ranges": CJK_RANGES, "always_include": set()},
     # Quicksand — the companion sites' font, for links to them (variable, weights 300–700)
     "Quicksand-Variable.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
-    # Fixed-charset micro-subsets for header UI. "text" pins the exact characters (no content scan);
+    # Fixed-charset micro-subsets for UI pieces. "text" pins the exact characters (no content scan);
     # "source" names the pool font when the output is a second cut of a font subsetted above.
     "IMFellEnglish-Toggle.woff2": {"source": "IMFellEnglish-Regular.woff2", "text": "textured"},
     "SourceSerif4-Toggle.woff2": {"source": "SourceSerif4-Regular.woff2", "text": "font: smooth"},
     "Baloo2-Slap.woff2": {"source": "Baloo2-ExtraBold.woff2", "text": "slap"},
+    # The smooth flavor's manicules and leaf
+    "IMFellEnglish-Ornaments.woff2": {"source": "IMFellEnglish-Regular.woff2", "text": "\u261C\u261E\uE047"},
 }
 
 

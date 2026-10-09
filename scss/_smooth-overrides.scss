@@ -13,6 +13,13 @@
 @use 'variables' as *;
 
 // -----------------------------------------------------------------------------
+// Font Faces: ornaments
+// The manicules and the leaf, which Source Serif lacks, borrowed from IM Fell English
+// -----------------------------------------------------------------------------
+
+@include font-face('IM Fell Ornaments', 'IMFellEnglish-Ornaments');
+
+// -----------------------------------------------------------------------------
 // Font Faces: Source Serif 4 (Adobe, OFL)
 // Three optical sizes: Caption (<14px), Regular (14-24px), Display (24px+)
 // -----------------------------------------------------------------------------

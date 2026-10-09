@@ -154,6 +154,9 @@ $font-small: 'IM Fell DW Pica', $font-body !default;
 $font-small-sc: 'IM Fell DW Pica SC', $font-small !default;
 $font-mono: 'Sarasa Mono J', monospace !default;
 $font-japanese: 'Oradano-mincho-GSRR' !default;
+// Where the manicules ☜☞ and the leaf come from.
+// It ends without a generic family like serif, so each use can say which face takes over for the other characters.
+$font-ornaments: 'IM Fell English' !default;
 
 // -----------------------------------------------------------------------------
 // Mixins

@@ -15,7 +15,8 @@ $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF,
 $unicode-japanese: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
 
 // IM Fell English: body text (13.5pt historical cut, van Dijck/Briot, 1672)
-@include font-face('IM Fell English',    'IMFellEnglish-Regular', $range: ($unicode-latin, U+261C, U+261E));  // manicules ☜☞
+// The English Regular also carries the ornaments CSS draws: the manicules ☜☞ and the leaf
+@include font-face('IM Fell English',    'IMFellEnglish-Regular', $range: ($unicode-latin, U+261C, U+261E, U+E047));
 @include font-face('IM Fell English',    'IMFellEnglish-Italic', $style: italic, $range: $unicode-latin);
 @include font-face('IM Fell English SC', 'IMFellEnglish-SC', $range: $unicode-latin);
 
@@ -44,7 +45,7 @@ $unicode-japanese: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
 // Quicksand: the companion sites' font, for links to them
 @include font-face('Quicksand', 'Quicksand-Variable', $weight: 300 700);
 
-// Header UI micro-subsets: each file carries only its component's glyphs, so both flavor trees pay a few KB instead of a full second family.
+// UI micro-subsets: each file carries only its component's glyphs, so both flavor trees pay a few KB instead of a full second family.
 // Charsets are pinned in config/font-subset.py ("text" entries).
 @include font-face('IM Fell English Toggle', 'IMFellEnglish-Toggle');
 @include font-face('Source Serif 4 Toggle', 'SourceSerif4-Toggle');

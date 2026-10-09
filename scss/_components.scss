@@ -271,9 +271,11 @@
     letter-spacing: 0.03em;
     color: var(--adm-border);
 
-    // The run-in title's full stop, so markdown never has to type it
+    // The run-in title's full stop, and a manicule pointing into the note
     &::after {
-      content: ".";
+      content: ". \261E";
+      content: ". \261E" / ".";  // screen readers hear the full stop, not "white right pointing index"
+      font-family: $font-ornaments, $font-body-sc;
     }
   }
 
