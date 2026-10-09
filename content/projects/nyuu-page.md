@@ -5,6 +5,10 @@ description: "You are here"
 weight: 5
 ---
 
+::: warning
+Circa the switch over to a light-mode theme a bunch of stuff here is out of date
+:::
+
 ::: tip
 Just want the code for some reason? Get it [here](https://github.com/nyuutsu/nyuu-dot-page).
 :::

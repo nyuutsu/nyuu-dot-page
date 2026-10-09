@@ -24,7 +24,7 @@ Evolution was bad at the time. It might be good now.
 :::
 
 ::: info
-Aside: the first set has 102 cards. The card-type breakdown is 69 Pokemon, 26, trainers, 7 energy. The trainers focus on lots of different mechanics. A mere two of them ([Devolution Spray]{.card source="pokemon"}, [Pokémon Breeder]{.card set="base1"}) are "about" evolution and an additional handful could benefit evolution-based strategies but weren't about them. It'd be fair to say trainers are not intended to be "about" evolution. Pokemon, however, are **about evolution**. 53/69<sup>(77%!)</sup> of them evolve or are evolved. Of the quarter that don't have evolutions, a bunch gain them in Jungle and/or Fossil. This game is "about evolution".
+Aside: the first set has 102 cards. The card-type breakdown is 69 Pokemon, 26 trainers, 7 energy. The trainers focus on lots of different mechanics. A mere two of them ([Devolution Spray]{.card source="pokemon"}, [Pokémon Breeder]{.card set="base1"}) are "about" evolution and an additional handful could benefit evolution-based strategies but weren't about them. It'd be fair to say trainers are not intended to be "about" evolution. Pokemon, however, are **about evolution**. 53/69<sup>(77%!)</sup> of them evolve or are evolved. Of the quarter that don't have evolutions, a bunch gain them in Jungle and/or Fossil. This game is "about evolution".
 :::
 
 Evolution could be great if the evolved forms were sufficiently stronger (more health, more damage per energy, more raw damage) than the non-evolving Pokemon. They aren't; evolving isn't profitable. Your attacks get stronger, which is flashy and cool! But your attacks also get more expensive, which is a huge problem and makes it impossible to *actually do damage*.

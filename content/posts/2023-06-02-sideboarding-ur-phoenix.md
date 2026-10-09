@@ -148,7 +148,7 @@ We're going to tweak your sideboard to be *very* anti-spirits. Most Phoenix side
 
     * I'm going to make you a reminder card for tracking "precombat instants/sorceries cast this turn" so you keep in mind to think about whether to work towards reaching it that turn & how far you currently are. It may take getting used to; that is okay.
 
-* The stack is FILO. If you try to use a lighting axe to kill something and the opponent responds by casting [Rattlechains]{.card source="mtg"}, then the Rattlechains will resolve first. Then its' ETB hexproof-granting ability will go on the stack also ahead of the lighting axe, and by the time the axe resolves the target will have hexproof and so not get axed.
+* The stack is FILO. If you try to use a lightning axe to kill something and the opponent responds by casting [Rattlechains]{.card source="mtg"}, then the Rattlechains will resolve first. Then its ETB hexproof-granting ability will go on the stack also ahead of the lightning axe, and by the time the axe resolves the target will have hexproof and so not get axed.
 
 * "Can't be countered" means countering it doesn't do anything. It also means that countering-related effects such as "ward" (which usually counter stuff unless you pay the ward cost) don't do anything.
 
@@ -214,7 +214,7 @@ Know what their cards do beforehand. Here is an archetypal decklist; [take a loo
 
 They're going to try to play one spirit, put [Curious Obsession]{.card source="mtg"} on it, then attack like ten times with it, using the extra cards to protect the spirit and counter your stuff. This is only good if they're able to do combat damage to you. Their creatures are pretty bad if you aren't surprised by them.
 
-The stack is FILO. If you try to use a lighting axe to kill something and the opponent responds by casting [Rattlechains]{.card source="mtg"}, then the Rattlechains will resolve first. Then its' ETB hexproof-granting ability will go on the stack also ahead of the lighting axe, and by the time the axe resolves the target will have hexproof and so not get axed.
+The stack is FILO. If you try to use a lightning axe to kill something and the opponent responds by casting [Rattlechains]{.card source="mtg"}, then the Rattlechains will resolve first. Then its ETB hexproof-granting ability will go on the stack also ahead of the lightning axe, and by the time the axe resolves the target will have hexproof and so not get axed.
 
 They're allowed to "level up" the [Ascendant Spirit]{.card source="mtg"} at instant speed. Doing so uses the stack.
 

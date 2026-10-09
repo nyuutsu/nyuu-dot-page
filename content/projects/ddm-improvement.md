@@ -1,7 +1,7 @@
 ---
 title: "DDM Improvement"
 icon: "🎲"
-description: "Improvement patch, guide, & save-editor for Yu-Gi-Oh! Dungeon Dice Monsters (GBA)."
+description: "Improvement patch, guide, & save-editor for Yu-Gi-Oh! Dungeon Dice Monsters (GBA)"
 weight: 3
 ---
 
@@ -49,7 +49,7 @@ This is an improvement patch for the game *Yu-Gi-Oh! Dungeon Dice Monsters* ("DD
       <source src="/videos/projects/ddm-improvement/clip4.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"'>
       <p><a href="/videos/projects/ddm-improvement/clip4.mp4">Download clip 4</a></p>
     </video>
-    <figcaption>We suspend the duel, then resume it.</figcaption>
+    <figcaption>We suspend the match, then resume it.</figcaption>
   </figure>
 </div>
 ```

@@ -14,13 +14,13 @@ Other cases are harder to understand.
 These days, the in-app link works and points [here](https://magic.wizards.com/en/mtgarena/drop-rates?utm_medium=product&utm_source=arena)
 :::
 
-* On the Wizards of the Coast's website, links  to *other parts of the Wizards's of the Cost website* sometimes don't work. This [list of articles](https://magic.wizards.com/en/news/making-magic/four-hundred-and-counting-2009-09-25) has an entry named
+* On the Wizards of the Coast's website, links to *other parts of the Wizards of the Coast's website* sometimes don't work. This [list of articles](https://magic.wizards.com/en/news/making-magic/four-hundred-and-counting-2009-09-25) has an entry named
 
 > Week #397 (August 4, 2009) – "Designing for Johnny"
 
 The link points to [here](https://magic.wizards.com/en/articles/archive/designing-johnny-2009-08-03), which 404s. Searching for a working link via google didn't go turn up anything. Searching via DuckDuckGo worked and turned up [this](https://magic.wizards.com/en/news/making-magic/designing-johnny-2009-07-31). So, at some point wotc changed their article url pattern from `/articles/archive/foo` to `/news/making-magic/foo`, but also changed the article publish date?
 
-That article is pretty old, but, it's not like its dead content or anything. Mark Rosewater's posts link extensively to his older posts, which is why I ended up finding the above oddity. The big vendors do these site reorganizations that change the location (or remove entirely) older articles and then don't update the links to those articles to match the new location. It's pretty hit or miss whether the on-hover card images in a given article will work five years down the line.
+That article is pretty old, but, it's not like it's dead content or anything. Mark Rosewater's posts link extensively to his older posts, which is why I ended up finding the above oddity. The big vendors do these site reorganizations that change the location (or remove entirely) older articles and then don't update the links to those articles to match the new location. It's pretty hit or miss whether the on-hover card images in a given article will work five years down the line.
 
 ---
 

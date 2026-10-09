@@ -1,7 +1,7 @@
 ---
 title: "DM4 Translation"
 icon: "🕹️"
-description: "English patch, guide, & save-editor for Yu-Gi-Oh! Duel Monsters 4 (GBC)."
+description: "English patch, guide, & save-editor for Yu-Gi-Oh! Duel Monsters 4 (GBC)"
 weight: 2
 ---
 

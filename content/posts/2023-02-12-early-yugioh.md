@@ -42,7 +42,7 @@ Konami has some to-my-knowledge uniquely terrible labor practices<sup>[1](https:
 
 * requiring all artists to sign NDAs! artists are not allowed to take credit for their work in any way
 
-The "vibe" is, "by fiat, this game is a black-box created by Konami™. it does not contain artistic flourishes or influences by individuals." This sort of a labor culture is not conducive to getting much primary source material about what working on the game was like, and why a design decision was made, which is a shame. There's a wealth of information out there about how *Magic* is made now & how it was made [in the past](https://www.Magiclibrarities.net/955-rarities-alpha-beta-gamma-playtest-cards-english-cards-index.html). I'm told some similar resources exist for Pokemon, though I don't know this for sure.
+This sort of a labor culture is not conducive to getting much primary source material about what working on the game was like, and why a design decision was made, which is a shame. There's a wealth of information out there about how *Magic* is made now & how it was made [in the past](https://www.Magiclibrarities.net/955-rarities-alpha-beta-gamma-playtest-cards-english-cards-index.html). I'm told some similar resources exist for Pokemon, though I don't know this for sure.
 
 ### jargon
 
@@ -62,8 +62,6 @@ They mostly did a thorough job of not 1:1 using Magic jargon. Except for how the
 
 ### relevant game mechanics
 
-I am going to explain mechanics by alluding and comparing to what *Magic* does.
-
 Quoting myself in ["Pokemon Trading Card Game" design review](/posts/2023-02-13-early-pokemon/):
 
 > An important idea in trading card games: over the course of the game, the amount of "swinginess" that happens in each turn should increase. The first turn should have puny little effects that represent tiny swings in "who is winning". Later turns should have increasingly large effects & so large swings in "who is winning and by how much". Analogous maybe to the "material advantage" bars shown by chess apps? Most collectible card games have a mechanic meant to achieve this.
@@ -76,9 +74,9 @@ Yu-Gi-Oh doesn't have mana. Most cards can be cast for free; the main resource, 
 
 * Normal summoning: you can play no more than one creature per turn. Loosely analogous to how in Magic you can play only one land per turn. Much like Magic's land drops, there are ways to get around this "one per turn" limitation & play more creatures.
 
-* Stars: some creatures have a sort of psuedo mana-cost. Each creature has an immutable stat, its amount of "stars". Things with a lot of stars are, (and these are the only game objects this is true of), not free. They cost "sacrificing some number of creatures"! Here is a list explaining what star counts correspond to what additional costs:
+* Stars: some creatures have a sort of pseudo mana-cost. Each creature has an immutable stat, its amount of "stars". Things with a lot of stars are, (and these are the only game objects this is true of), not free. They cost "sacrificing some number of creatures"! Here is a list explaining what star counts correspond to what additional costs:
 
-    * 1★ to 4★: no additonal cost!
+    * 1★ to 4★: no additional cost!
 
     * 5★ to 6★: one sacrifice
 
@@ -86,13 +84,13 @@ Yu-Gi-Oh doesn't have mana. Most cards can be cast for free; the main resource, 
 
 Observations:
 
-* There are three "tiers" of starriness, based on how how many sacrifices it costs to play the thing. You might expect there to be *some sort* of a functional distinction between, for example a 1★ and 4★, even if they both can be played for free. There is no such distinction. For all rules purposes a 1★ and a 4★ are exactly the same. *weird*! The cards in the manga have stars on them, roughly indicating how strong they are but otherwise having no associated mechanics. That's why there are so many star amounts; they were flavor that had to be retrofitted to make them do *something* in an actual game.
+* There are three "tiers" of starriness, based on how many sacrifices it costs to play the thing. You might expect there to be *some sort* of a functional distinction between, for example a 1★ and 4★, even if they both can be played for free. There is no such distinction. For all rules purposes a 1★ and a 4★ are exactly the same. *weird*! The cards in the manga have stars on them, roughly indicating how strong they are but otherwise having no associated mechanics. That's why there are so many star amounts; they were flavor that had to be retrofitted to make them do *something* in an actual game.
 
 * I did a little bit of a fib when I wrote the above "stars to costs" table. On actual Yu-Gi-Oh cards, the stars are not represented by putting, e.g., "8★" on the card somewhere. Having 8 stars is represented by displaying 8 ★ symbols in a row. Humans can't easily [subitize](https://en.m.wikipedia.org/wiki/Subitizing) past *four* of something, so, figuring out how many stars something has by *reading the card* is a pain in the ass.
 
     In light of this, I'm going to redraw the "star to costs" list now, but this time I'm going to template it the way actual Yu-Gi-Oh cards present this information. I hear these days they've added creatures that have even more than 8 ★, so, good luck with that:
 
-    * ★ to ★★★★: no additonal cost!
+    * ★ to ★★★★: no additional cost!
 
     * ★★★★★ to ★★★★★★: one sacrifice
 
@@ -148,7 +146,7 @@ E1's [contents](https://yugioh.fandom.com/wiki/Set_Card_Galleries:Legend_of_Blue
 
     3. and "their attack/defense are roughly ⚔1500/🛡1500
 
-    It is weird that they want to spend sixty creatures worth of space in the set on expressing what are basically three ideas, especially  since #1 is so underpowered nobody would want to use it.
+    It is weird that they want to spend sixty creatures worth of space in the set on expressing what are basically three ideas, especially since #1 is so underpowered nobody would want to use it.
 
 * About 10% of the creatures are "fusions". Fusion is a mechanic where you can summon specific creatures from out of your sideboard & without it costing you your summon for that turn. To do this, you cast a specific spell, [Polymerization]{.card source="yugioh"}, and sacrifice-or-discard two specific (as in, each fusion card lists exactly two other cards it is fused out of) other monsters as "fusion material". *Wow! Those are some steep costs*. You're committing **three** specific cards to do this, you need to find all three of them, one of those cards does nothing on its own, and the other two have no particular selling point other than that they can be used for this.
 
