@@ -10,27 +10,27 @@
 // All fonts defined here for easy management and future subsetting
 // -----------------------------------------------------------------------------
 
-// Latin + common punctuation/symbols (shared by all Fell cuts)
+// Latin + common punctuation/symbols (shared by all the Fell fonts)
 $unicode-latin: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+20A0-20CF, U+2100-214F;
 $unicode-japanese: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
 
-// IM Fell English: body text (13.5pt historical cut, van Dijck/Briot, 1672)
+// IM Fell English: body text (13.5pt metal type, van Dijck/Briot, 1672)
 // The English Regular also carries the ornaments CSS draws: the manicules ☜☞ and the leaf
 @include font-face('IM Fell English',    'IMFellEnglish-Regular', $range: ($unicode-latin, U+261C, U+261E, U+E047));
 @include font-face('IM Fell English',    'IMFellEnglish-Italic', $style: italic, $range: $unicode-latin);
 @include font-face('IM Fell English SC', 'IMFellEnglish-SC', $range: $unicode-latin);
 
-// IM Fell Great Primer: subheadings h3-h4 (17pt historical cut, de Walpergen, 1684)
+// IM Fell Great Primer: subheadings h3-h4 (17pt metal type, de Walpergen, 1684)
 @include font-face('IM Fell Great Primer',    'IMFellGreatPrimer-Regular', $range: $unicode-latin);
 @include font-face('IM Fell Great Primer',    'IMFellGreatPrimer-Italic', $style: italic, $range: $unicode-latin);
 @include font-face('IM Fell Great Primer SC', 'IMFellGreatPrimer-SC', $range: $unicode-latin);
 
-// IM Fell Double Pica: headings h1-h2 (21pt historical cut, de Walpergen, 1684)
+// IM Fell Double Pica: headings h1-h2 (21pt metal type, de Walpergen, 1684)
 @include font-face('IM Fell Double Pica',    'IMFellDoublePica-Regular', $range: $unicode-latin);
 @include font-face('IM Fell Double Pica',    'IMFellDoublePica-Italic', $style: italic, $range: $unicode-latin);
 @include font-face('IM Fell Double Pica SC', 'IMFellDoublePica-SC', $range: $unicode-latin);
 
-// IM Fell DW Pica: small/UI text (12.5pt historical cut, de Walpergen, 1692)
+// IM Fell DW Pica: small/UI text (12.5pt metal type, de Walpergen, 1692)
 @include font-face('IM Fell DW Pica',    'IMFellDWPica-Regular', $range: $unicode-latin);
 @include font-face('IM Fell DW Pica',    'IMFellDWPica-Italic', $style: italic, $range: $unicode-latin);
 @include font-face('IM Fell DW Pica SC', 'IMFellDWPica-SC', $range: $unicode-latin);
@@ -226,8 +226,8 @@ figure {
       content: '';
       position: absolute;
       // Sit above figcaption, at image's bottom-right
-      bottom: calc(#{$space-xs} + 1.2em + #{$font-size-sm});
-      right: $space-xs;
+      inset-block-end: calc(#{$space-xs} + 1.2em + #{$font-size-sm});
+      inset-inline-end: $space-xs;
       width: 1.5rem;
       height: 1.5rem;
       background: url('/images/emoji/1f50d.svg') no-repeat center / contain;
@@ -492,7 +492,7 @@ strong, b {
   font-weight: 400;
   letter-spacing: 0.03em;
 
-  // Use the SC cut matched to each optical size
+  // Use the small-caps font matched to each size
   h1 &, h2 & { font-family: $font-heading-sc; }
   h3 &, h4 & { font-family: $font-subheading-sc; }
   h5 &, h6 & { font-family: $font-body-sc; }
@@ -517,11 +517,12 @@ em, i {
   display: flow-root;  // contain the float so the versal doesn't bleed into the next block
 
   > p:first-child::first-letter {
-    float: left;
+    float: inline-start;
     font-family: $font-heading;
     font-size: 4.6em;
     line-height: 0.8;
-    padding: 0.06em 0.1em 0 0;
+    padding-block-start: 0.06em;
+    padding-inline-end: 0.1em;
     color: $color-accent;
   }
 
@@ -533,10 +534,12 @@ em, i {
 
 .dropcap-j > p:first-child::first-letter {
   font-size: 4.15em;  // J's tail descends; a smaller versal keeps it within three lines
-  padding: 0.1em 0.12em 0 0;
+  padding-block-start: 0.1em;
+  padding-inline-end: 0.12em;
 }
 
 .dropcap-q > p:first-child::first-letter {
   font-size: 4.15em;
-  padding: 0.1em 0.42em 0 0;  // the Q swash sweeps right; the text must start clear of it
+  padding-block-start: 0.1em;
+  padding-inline-end: 0.42em;  // the Q swash sweeps into the line; the text must start clear of it
 }

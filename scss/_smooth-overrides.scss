@@ -6,7 +6,7 @@
 // Font-family rules are NOT here — those are handled by the entry point
 // configuring _variables.scss via @use ... with (). This file only contains:
 //   1. @font-face declarations (the actual typeface files)
-//   2. SC→bold: IM Fell uses separate SC font cuts; Source Serif uses bold weight
+//   2. SC→bold: IM Fell uses separate small-caps fonts; Source Serif uses bold weight
 //   3. Nav toggles
 // =============================================================================
 
@@ -46,8 +46,8 @@ $unicode-japanese: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF, U+3040-309F;
 
 // -----------------------------------------------------------------------------
 // SC → Bold
-// IM Fell has separate small-caps font cuts (weight 400, visually distinct).
-// Source Serif 4 has no SC cuts; use bold weight for the same visual emphasis.
+// IM Fell has separate small-caps fonts (weight 400, visually distinct).
+// Source Serif 4 has no small-caps fonts; use bold weight for the same visual emphasis.
 // -----------------------------------------------------------------------------
 
 strong, b {

@@ -17,7 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100svh;
 }
 
 // -----------------------------------------------------------------------------
@@ -28,9 +28,9 @@ body {
 .page {
   width: 100%;
   max-width: $max-width-page;
-  min-height: 100vh;
+  min-height: 100svh;
   // Paper: a faint grain over a soft vignette.
-  // The grain is its own file rather than inline here: the server's security policy only lets images load from nyuu.page itself.
+  // (A file, because the server's security policy blocks inline images.)
   background:
     url('#{$asset-origin}/images/backgrounds/paper-grain.svg'),
     radial-gradient(ellipse at 50% 40%, transparent 55%, rgba($color-paper-shade, 0.12)),
@@ -69,7 +69,7 @@ body {
 .site-logo {
   display: block;
   text-decoration: none;
-  margin-right: auto;
+  margin-inline-end: auto;
 
   &:hover {
     opacity: 0.85;
@@ -128,7 +128,7 @@ body {
   background-image: url('#{$asset-origin}/images/backgrounds/footer.webp');
   background-repeat: repeat;
   padding: $space-lg $space-md;
-  border-top: 1px solid $rule;
+  border-block-start: 1px solid $rule;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

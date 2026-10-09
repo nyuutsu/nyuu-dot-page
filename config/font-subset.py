@@ -167,7 +167,7 @@ FONTS = {
     # Quicksand — the companion sites' font, for links to them (variable, weights 300–700)
     "Quicksand-Variable.woff2": {"ranges": LATIN_RANGES, "always_include": LATIN_ALWAYS_INCLUDE},
     # Fixed-charset micro-subsets for UI pieces. "text" pins the exact characters (no content scan);
-    # "source" names the pool font when the output is a second cut of a font subsetted above.
+    # "source" names the pool font when the output is a second subset of a font subsetted above.
     "IMFellEnglish-Toggle.woff2": {"source": "IMFellEnglish-Regular.woff2", "text": "textured"},
     "SourceSerif4-Toggle.woff2": {"source": "SourceSerif4-Regular.woff2", "text": "font: smooth"},
     "Baloo2-Slap.woff2": {"source": "Baloo2-ExtraBold.woff2", "text": "slap"},

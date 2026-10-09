@@ -61,8 +61,7 @@ body, a, svg,
 }
 
 .browse-header, .meta {
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-inline: 5%;
 }
 
 // _layout.scss .site-main has padding for prose content; files page has none
@@ -117,7 +116,7 @@ th:last-child, td:last-child { width: 5%; }
 
 .grid .size {
   font-size: 0.75rem;
-  margin-top: 0.5em;
+  margin-block-start: 0.5em;
   color: $color-text;
 }
 
@@ -126,10 +125,9 @@ th:last-child, td:last-child { width: 5%; }
 // -----------------------------------------------------------------------------
 
 .browse-header {
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-block: 15px;
   background-color: $color-bg-inner;
-  border-bottom: 1px solid $rule;
+  border-block-end: 1px solid $rule;
 }
 
 .breadcrumbs {
@@ -138,8 +136,8 @@ th:last-child, td:last-child { width: 5%; }
   font-size: 0.75rem;
   letter-spacing: 1px;
   color: $color-text;
-  margin-bottom: 5px;
-  padding-left: 3px;
+  margin-block-end: 5px;
+  padding-inline-start: 3px;
 }
 
 // Override _typography.scss's h1 styling for the directory name display
@@ -176,9 +174,8 @@ h1 a:first-child { margin: 0; }
   gap: 1em;
   font-family: $font-small;
   font-size: $font-size-sm;
-  border-bottom: 1px solid $rule;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  border-block-end: 1px solid $rule;
+  padding-block: 1em;
   color: $color-text;
 }
 
@@ -186,7 +183,7 @@ h1 a:first-child { margin: 0; }
   display: flex;
   gap: 1em;
   align-items: center;
-  margin-right: auto;
+  margin-inline-end: auto;
 }
 
 // -----------------------------------------------------------------------------
@@ -196,15 +193,15 @@ h1 a:first-child { margin: 0; }
 .filter-container {
   position: relative;
   display: inline-block;
-  margin-left: 1em;
+  margin-inline-start: 1em;
 }
 
 #search-icon {
   color: $color-accent;
   position: absolute;
   height: 1em;
-  top: 0.6em;
-  left: 0.5em;
+  inset-block-start: 0.6em;
+  inset-inline-start: 0.5em;
 }
 
 #filter {
@@ -250,12 +247,12 @@ tbody tr:hover, .grid .entry a:hover {
   background-color: $accent-faint;
 }
 
-th, td { text-align: left; }
+th, td { text-align: start; }
 
 th {
   font-family: $font-body-sc;
   position: sticky;
-  top: 0;
+  inset-block-start: 0;
   background: $color-bg-inner;
   white-space: nowrap;
   z-index: 2;
@@ -322,7 +319,7 @@ td .go-up {
 .sizebar-bar {
   background-color: $accent-faint;
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
+  inset: 0;
   z-index: 0;
   height: 100%;
   pointer-events: none;
@@ -361,7 +358,7 @@ td .go-up {
 .grid .entry a:hover { background-color: $accent-faint; }
 .grid .entry svg { width: 75px; height: 75px; }
 .grid .entry img { max-height: 200px; object-fit: cover; }
-.grid .entry .name { margin-top: 1em; }
+.grid .entry .name { margin-block-start: 1em; }
 
 // -----------------------------------------------------------------------------
 // Accessibility
@@ -386,7 +383,7 @@ td .go-up {
 @media (max-width: 600px) {
   .hideable { display: none; }
   td:nth-child(2) { width: auto; }
-  th:nth-child(3), td:nth-child(3) { padding-right: 5%; text-align: right; }
+  th:nth-child(3), td:nth-child(3) { padding-inline-end: 5%; text-align: end; }
   h1 { color: $color-heading; }
   h1 a { margin: 0; }
   #filter { max-width: 100px; }

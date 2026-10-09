@@ -24,6 +24,7 @@
 html {
   // Prevent font size inflation on mobile
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   // Modern tab size
   tab-size: 4;
   color-scheme: light;
@@ -31,9 +32,7 @@ html {
 
 body {
   // Full viewport height minimum
-  min-height: 100vh;
-  // Improve text rendering
-  text-rendering: optimizeLegibility;
+  min-height: 100svh;
   line-height: $line-height-normal;
 }
 

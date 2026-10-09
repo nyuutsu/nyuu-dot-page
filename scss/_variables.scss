@@ -1,7 +1,7 @@
 // =============================================================================
 // Variables
-// All design tokens in one place. These are SCSS variables (not CSS custom
-// properties) so they don't ship to the client.
+// All design tokens in one place.
+// They're SCSS variables rather than CSS custom properties, so they're settled at build time and never reach the browser.
 // =============================================================================
 
 @use 'sass:map';
@@ -87,7 +87,7 @@ $space-xl:  2rem;
 // Typography Scale
 // One root size that grows gently with the window: 18px on a phone, about 21px at 1440px wide, never above 22px.
 // IM Fell is rough, inky type that blurs when small, so it needs more size than a clean modern face to read as easily.
-// Headings sit on a scale of equal steps above it: 1.25 apart, the same proportion the Fell cuts step by (13.5pt → 17pt → 21pt).
+// Headings sit on a scale of equal steps above it: 1.25 apart, the same proportion the Fell type sizes step by (13.5pt → 17pt → 21pt).
 // A phone is too narrow for jumps that big, so there the steps are a gentler 1.2 (see the h1-h4 rules in _typography.scss).
 // -----------------------------------------------------------------------------
 
@@ -115,8 +115,9 @@ $max-width-page: 75ch;
 // Mobile-first: min-width queries, styles apply at this width and above.
 // -----------------------------------------------------------------------------
 
-// Layout breakpoint (padding, component layout)
+// Layout breakpoints (padding, component layout)
 $breakpoint-md: 768px;
+$breakpoint-lg: 1200px;
 
 // -----------------------------------------------------------------------------
 // Border Radius
