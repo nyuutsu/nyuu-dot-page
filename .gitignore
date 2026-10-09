@@ -79,4 +79,5 @@ TODO.md
 
 # Generated caches (rebuilt during make build)
 static/fonts/.font-subset-cache.json
+scss/_font-versions.scss
 config/__pycache__/

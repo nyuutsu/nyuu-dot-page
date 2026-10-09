@@ -4,6 +4,9 @@
 // properties) so they don't ship to the client.
 // =============================================================================
 
+@use 'sass:map';
+@use 'font-versions' as *;
+
 // -----------------------------------------------------------------------------
 // Colors
 // -----------------------------------------------------------------------------
@@ -171,10 +174,13 @@ $font-ornaments: 'IM Fell English' !default;
 // -----------------------------------------------------------------------------
 
 // Emit a @font-face block. File path is relative to $asset-origin/fonts/.
+// The URL carries the font's content stamp (from config/font-subset.py), so a re-subsetted font gets a new address.
 @mixin font-face($family, $file, $weight: 400, $style: normal, $range: null) {
+  $stamp: '';
+  @if map.has-key($font-versions, $file) { $stamp: '?v=#{map.get($font-versions, $file)}'; }
   @font-face {
     font-family: $family;
-    src: url('#{$asset-origin}/fonts/#{$file}.woff2') format('woff2');
+    src: url('#{$asset-origin}/fonts/#{$file}.woff2#{$stamp}') format('woff2');
     font-weight: $weight;
     font-style: $style;
     font-display: swap;

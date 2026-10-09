@@ -21,7 +21,7 @@ import Data.Time.Calendar (Day)
 import Hakyll
 import Hakyll.Core.Dependencies (DependencySelector (IdentifierDependency), contentDependency)
 import System.Environment (lookupEnv)
-import System.FilePath (takeBaseName, takeDirectory, (</>))
+import System.FilePath (takeBaseName, takeDirectory, takeFileName, (</>))
 import Text.Pandoc.Options
 import Text.Read (readMaybe)
 import Transforms (allTransforms, dropcapTransform)
@@ -149,6 +149,19 @@ stylesheetSource :: Flavor -> FilePath
 stylesheetSource Textured = "css/main.css"
 stylesheetSource Smooth   = "css/smooth.css"
 
+-- | Which font a flavor preloads; single source of truth for the preload href and the version hash.
+preloadFontSource :: Flavor -> FilePath
+preloadFontSource Textured = "static/fonts/IMFellEnglish-Regular.woff2"
+preloadFontSource Smooth   = "static/fonts/SourceSerif4-Regular.woff2"
+
+-- | Content stamps for the assets the page head links by URL.
+-- The preload stamp must match the one the stylesheet gives the same font, or the browser fetches it twice;
+-- config/font-subset.py computes its stamps with the same FNV-1a as contentVersion for that reason.
+data AssetVersions = AssetVersions
+  { stylesheetVersion  :: !String
+  , preloadFontVersion :: !String
+  }
+
 -- | FNV-1a hash of a file's bytes, as hex. Changes exactly when the file changes.
 -- Used to version asset URLs: browsers cache them for a year by URL, so a content-derived
 -- query string makes every deploy a cache miss and every non-deploy a cache hit.
@@ -161,17 +174,14 @@ contentVersion path = do
     fnv1a acc byte = (acc `xor` fromIntegral byte) * 0x100000001b3
 
 -- | Values that differ between the textured and smooth output trees.
-flavorContext :: Flavor -> String -> Context String
-flavorContext flavor cssVersion =
-  constField "stylesheet"  ("/" <> stylesheetSource flavor <> "?v=" <> cssVersion) <>
-  constField "preloadFont" (preloadFont flavor)
-  where
-    preloadFont Textured = "/fonts/IMFellEnglish-Regular.woff2"
-    preloadFont Smooth   = "/fonts/SourceSerif4-Regular.woff2"
+flavorContext :: Flavor -> AssetVersions -> Context String
+flavorContext flavor versions =
+  constField "stylesheet"  ("/" <> stylesheetSource flavor <> "?v=" <> stylesheetVersion versions) <>
+  constField "preloadFont" ("/fonts/" <> takeFileName (preloadFontSource flavor) <> "?v=" <> preloadFontVersion versions)
 
 -- | Base context for all pages (flavor fields + canonical URL + defaults)
-siteContext :: Flavor -> String -> Context String
-siteContext flavor cssVersion = flavorContext flavor cssVersion <> canonicalUrlField <> defaultContext
+siteContext :: Flavor -> AssetVersions -> Context String
+siteContext flavor versions = flavorContext flavor versions <> canonicalUrlField <> defaultContext
 
 -- | Format the "updated" metadata field for display (e.g. "January 28, 2026")
 -- Leaves the raw ISO value in $updated$ for the datetime attribute.
@@ -186,12 +196,12 @@ updatedField = field "updatedDisplay" $ \item -> do
         Just day -> return $ formatTime defaultTimeLocale "%B %e, %Y" (day :: Day)
 
 -- | Context for blog posts (includes formatted date + machine-readable ISO date)
-postContext :: Flavor -> String -> Context String
-postContext flavor cssVersion =
+postContext :: Flavor -> AssetVersions -> Context String
+postContext flavor versions =
   dateField "date" "%B %e, %Y" <>
   dateField "isodate" "%Y-%m-%d" <>
   updatedField <>
-  siteContext flavor cssVersion
+  siteContext flavor versions
 
 -- | Computed field: SVG path for the project icon emoji.
 -- Reads the first character of the "icon" metadata, converts to a codepoint
@@ -237,9 +247,10 @@ siteRules flavor = do
   imageDims <- preprocess $ scanImageDimensions "static"
   syntaxMap <- preprocess $ loadCustomSyntaxMap "config/syntax"
                               (writerSyntaxMap defaultHakyllWriterOptions)
-  cssVersion <- preprocess $ contentVersion (stylesheetSource flavor)
-  let pageContext = siteContext flavor cssVersion
-  let blogPostContext = postContext flavor cssVersion
+  assetVersions <- preprocess $
+    AssetVersions <$> contentVersion (stylesheetSource flavor) <*> contentVersion (preloadFontSource flavor)
+  let pageContext = siteContext flavor assetVersions
+  let blogPostContext = postContext flavor assetVersions
   let writerOptions = defaultHakyllWriterOptions { writerSyntaxMap = syntaxMap }
   let baseTransforms = allTransforms admonitionConfig avatarConfig cardCache imageDims emojiAssets
   -- Pages opt into a drop cap with `dropcap: true` frontmatter. The flag is Hakyll
@@ -254,6 +265,7 @@ siteRules flavor = do
 
   -- Pages bake in the stylesheet's content-hash URL, so they must rebuild when the stylesheet changes;
   -- Hakyll's tracker can't see context values, so the dependency is declared explicitly.
+  -- The stylesheet carries every font's stamp too, so a changed preload font rebuilds the pages through it.
   let withStylesheetDependency = rulesExtraDependencies [contentDependency (IdentifierDependency (fromFilePath (stylesheetSource flavor)))]
 
   ----------------------------------------------------------------------------
