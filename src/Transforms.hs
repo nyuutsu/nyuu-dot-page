@@ -1,12 +1,12 @@
 -- =============================================================================
 -- Transforms
--- Re-exports all Pandoc AST transformations and provides combined transform
+-- Every Pandoc transform, and the pipeline that runs them.
 -- =============================================================================
 
 module Transforms
   ( -- * Combined transform
     allTransforms
-    -- * Individual transforms (re-exported)
+    -- * Individual transforms
   , imageDimensionsTransform
   , japaneseTransform
   , emojiTransform
@@ -19,7 +19,7 @@ module Transforms
   , cardNoticeTransform
   , figureLinkTransform
   , tableTransform
-    -- * Per-page transforms (composed in site.hs, not part of allTransforms)
+    -- * Per-page transforms, which site.hs applies only where a page asks
   , dropcapTransform
   ) where
 
@@ -29,7 +29,6 @@ import CardCache (CardCache)
 import Emoji (EmojiAssets)
 import ImageDimensions (ImageDimensions)
 
--- Re-export individual transforms
 import Transforms.ImageDimensions (imageDimensionsTransform)
 import Transforms.Japanese (japaneseTransform)
 import Transforms.Emoji (emojiTransform)
@@ -44,41 +43,21 @@ import Transforms.FigureLink (figureLinkTransform)
 import Transforms.Tables (tableTransform)
 import Transforms.Dropcap (dropcapTransform)
 
--- | Combined transform that applies all transformations
--- Config loaded from config/*.toml and config/*.json files
--- Order matters:
---   1. forumPostTransform - convert forum-post/forum-reply divs
---   2. chatTransform - convert chat divs to message bubbles
---   3. admonitionTransform - convert fenced divs to admonition structure
---   4. cardNoticeTransform - expand :::cards::: into notice
---      (must precede cardTransform: its output contains a .card span for the
---       Thalia example, which cardTransform needs to resolve into a preview)
---   5. cardTransform - convert .card spans to hover previews (produces Image nodes)
---   6. imageDimensionsTransform - add width/height for CLS prevention
---      (must follow cardTransform: card previews use native Image nodes that
---       need dimensions injected from the cache)
---   7. anchorTransform - headings become clickable anchors
---   8. figureLinkTransform - make figure images clickable to full size
---   9. emojiTransform - replace emoji chars with inline SVG images
---      (must follow cardTransform/cardNoticeTransform which inject emoji,
---       must precede japaneseTransform so emoji aren't wrapped in lang="ja")
---  10. japaneseTransform - wrap CJK text (runs last to process all text)
---  11. tableTransform - reset column widths, wrap tables for horizontal
---      scrolling (no ordering constraints)
---  12. companionExcerptTransform - quote a companion site's section as a
---      credited figure (no ordering constraints)
---
--- Note: Figures are handled by Pandoc's implicit_figures extension.
--- Use ![Caption](image){alt="accessibility text"} syntax.
+-- | Every transform a page gets. Composition runs right to left, so read the chain from the bottom up.
+-- Some must run in order:
+--   cardNoticeTransform before cardTransform: the notice's Thalia example is a .card span, which cardTransform resolves.
+--   cardTransform before imageDimensionsTransform: card previews are Image nodes, waiting for their sizes from the cache.
+--   emojiTransform after both card transforms, which add 🎴, and before japaneseTransform, so emoji aren't wrapped in lang="ja".
+--   japaneseTransform last: it turns ruby into raw HTML and splits text into lang="ja" spans, and text a later transform adds would miss both.
 allTransforms :: AdmonitionConfig -> AvatarConfig -> CardCache -> ImageDimensions -> EmojiAssets -> Pandoc -> Pandoc
-allTransforms admonitionConfig avatarConfig cardCache imageDims emojiAssets =
-  tableTransform
-  . japaneseTransform
+allTransforms admonitionConfig avatarConfig cardCache imageDimensions emojiAssets =
+  japaneseTransform
   . emojiTransform emojiAssets
   . companionExcerptTransform
+  . tableTransform
   . figureLinkTransform
   . anchorTransform
-  . imageDimensionsTransform imageDims
+  . imageDimensionsTransform imageDimensions
   . cardTransform cardCache
   . cardNoticeTransform
   . admonitionTransform admonitionConfig

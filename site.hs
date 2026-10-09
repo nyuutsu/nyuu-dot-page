@@ -1,10 +1,7 @@
 --------------------------------------------------------------------------------
 -- nyuu.page site generator
 --
--- A minimal Hakyll configuration with:
--- - Clean URLs (/about/ not /about.html)
--- - Fenced div support for admonitions
--- - Blog posts with archive
+-- The config and data it loads, then where each page comes from and how it's made.
 --------------------------------------------------------------------------------
 
 import Data.Bits (xor)
@@ -54,8 +51,7 @@ configFor flavor = defaultConfiguration
   , providerDirectory    = "."
   , ignoreFile           = \path ->
       ignoreFile defaultConfiguration path
-      -- Hakyll only auto-ignores its own output dirs; list both flavors'
-      -- so neither build scans the other's tree.
+      -- Hakyll already skips this flavor's own output and cache; this adds the other flavor's, and the source folders no rule matches.
       || path `elem` ["config", "scss", "src", "_site", "_site-smooth", "_cache", "_cache-smooth"]
   }
   where
@@ -63,7 +59,6 @@ configFor flavor = defaultConfiguration
       Textured -> ("_site", "_cache")
       Smooth   -> ("_site-smooth", "_cache-smooth")
 
--- | RSS feed configuration
 feedConfig :: FeedConfiguration
 feedConfig = FeedConfiguration
   { feedTitle       = "nyuu.page"
@@ -76,80 +71,60 @@ feedConfig = FeedConfiguration
 --------------------------------------------------------------------------------
 -- Clean URLs
 --
--- Converts paths like "about.html" to "about/index.html"
--- so URLs can be "/about/" instead of "/about.html"
+-- Each page becomes a folder holding an index.html, so its address reads /about/ rather than /about.html.
 --------------------------------------------------------------------------------
 
 cleanRoute :: Routes
 cleanRoute = customRoute createIndexPath
   where
     createIndexPath identifier =
-      let path = toFilePath identifier
-          dir  = takeDirectory path
-          base = takeBaseName path
-      in case dir of
-           "." -> base </> "index.html"
-           _   -> dir </> base </> "index.html"
+      let path      = toFilePath identifier
+          directory = takeDirectory path
+          baseName  = takeBaseName path
+      in case directory of
+           "." -> baseName </> "index.html"
+           _   -> directory </> baseName </> "index.html"
 
--- | Strip "content/" prefix and apply clean URL routing.
--- Used by pages, posts, and projects under content/.
+-- | Pages live under content/ in the repo but at the site root: content/about.md becomes /about/.
 contentRoute :: Routes
 contentRoute = gsubRoute "content/" (const "") `composeRoutes` cleanRoute
 
--- | Strip trailing "index.html" from a URL path
--- "/about/index.html" -> "/about/"
+-- | "/about/index.html" -> "/about/"
 stripIndexSuffix :: String -> String
 stripIndexSuffix url
   | suffix `isSuffixOf` url = take (length url - length suffix) url
   | otherwise               = url
   where suffix = "index.html"
 
--- | Remove "index.html" from the end of URLs in generated content
+-- | The same, for every link in a page's HTML.
 cleanUrls :: Item String -> Compiler (Item String)
 cleanUrls = return . fmap (withUrls stripIndexSuffix)
 
--- | Wrap content in the default template, relativize URLs, and clean them
--- Common tail of every page's compile pipeline.
+-- | The steps every HTML page finishes with.
 applyDefault :: Context String -> Item String -> Compiler (Item String)
-applyDefault ctx item =
-  loadAndApplyTemplate "templates/default.html" ctx item
+applyDefault context item =
+  loadAndApplyTemplate "templates/default.html" context item
     >>= relativizeUrls
     >>= cleanUrls
-
---------------------------------------------------------------------------------
--- Pandoc Compiler
---
--- Enables fenced_divs and bracketed_spans extensions for widgets.
--- All transforms are applied from Transforms module - see src/Transforms.hs
--- Admonition config is loaded from config/admonitions.toml
---------------------------------------------------------------------------------
-
-readerOptions :: ReaderOptions
-readerOptions = defaultHakyllReaderOptions
-  { readerExtensions =
-      enableExtension Ext_fenced_divs $
-      enableExtension Ext_bracketed_spans $
-      readerExtensions defaultHakyllReaderOptions
-  }
 
 --------------------------------------------------------------------------------
 -- Contexts
 --------------------------------------------------------------------------------
 
--- | Absolute canonical URL for SEO tags (bypasses relativizeUrls/cleanUrls)
+-- | The page's full address, for the canonical link; it's always nyuu.page, even in the smooth tree.
 canonicalUrlField :: Context String
 canonicalUrlField = field "canonicalUrl" $ \item -> do
   maybeRoute <- getRoute (itemIdentifier item)
   return $ case maybeRoute of
-        Nothing -> "https://nyuu.page/"
-        Just r  -> "https://nyuu.page/" <> stripIndexSuffix r
+        Nothing        -> "https://nyuu.page/"
+        Just routePath -> "https://nyuu.page/" <> stripIndexSuffix routePath
 
--- | Which compiled stylesheet a flavor ships; single source of truth for the link href and the version hash.
+-- | The stylesheet a flavor ships; its link and its stamp both come from here.
 stylesheetSource :: Flavor -> FilePath
 stylesheetSource Textured = "css/main.css"
 stylesheetSource Smooth   = "css/smooth.css"
 
--- | Which font a flavor preloads; single source of truth for the preload href and the version hash.
+-- | The font a flavor preloads; its link and its stamp both come from here.
 preloadFontSource :: Flavor -> FilePath
 preloadFontSource Textured = "static/fonts/IMFellEnglish-Regular.woff2"
 preloadFontSource Smooth   = "static/fonts/SourceSerif4-Regular.woff2"
@@ -162,16 +137,15 @@ data AssetVersions = AssetVersions
   , preloadFontVersion :: !String
   }
 
--- | FNV-1a hash of a file's bytes, as hex. Changes exactly when the file changes.
--- Used to version asset URLs: browsers cache them for a year by URL, so a content-derived
--- query string makes every deploy a cache miss and every non-deploy a cache hit.
+-- | FNV-1a hash of a file's bytes, as hex, for stamping asset URLs.
+-- Browsers keep a stamped file for a year, so the stamp changes only when the file does: a new version is fetched once, and an unchanged one stays cached.
 contentVersion :: FilePath -> IO String
 contentVersion path = do
   bytes <- ByteString.readFile path
   pure $ showHex (ByteString.foldl' fnv1a fnvOffsetBasis bytes) ""
   where
     fnvOffsetBasis = 0xcbf29ce484222325 :: Word64
-    fnv1a acc byte = (acc `xor` fromIntegral byte) * 0x100000001b3
+    fnv1a hash byte = (hash `xor` fromIntegral byte) * 0x100000001b3
 
 -- | Values that differ between the textured and smooth output trees.
 flavorContext :: Flavor -> AssetVersions -> Context String
@@ -179,23 +153,23 @@ flavorContext flavor versions =
   constField "stylesheet"  ("/" <> stylesheetSource flavor <> "?v=" <> stylesheetVersion versions) <>
   constField "preloadFont" ("/fonts/" <> takeFileName (preloadFontSource flavor) <> "?v=" <> preloadFontVersion versions)
 
--- | Base context for all pages (flavor fields + canonical URL + defaults)
+-- | The fields every page's template can use.
 siteContext :: Flavor -> AssetVersions -> Context String
 siteContext flavor versions = flavorContext flavor versions <> canonicalUrlField <> defaultContext
 
--- | Format the "updated" metadata field for display (e.g. "January 28, 2026")
--- Leaves the raw ISO value in $updated$ for the datetime attribute.
+-- | A post's "updated" date, written out for reading: "January 28, 2026".
+-- The raw ISO date stays in $updated$ for the datetime attribute.
 updatedField :: Context String
 updatedField = field "updatedDisplay" $ \item -> do
   maybeUpdated <- getMetadataField (itemIdentifier item) "updated"
   case maybeUpdated of
     Nothing -> noResult "no updated field"
-    Just dateStr ->
-      case parseTimeM True defaultTimeLocale "%Y-%m-%d" dateStr of
-        Nothing  -> noResult ("couldn't parse updated date: " ++ dateStr)
+    Just isoDate ->
+      case parseTimeM True defaultTimeLocale "%Y-%m-%d" isoDate of
+        Nothing  -> noResult ("couldn't parse updated date: " ++ isoDate)
         Just day -> return $ formatTime defaultTimeLocale "%B %e, %Y" (day :: Day)
 
--- | Context for blog posts (includes formatted date + machine-readable ISO date)
+-- | Posts add their dates, written out and in ISO form.
 postContext :: Flavor -> AssetVersions -> Context String
 postContext flavor versions =
   dateField "date" "%B %e, %Y" <>
@@ -203,18 +177,16 @@ postContext flavor versions =
   updatedField <>
   siteContext flavor versions
 
--- | Computed field: SVG path for the project icon emoji.
--- Reads the first character of the "icon" metadata, converts to a codepoint
--- hex path.  The template uses this for the <img> src alongside $icon$ for
--- alt text and the hidden copy-paste span.
+-- | Where a project's icon emoji lives as an SVG; only the first codepoint counts, so the icon must be a single-codepoint emoji.
+-- The template shows that image, and keeps $icon$ itself for the alt text and the hidden copy-paste span.
 emojiIconSrcField :: Context String
 emojiIconSrcField = field "icon-src" $ \item -> do
   maybeIcon <- getMetadataField (itemIdentifier item) "icon"
   case maybeIcon of
-    Just (c:_) -> return $ "/images/emoji/" ++ showHex (ord c) "" ++ ".svg"
-    _          -> noResult "no icon field"
+    Just (iconCharacter:_) -> return $ "/images/emoji/" ++ showHex (ord iconCharacter) "" ++ ".svg"
+    _                      -> noResult "no icon field"
 
--- | Sort items by a metadata field (numeric, ascending)
+-- | Lightest first, by the weight in each page's frontmatter; a page without one goes last.
 sortByWeight :: [Item String] -> Compiler [Item String]
 sortByWeight items = do
   withWeights <- mapM addWeight items
@@ -238,13 +210,13 @@ siteRules :: Flavor -> Rules ()
 siteRules flavor = do
 
   ----------------------------------------------------------------------------
-  -- Load config (runs before rules)
+  -- Everything the pages draw on, loaded once before any of them compile
   ----------------------------------------------------------------------------
   admonitionConfig <- preprocess $ loadAdmonitionConfig "config/admonitions.toml"
   avatarConfig <- preprocess $ loadAvatarConfig "config/avatars.toml"
-  cardCache <- preprocess $ buildCardCache readerOptions "config" "content" "static/images/cards"
+  cardCache <- preprocess $ buildCardCache defaultHakyllReaderOptions "config" "content" "static/images/cards"
   emojiAssets <- preprocess $ buildEmojiAssets "config/blobmoji/svg-fixed" "static/images/emoji" ["content", "src", "scss"]
-  imageDims <- preprocess $ scanImageDimensions "static"
+  imageDimensions <- preprocess $ scanImageDimensions "static"
   syntaxMap <- preprocess $ loadCustomSyntaxMap "config/syntax"
                               (writerSyntaxMap defaultHakyllWriterOptions)
   assetVersions <- preprocess $
@@ -252,16 +224,16 @@ siteRules flavor = do
   let pageContext = siteContext flavor assetVersions
   let blogPostContext = postContext flavor assetVersions
   let writerOptions = defaultHakyllWriterOptions { writerSyntaxMap = syntaxMap }
-  let baseTransforms = allTransforms admonitionConfig avatarConfig cardCache imageDims emojiAssets
-  -- Pages opt into a drop cap with `dropcap: true` frontmatter. The flag is Hakyll
-  -- metadata, invisible to the pure transform chain, so the choice is made here.
+  let baseTransforms = allTransforms admonitionConfig avatarConfig cardCache imageDimensions emojiAssets
+  -- Pages opt into a drop cap with `dropcap: true` frontmatter.
+  -- The flag is Hakyll metadata, invisible to the pure transform chain, so the choice is made here.
   let sitePandocCompiler = do
         identifier <- getUnderlying
         dropcapFlag <- getMetadataField identifier "dropcap"
         let transforms = if dropcapFlag == Just "true"
                            then dropcapTransform . baseTransforms
                            else baseTransforms
-        pandocCompilerWithTransform readerOptions writerOptions transforms
+        pandocCompilerWithTransform defaultHakyllReaderOptions writerOptions transforms
 
   -- Pages bake in the stylesheet's content-hash URL, so they must rebuild when the stylesheet changes;
   -- Hakyll's tracker can't see context values, so the dependency is declared explicitly.
@@ -277,7 +249,7 @@ siteRules flavor = do
     compile copyFileCompiler
 
   ----------------------------------------------------------------------------
-  -- CSS: compress and copy
+  -- CSS, as Sass wrote it
   ----------------------------------------------------------------------------
   match "css/*.css" $ do
     route idRoute
@@ -294,7 +266,6 @@ siteRules flavor = do
 
   ----------------------------------------------------------------------------
   -- Static pages: about, contact
-  -- Uses contentRoute for clean URLs
   ----------------------------------------------------------------------------
   withStylesheetDependency $ match (fromList ["content/about.md", "content/contact.md"]) $ do
     route contentRoute
@@ -316,8 +287,7 @@ siteRules flavor = do
         >>= applyDefault pageContext
 
   ----------------------------------------------------------------------------
-  -- Home page: project showcase + recent posts
-  -- Projects loaded from content/projects/, sorted by weight
+  -- Home page: the project showcase and the five newest posts
   ----------------------------------------------------------------------------
   withStylesheetDependency $ match "content/index.md" $ do
     route $ constRoute "index.html"
@@ -341,7 +311,7 @@ siteRules flavor = do
     route contentRoute
     compile $
       sitePandocCompiler
-        >>= saveSnapshot "content"  -- Save for RSS before templates
+        >>= saveSnapshot "content"  -- the bare post, for the RSS feed
         >>= loadAndApplyTemplate "templates/post.html" blogPostContext
         >>= applyDefault blogPostContext
 
